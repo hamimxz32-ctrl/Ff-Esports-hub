@@ -1,0 +1,220 @@
+{
+  "entities": {
+    "Roster": {
+      "title": "Team Roster",
+      "description": "An esports team roster for Free Fire",
+      "type": "object",
+      "properties": {
+        "teamName": { "type": "string" },
+        "teamLogo": { "type": "string", "format": "uri" },
+        "players": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "fullName": { "type": "string" },
+              "ign": { "type": "string" },
+              "role": { "type": "string" },
+              "uid": { "type": "string" },
+              "facebookId": { "type": "string" },
+              "photoURL": { "type": "string", "format": "uri" }
+            },
+            "required": ["ign", "role", "uid"]
+          }
+        },
+        "coach": {
+          "type": "object",
+          "properties": {
+            "name": { "type": "string" },
+            "ign": { "type": "string" },
+            "photoURL": { "type": "string", "format": "uri" }
+          }
+        },
+        "manager": {
+          "type": "object",
+          "properties": {
+            "name": { "type": "string" },
+            "ign": { "type": "string" },
+            "photoURL": { "type": "string", "format": "uri" }
+          }
+        },
+        "sponsor": {
+          "type": "object",
+          "properties": {
+            "name": { "type": "string" },
+            "logo": { "type": "string", "format": "uri" }
+          }
+        },
+        "socialLinks": {
+          "type": "object",
+          "properties": {
+            "facebook": { "type": "string" },
+            "instagram": { "type": "string" },
+            "youtube": { "type": "string" }
+          }
+        },
+        "status": { "type": "string", "enum": ["pending", "approved"] },
+        "authorUid": { "type": "string" },
+        "authorName": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "reactions": { "type": "object" }
+      },
+      "required": ["teamName", "players", "status", "authorUid", "createdAt"]
+    },
+    "GalleryItem": {
+      "title": "Gallery Item",
+      "description": "A screenshot or photo from a game",
+      "type": "object",
+      "properties": {
+        "imageUrl": { "type": "string", "format": "uri" },
+        "caption": { "type": "string" },
+        "status": { "type": "string", "enum": ["pending", "approved"] },
+        "authorName": { "type": "string" },
+        "authorUid": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "reactions": { "type": "object" }
+      },
+      "required": ["imageUrl", "status", "authorUid", "createdAt"]
+    },
+    "Comment": {
+      "title": "Comment",
+      "description": "A comment on a roster or photo",
+      "type": "object",
+      "properties": {
+        "targetId": { "type": "string" },
+        "targetType": { "type": "string", "enum": ["roster", "gallery"] },
+        "text": { "type": "string" },
+        "authorName": { "type": "string" },
+        "authorUid": { "type": "string" },
+        "authorPhoto": { "type": "string", "format": "uri" },
+        "status": { "type": "string", "enum": ["pending", "approved"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["targetId", "targetType", "text", "authorName", "authorUid", "status", "createdAt"]
+    },
+    "User": {
+      "title": "User",
+      "description": "User profile information",
+      "type": "object",
+      "properties": {
+        "username": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "displayName": { "type": "string" },
+        "photoURL": { "type": "string", "format": "uri" },
+        "bio": { "type": "string" },
+        "gameUID": { "type": "string" },
+        "facebookId": { "type": "string" },
+        "lastActive": { "type": "string", "format": "date-time" },
+        "isOnline": { "type": "boolean" }
+      }
+    },
+    "FriendRequest": {
+      "title": "Friend Request",
+      "description": "A request to connect between two users",
+      "type": "object",
+      "properties": {
+        "fromUid": { "type": "string" },
+        "fromName": { "type": "string" },
+        "fromPhoto": { "type": "string", "format": "uri" },
+        "toUid": { "type": "string" },
+        "status": { "type": "string", "enum": ["pending", "accepted", "rejected"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["fromUid", "fromName", "toUid", "status", "createdAt"]
+    },
+    "Message": {
+      "title": "Message",
+      "description": "A private message between two friends",
+      "type": "object",
+      "properties": {
+        "chatId": { "type": "string", "description": "Sorted combination of two user UIDs" },
+        "participants": { "type": "array", "items": { "type": "string" } },
+        "senderUid": { "type": "string" },
+        "text": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["chatId", "participants", "senderUid", "text", "createdAt"]
+    },
+    "Visit": {
+      "title": "Visit",
+      "description": "A record of a user visiting the site",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "displayName": { "type": "string" },
+        "timestamp": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "displayName", "timestamp"]
+    },
+    "RecruitmentPost": {
+      "title": "Recruitment Post",
+      "description": "A post for players looking for teams or teams looking for players",
+      "type": "object",
+      "properties": {
+        "type": { "type": "string", "enum": ["player", "team"] },
+        "ign": { "type": "string" },
+        "gameUid": { "type": "string" },
+        "whatsapp": { "type": "string" },
+        "instagram": { "type": "string" },
+        "facebook": { "type": "string" },
+        "previousTeam": { "type": "string" },
+        "screenshots": { "type": "array", "items": { "type": "string" } },
+        "gameplayVideo": { "type": "string" },
+        "requirements": {
+          "type": "object",
+          "properties": {
+            "age": { "type": "string" },
+            "role": { "type": "string" },
+            "experience": { "type": "string" },
+            "other": { "type": "string" }
+          }
+        },
+        "authorUid": { "type": "string" },
+        "authorName": { "type": "string" },
+        "authorPhoto": { "type": "string" },
+        "status": { "type": "string", "enum": ["pending", "approved"] },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "reactions": { "type": "object" }
+      },
+      "required": ["type", "authorUid", "status", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/rosters": {
+      "schema": "Roster",
+      "description": "Collection of team rosters"
+    },
+    "/gallery": {
+      "schema": "GalleryItem",
+      "description": "Collection of esports memories"
+    },
+    "/comments": {
+      "schema": "Comment",
+      "description": "Comments on rosters and photos"
+    },
+    "/users": {
+      "schema": "User",
+      "description": "User profile documents"
+    },
+    "/visits": {
+      "schema": "Visit",
+      "description": "Log of site visits"
+    },
+    "/friendRequests": {
+      "schema": "FriendRequest",
+      "description": "Friend requests between users"
+    },
+    "/messages": {
+      "schema": "Message",
+      "description": "Private messages"
+    },
+    "/recruitment": {
+      "schema": "RecruitmentPost",
+      "description": "Player and team recruitment posts"
+    },
+    "/settings": {
+      "schema": "object",
+      "description": "Global site configuration"
+    }
+  }
+}
