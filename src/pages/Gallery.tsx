@@ -58,7 +58,6 @@ export default function Gallery() {
   const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
   const [editingPhoto, setEditingPhoto] = useState<Photo | null>(null);
   const [isEditing, setIsEditing] = useState(false);
-  const [userReactions, setUserReactions] = useState<Record<string, string[]>>({});
   
   // Cropping states
   const [imageToCrop, setImageToCrop] = useState<string | null>(null);
@@ -183,7 +182,7 @@ export default function Gallery() {
         authorUid: user.uid,
         createdAt: serverTimestamp(),
         status: 'pending',
-        reactions: { like: 0, fire: 0, funny: 0, love: 0 }
+        reactions: { like: [], fire: [], funny: [], love: [] }
       });
       setFormData({ url: '', caption: '' });
       setShowUpload(false);
@@ -202,28 +201,24 @@ export default function Gallery() {
       return;
     }
 
-    const postReactions = userReactions[photoId] || [];
+    const photo = photos.find(p => p.id === photoId);
+    if (!photo) return;
+
     const photoRef = doc(db, 'gallery', photoId);
+    const currentReactions = photo.reactions?.[reactionKey] || [];
+    const hasReacted = Array.isArray(currentReactions) && currentReactions.includes(user.uid);
 
     try {
-      if (postReactions.includes(reactionKey)) {
+      if (hasReacted) {
         // Remove reaction
         await updateDoc(photoRef, {
           [`reactions.${reactionKey}`]: arrayRemove(user.uid)
         });
-        setUserReactions(prev => ({
-          ...prev,
-          [photoId]: postReactions.filter(r => r !== reactionKey)
-        }));
       } else {
         // Add reaction
         await updateDoc(photoRef, {
           [`reactions.${reactionKey}`]: arrayUnion(user.uid)
         });
-        setUserReactions(prev => ({
-          ...prev,
-          [photoId]: [...postReactions, reactionKey]
-        }));
       }
     } catch (error) {
       console.error('Error reacting:', error);

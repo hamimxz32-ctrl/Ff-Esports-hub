@@ -30,7 +30,7 @@ interface Roster {
   authorName: string;
   authorUid: string;
   createdAt: any;
-  reactions: Record<string, number>;
+  reactions: Record<string, string[]>;
   isEdited?: boolean;
 }
 
@@ -179,7 +179,7 @@ export default function Rosters() {
         authorName: user.displayName || 'Anonymous',
         authorUid: user.uid,
         createdAt: serverTimestamp(),
-        reactions: { like: 0, heart: 0 }
+        reactions: { like: [], heart: [] }
       });
       setFormData({
         teamName: '',
@@ -471,7 +471,7 @@ export default function Rosters() {
                       <div className="flex items-center gap-3">
                         <div className="w-8 h-8 rounded-lg overflow-hidden border border-zinc-200 dark:border-zinc-700">
                           <img 
-                            src={player.photoURL || `https://picsum.photos/seed/${player.ign}/100/100`} 
+                            src={player.photoURL || roster.teamLogo || `https://picsum.photos/seed/${player.ign}/100/100`} 
                             alt={player.ign} 
                             className="w-full h-full object-cover"
                             referrerPolicy="no-referrer"
@@ -502,24 +502,36 @@ export default function Rosters() {
                   <div className="grid grid-cols-3 gap-2 pt-2">
                     {roster.coach?.name && (
                       <div className="text-center space-y-1">
-                        <div className="w-8 h-8 rounded-full bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center mx-auto border border-zinc-700">
-                          <UserIcon className="w-4 h-4 text-zinc-500" />
+                        <div className="w-8 h-8 rounded-full bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center mx-auto border border-zinc-700 overflow-hidden">
+                          {roster.coach.photoURL || roster.teamLogo ? (
+                            <img src={roster.coach.photoURL || roster.teamLogo} className="w-full h-full object-cover" alt="Coach" referrerPolicy="no-referrer" />
+                          ) : (
+                            <UserIcon className="w-4 h-4 text-zinc-500" />
+                          )}
                         </div>
                         <p className="text-[8px] font-black uppercase text-zinc-500">Coach</p>
                       </div>
                     )}
                     {roster.manager?.name && (
                       <div className="text-center space-y-1">
-                        <div className="w-8 h-8 rounded-full bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center mx-auto border border-zinc-700">
-                          <UserIcon className="w-4 h-4 text-zinc-500" />
+                        <div className="w-8 h-8 rounded-full bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center mx-auto border border-zinc-700 overflow-hidden">
+                          {roster.manager.photoURL || roster.teamLogo ? (
+                            <img src={roster.manager.photoURL || roster.teamLogo} className="w-full h-full object-cover" alt="Manager" referrerPolicy="no-referrer" />
+                          ) : (
+                            <UserIcon className="w-4 h-4 text-zinc-500" />
+                          )}
                         </div>
                         <p className="text-[8px] font-black uppercase text-zinc-500">Manager</p>
                       </div>
                     )}
                     {roster.sponsor?.name && (
                       <div className="text-center space-y-1">
-                        <div className="w-8 h-8 rounded-lg bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center mx-auto border border-zinc-700">
-                          <Briefcase className="w-4 h-4 text-zinc-500" />
+                        <div className="w-8 h-8 rounded-lg bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center mx-auto border border-zinc-700 overflow-hidden">
+                          {roster.sponsor.logo || roster.teamLogo ? (
+                            <img src={roster.sponsor.logo || roster.teamLogo} className="w-full h-full object-cover" alt="Sponsor" referrerPolicy="no-referrer" />
+                          ) : (
+                            <Briefcase className="w-4 h-4 text-zinc-500" />
+                          )}
                         </div>
                         <p className="text-[8px] font-black uppercase text-zinc-500">Sponsor</p>
                       </div>

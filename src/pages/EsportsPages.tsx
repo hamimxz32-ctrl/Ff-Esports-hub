@@ -12,7 +12,7 @@ interface EsportsPage {
   title: string;
   description: string;
   logoUrl?: string;
-  category: 'News' | 'Production' | 'Management';
+  category: 'News' | 'Production' | 'Management' | 'Memes' | 'Others' | 'Organisations';
   socialLinks: {
     facebook?: string;
     whatsapp?: string;
@@ -30,7 +30,7 @@ export default function EsportsPages() {
   const [showRequest, setShowRequest] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [requestData, setRequestData] = useState({ type: 'Add Page', pageTitle: '', details: '' });
-  const [activeCategory, setActiveCategory] = useState<'All' | 'News' | 'Production' | 'Management'>('All');
+  const [activeCategory, setActiveCategory] = useState<'All' | 'News' | 'Production' | 'Management' | 'Memes' | 'Others' | 'Organisations'>('All');
   const [showAddPage, setShowAddPage] = useState(false);
   const [newPageData, setNewPageData] = useState<Partial<EsportsPage>>({
     title: '',
@@ -39,6 +39,13 @@ export default function EsportsPages() {
     category: 'News',
     socialLinks: { facebook: '', whatsapp: '', youtube: '' }
   });
+
+  useEffect(() => {
+    if (showAddPage && activeCategory !== 'All') {
+      setNewPageData(prev => ({ ...prev, category: activeCategory as any }));
+    }
+  }, [showAddPage, activeCategory]);
+
   const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null);
   const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
 
@@ -168,12 +175,12 @@ export default function EsportsPages() {
           >
             <Plus className="w-4 h-4" /> Add Page
           </button>
-          <div className="flex gap-2 p-1 bg-zinc-100 dark:bg-zinc-900 rounded-2xl">
-            {['All', 'News', 'Production', 'Management'].map((cat) => (
+          <div className="flex gap-2 p-1 bg-zinc-100 dark:bg-zinc-900 rounded-2xl overflow-x-auto max-w-full no-scrollbar">
+            {['All', 'News', 'Production', 'Management', 'Memes', 'Others', 'Organisations'].map((cat) => (
               <button
                 key={cat}
                 onClick={() => setActiveCategory(cat as any)}
-                className={`px-4 py-2 rounded-xl text-[10px] font-black uppercase italic tracking-widest transition-all ${
+                className={`px-4 py-2 rounded-xl text-[10px] font-black uppercase italic tracking-widest transition-all whitespace-nowrap ${
                   activeCategory === cat 
                     ? 'bg-blue-500 text-white shadow-lg' 
                     : 'text-zinc-500 hover:text-blue-500'
@@ -349,6 +356,9 @@ export default function EsportsPages() {
                     <option value="News">News</option>
                     <option value="Production">Production</option>
                     <option value="Management">Management</option>
+                    <option value="Memes">Memes</option>
+                    <option value="Others">Others</option>
+                    <option value="Organisations">Organisations</option>
                   </select>
                 </div>
                 <div className="space-y-1">

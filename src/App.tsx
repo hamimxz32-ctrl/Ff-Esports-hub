@@ -51,6 +51,8 @@ export interface Settings {
   groupChatDesc: string;
   fontFamily: string;
   supportTelegram: string;
+  creatorName: string;
+  creatorLink: string;
 }
 
 const DEFAULT_SETTINGS: Settings = {
@@ -68,13 +70,15 @@ const DEFAULT_SETTINGS: Settings = {
   topTeamsTitle: 'Top Teams',
   topTeamsDesc: 'The elite squads dominating the current competitive scene.',
   esportsPagesTitle: 'Esports Pages',
-  esportsPagesDesc: 'Official pages for news, production, and management.',
+  esportsPagesDesc: 'Official pages for news, production, management, memes, and more.',
   friendsTitle: 'Community Friends',
   friendsDesc: 'Connect with other players and build your esports network.',
   groupChatTitle: 'Global Group Chat',
   groupChatDesc: 'Real-time conversation with the entire community.',
   fontFamily: 'Inter',
   supportTelegram: 'https://t.me/admin',
+  creatorName: 'hamim miah',
+  creatorLink: 'https://t.me/hamimmiahh',
 };
 
 const AuthContext = createContext<AuthContextType>({ 
@@ -198,20 +202,30 @@ export default function App() {
     // Track visit and update profile
     const trackUser = async () => {
       try {
+        const userSnap = await getDoc(userRef);
+        const currentData = userSnap.exists() ? userSnap.data() : null;
+
         await addDoc(collection(db, 'visits'), {
           uid: user.uid,
-          displayName: user.displayName || 'Anonymous',
-          photoURL: user.photoURL || '',
+          displayName: currentData?.displayName || user.displayName || 'Anonymous',
+          photoURL: currentData?.photoURL || user.photoURL || '',
           timestamp: serverTimestamp()
         });
         
-        await setDoc(userRef, {
+        const updateData: any = {
           uid: user.uid,
-          displayName: user.displayName || 'Anonymous',
-          photoURL: user.photoURL || '',
           isOnline: true,
           lastActive: serverTimestamp()
-        }, { merge: true });
+        };
+
+        // Only set displayName and photoURL if they don't exist in Firestore
+        // This prevents overwriting custom profile data with stale Auth data
+        if (!userSnap.exists()) {
+          updateData.displayName = user.displayName || 'Anonymous';
+          updateData.photoURL = user.photoURL || '';
+        }
+        
+        await setDoc(userRef, updateData, { merge: true });
       } catch (error) {
         console.error('User tracking failed:', error);
       }

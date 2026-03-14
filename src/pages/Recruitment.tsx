@@ -57,6 +57,7 @@ interface RecruitmentPost {
   previousTeam?: string;
   screenshots?: string[];
   gameplayVideo?: string;
+  teamLogo?: string;
   requirements?: {
     age?: string;
     role?: string;
@@ -104,7 +105,6 @@ export default function Recruitment() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [selectedPost, setSelectedPost] = useState<RecruitmentPost | null>(null);
   const [selectedUser, setSelectedUser] = useState<any>(null);
-  const [userReactions, setUserReactions] = useState<Record<string, string[]>>({});
   const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null);
   const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
 
@@ -118,6 +118,7 @@ export default function Recruitment() {
     previousTeam: '',
     screenshots: [] as string[],
     gameplayVideo: '',
+    teamLogo: '',
     requirements: {
       age: '',
       role: '',
@@ -194,7 +195,7 @@ export default function Recruitment() {
         authorPhoto: userData?.photoURL || user.photoURL || '',
         status: isAdmin ? 'approved' : 'pending',
         createdAt: serverTimestamp(),
-        reactions: {}
+        reactions: { like: [], fire: [], funny: [], love: [] }
       });
       setShowCreate(false);
       setFormData({
@@ -207,6 +208,7 @@ export default function Recruitment() {
         previousTeam: '',
         screenshots: [],
         gameplayVideo: '',
+        teamLogo: '',
         requirements: { age: '', role: '', experience: '', other: '' }
       });
       showToast(isAdmin ? 'Post published!' : 'Post submitted for review!', 'success');
@@ -224,28 +226,24 @@ export default function Recruitment() {
       return;
     }
 
-    const postReactions = userReactions[postId] || [];
+    const post = posts.find(p => p.id === postId);
+    if (!post) return;
+
     const postRef = doc(db, 'recruitment', postId);
+    const currentReactions = post.reactions?.[reactionKey] || [];
+    const hasReacted = Array.isArray(currentReactions) && currentReactions.includes(user.uid);
 
     try {
-      if (postReactions.includes(reactionKey)) {
+      if (hasReacted) {
         // Remove reaction
         await updateDoc(postRef, {
           [`reactions.${reactionKey}`]: arrayRemove(user.uid)
         });
-        setUserReactions(prev => ({
-          ...prev,
-          [postId]: postReactions.filter(r => r !== reactionKey)
-        }));
       } else {
         // Add reaction
         await updateDoc(postRef, {
           [`reactions.${reactionKey}`]: arrayUnion(user.uid)
         });
-        setUserReactions(prev => ({
-          ...prev,
-          [postId]: [...postReactions, reactionKey]
-        }));
       }
     } catch (error) {
       console.error('Error reacting:', error);
@@ -355,7 +353,7 @@ export default function Recruitment() {
                 <div className="flex items-center gap-4">
                   <button onClick={() => handleViewUser(post.authorUid)} className="relative shrink-0">
                     <img 
-                      src={post.authorPhoto || `https://picsum.photos/seed/${post.authorUid}/100/100`} 
+                      src={post.type === 'team' && post.teamLogo ? post.teamLogo : (post.authorPhoto || `https://picsum.photos/seed/${post.authorUid}/100/100`)} 
                       alt={post.authorName} 
                       className="w-12 h-12 rounded-2xl object-cover border-2 border-pink-400/20"
                       referrerPolicy="no-referrer"
@@ -408,7 +406,7 @@ export default function Recruitment() {
                         key={emoji.key}
                         onClick={() => handleReaction(post.id, emoji.key)}
                         className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
-                          userReactions[post.id] === emoji.key
+                          Array.isArray(post.reactions?.[emoji.key]) && post.reactions[emoji.key].includes(user?.uid || '')
                           ? 'bg-pink-400 text-white'
                           : darkMode ? 'bg-zinc-800 text-zinc-400 hover:bg-zinc-700' : 'bg-zinc-50 text-zinc-500 hover:bg-zinc-100'
                         }`}
@@ -561,6 +559,34 @@ export default function Recruitment() {
                           placeholder="e.g. Good communication"
                           className={`w-full px-6 py-4 rounded-2xl border ${darkMode ? 'bg-zinc-800 border-zinc-700 text-white' : 'bg-zinc-50 border-zinc-100 text-zinc-900'} focus:ring-2 focus:ring-pink-400 outline-none transition-all font-bold`}
                         />
+                      </div>
+                      <div className="space-y-2">
+                        <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 ml-2">Team Logo</label>
+                        <div className="flex items-center gap-4">
+                          {formData.teamLogo && (
+                            <img src={formData.teamLogo} className="w-12 h-12 rounded-xl object-cover" alt="Logo Preview" />
+                          )}
+                          <label className={`flex-1 flex items-center justify-center gap-2 py-4 border-2 border-dashed rounded-2xl cursor-pointer transition-colors ${darkMode ? 'bg-zinc-800 border-zinc-700 hover:border-pink-400' : 'bg-zinc-50 border-zinc-200 hover:border-pink-400'}`}>
+                            <ImageIcon className="w-5 h-5 text-zinc-400" />
+                            <span className="text-xs font-bold text-zinc-500">Upload Logo</span>
+                            <input type="file" accept="image/*" className="hidden" onChange={async (e) => {
+                              if (e.target.files && e.target.files[0]) {
+                                const file = e.target.files[0];
+                                const options = { maxSizeMB: 0.1, maxWidthOrHeight: 400, useWebWorker: true };
+                                try {
+                                  const compressedFile = await imageCompression(file, options);
+                                  const reader = new FileReader();
+                                  reader.readAsDataURL(compressedFile);
+                                  reader.onloadend = () => {
+                                    setFormData({ ...formData, teamLogo: reader.result as string });
+                                  };
+                                } catch (error) {
+                                  console.error('Logo upload failed:', error);
+                                }
+                              }
+                            }} />
+                          </label>
+                        </div>
                       </div>
                     </div>
                   )}
@@ -858,7 +884,12 @@ function PostDetailModal({ post, onClose, onViewUser, darkMode }: { post: Recrui
         <div className="md:w-1/2 p-8 flex flex-col h-[600px] md:h-auto">
           <div className="flex items-center gap-4 mb-8">
             <button onClick={() => onViewUser(post.authorUid)} className="shrink-0">
-              <img src={post.authorPhoto} className="w-14 h-14 rounded-2xl object-cover border-2 border-pink-400" alt={post.authorName} />
+              <img 
+                src={post.type === 'team' && post.teamLogo ? post.teamLogo : (post.authorPhoto || `https://picsum.photos/seed/${post.authorUid}/100/100`)} 
+                className="w-14 h-14 rounded-2xl object-cover border-2 border-pink-400" 
+                alt={post.authorName} 
+                referrerPolicy="no-referrer"
+              />
             </button>
             <div>
               <h2 className={`text-2xl font-black uppercase italic leading-none ${darkMode ? 'text-white' : 'text-zinc-900'}`}>{post.ign || post.authorName}</h2>

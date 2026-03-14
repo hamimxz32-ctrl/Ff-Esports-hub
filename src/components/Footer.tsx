@@ -69,7 +69,7 @@ export default function Footer() {
 
         <div className="text-center md:text-right">
           <p className="text-zinc-500 text-xs font-bold uppercase tracking-widest">
-            created by <span className="text-emerald-500">hamimmiahh</span> ☠️
+            created by <a href={settings.creatorLink} target="_blank" rel="noreferrer" className="text-emerald-500 hover:underline">{settings.creatorName}</a> ☠️
           </p>
           <p className="text-[10px] text-zinc-600 mt-1 uppercase font-bold">© 2026 Bangladesh Esports Ecosystem</p>
         </div>
