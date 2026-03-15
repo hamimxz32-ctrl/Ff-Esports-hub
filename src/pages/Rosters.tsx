@@ -345,18 +345,18 @@ export default function Rosters() {
       {/* Support & Visit Pages Bar */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {/* Support Bar */}
-        <div className={`p-8 rounded-[2.5rem] border ${darkMode ? 'bg-zinc-900/50 border-zinc-800' : 'bg-emerald-50/50 border-emerald-100'} flex flex-col sm:flex-row items-center gap-6 group transition-all hover:shadow-xl`}>
-          <div className="w-16 h-16 bg-emerald-500 rounded-2xl flex items-center justify-center shadow-lg shadow-emerald-500/20 shrink-0 group-hover:scale-110 transition-transform">
+        <div className="p-8 rounded-2xl border bg-esports-card border-white/5 flex flex-col sm:flex-row items-center gap-6 group transition-all hover:border-esports-primary/30">
+          <div className="w-16 h-16 bg-esports-primary rounded-xl flex items-center justify-center shadow-lg shadow-esports-primary/20 shrink-0 group-hover:scale-110 transition-transform">
             <HelpCircle className="w-8 h-8 text-white" />
           </div>
           <div className="text-center sm:text-left flex-1">
-            <h3 className="text-xl font-black uppercase italic tracking-tighter mb-1">Support System</h3>
-            <p className="text-xs font-bold text-zinc-500 uppercase tracking-widest mb-4">Need help? Our team is here 24/7.</p>
+            <h3 className="text-xl font-black uppercase italic tracking-tighter mb-1 text-esports-text">Support System</h3>
+            <p className="text-xs font-bold text-esports-text-muted uppercase tracking-widest mb-4">Need help? Our team is here 24/7.</p>
             <a 
               href={settings.supportTelegram} 
               target="_blank" 
               rel="noreferrer"
-              className="inline-flex items-center gap-2 px-6 py-2 bg-emerald-500 text-white rounded-xl text-[10px] font-black uppercase italic tracking-widest hover:bg-emerald-600 transition-all"
+              className="inline-flex items-center gap-2 px-6 py-2 bg-esports-primary text-white rounded-lg text-[10px] font-black uppercase italic tracking-widest hover:bg-esports-primary/80 transition-all"
             >
               Contact Support <ArrowRight className="w-3 h-3" />
             </a>
@@ -364,16 +364,16 @@ export default function Rosters() {
         </div>
 
         {/* Visit Pages Bar */}
-        <div className={`p-8 rounded-[2.5rem] border ${darkMode ? 'bg-zinc-900/50 border-zinc-800' : 'bg-blue-50/50 border-blue-100'} flex flex-col sm:flex-row items-center gap-6 group transition-all hover:shadow-xl`}>
-          <div className="w-16 h-16 bg-blue-500 rounded-2xl flex items-center justify-center shadow-lg shadow-blue-500/20 shrink-0 group-hover:scale-110 transition-transform">
+        <div className="p-8 rounded-2xl border bg-esports-card border-white/5 flex flex-col sm:flex-row items-center gap-6 group transition-all hover:border-esports-secondary/30">
+          <div className="w-16 h-16 bg-esports-secondary rounded-xl flex items-center justify-center shadow-lg shadow-esports-secondary/20 shrink-0 group-hover:scale-110 transition-transform">
             <Globe className="w-8 h-8 text-white" />
           </div>
           <div className="text-center sm:text-left flex-1">
-            <h3 className="text-xl font-black uppercase italic tracking-tighter mb-1">Visit Pages</h3>
-            <p className="text-xs font-bold text-zinc-500 uppercase tracking-widest mb-4">Explore the ecosystem pages.</p>
+            <h3 className="text-xl font-black uppercase italic tracking-tighter mb-1 text-esports-text">Visit Pages</h3>
+            <p className="text-xs font-bold text-esports-text-muted uppercase tracking-widest mb-4">Explore the ecosystem pages.</p>
             <Link 
               to="/esports-pages"
-              className="inline-flex items-center gap-2 px-6 py-2 bg-blue-500 text-white rounded-xl text-[10px] font-black uppercase italic tracking-widest hover:bg-blue-600 transition-all"
+              className="inline-flex items-center gap-2 px-6 py-2 bg-esports-secondary text-white rounded-lg text-[10px] font-black uppercase italic tracking-widest hover:bg-esports-secondary/80 transition-all"
             >
               View All Pages <ArrowRight className="w-3 h-3" />
             </Link>
@@ -383,30 +383,30 @@ export default function Rosters() {
 
       <div className="flex flex-col sm:flex-row justify-between items-center gap-6">
         <div className="space-y-2 text-center sm:text-left">
-          <h1 className={`text-5xl font-black uppercase italic tracking-tighter leading-none ${darkMode ? 'text-white' : 'text-zinc-900'}`}>
+          <h1 className="text-5xl font-black uppercase italic tracking-tighter leading-none text-esports-text">
             {settings.rosterTitle}
           </h1>
-          <p className="text-zinc-500 font-medium max-w-md">{settings.rosterDesc}</p>
+          <p className="text-esports-text-muted font-medium max-w-md">{settings.rosterDesc}</p>
         </div>
         
         <div className="flex items-center gap-4">
-          <div className="flex bg-zinc-100 dark:bg-zinc-800 p-1 rounded-2xl">
+          <div className="flex bg-esports-card p-1 rounded-xl border border-white/5">
             <button 
               onClick={() => setActiveTab('teams')}
-              className={`px-6 py-2 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${activeTab === 'teams' ? 'bg-pink-400 text-white shadow-lg' : 'text-zinc-500'}`}
+              className={`px-6 py-2 rounded-lg text-xs font-black uppercase tracking-widest transition-all ${activeTab === 'teams' ? 'bg-esports-primary text-white shadow-lg' : 'text-esports-text-muted hover:text-white'}`}
             >
               Teams
             </button>
             <button 
               onClick={() => setActiveTab('players')}
-              className={`px-6 py-2 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${activeTab === 'players' ? 'bg-pink-400 text-white shadow-lg' : 'text-zinc-500'}`}
+              className={`px-6 py-2 rounded-lg text-xs font-black uppercase tracking-widest transition-all ${activeTab === 'players' ? 'bg-esports-primary text-white shadow-lg' : 'text-esports-text-muted hover:text-white'}`}
             >
               Players
             </button>
           </div>
           <button 
             onClick={() => user ? setShowRegister(true) : navigate('/login')}
-            className="flex items-center gap-2 px-8 py-4 bg-pink-400 text-white rounded-[2rem] font-black uppercase italic tracking-wider hover:bg-pink-500 transition-all active:scale-95 shadow-lg shadow-pink-400/20"
+            className="flex items-center gap-2 px-8 py-4 bg-esports-primary text-white rounded-xl font-black uppercase italic tracking-wider hover:bg-esports-primary/90 transition-all active:scale-95 shadow-lg shadow-esports-primary/20"
           >
             <Plus className="w-5 h-5" />
             Register
@@ -417,13 +417,13 @@ export default function Rosters() {
       {activeTab === 'teams' ? (
         <div className="space-y-8">
           <div className="relative max-w-md mx-auto sm:mx-0">
-            <Search className="absolute left-6 top-1/2 -translate-y-1/2 w-5 h-5 text-zinc-400" />
+            <Search className="absolute left-6 top-1/2 -translate-y-1/2 w-5 h-5 text-esports-text-muted" />
             <input 
               type="text"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               placeholder="Search teams by name..."
-              className={`w-full rounded-2xl pl-14 pr-6 py-4 focus:outline-none focus:border-pink-400 transition-colors ${darkMode ? 'bg-zinc-900 border-zinc-800 text-white' : 'bg-white border-zinc-100 text-zinc-800'} border-2`}
+              className="w-full rounded-xl pl-14 pr-6 py-4 focus:outline-none focus:border-esports-primary/50 transition-colors bg-esports-card border-white/5 text-esports-text border-2"
             />
           </div>
 
@@ -432,11 +432,11 @@ export default function Rosters() {
               <motion.div 
                 key={roster.id}
                 layout
-                className={`group relative ${darkMode ? 'bg-zinc-900 border-zinc-800' : 'bg-white border-zinc-100'} rounded-[2.5rem] overflow-hidden border-2 shadow-sm hover:shadow-2xl transition-all p-8 space-y-6`}
+                className="group relative bg-esports-card border-white/5 rounded-2xl overflow-hidden border-2 shadow-sm hover:border-esports-primary/20 transition-all p-8 space-y-6"
               >
                 <div className="flex justify-between items-start">
                   <div className="flex gap-4 items-center">
-                    <div className={`w-16 h-16 rounded-2xl overflow-hidden border-2 ${darkMode ? 'border-zinc-800' : 'border-zinc-50'} shadow-md`}>
+                    <div className="w-16 h-16 rounded-xl overflow-hidden border-2 border-white/5 shadow-md">
                       <img 
                         src={roster.teamLogo || `https://picsum.photos/seed/${roster.id}/200/200`} 
                         alt={roster.teamName} 
@@ -445,20 +445,20 @@ export default function Rosters() {
                       />
                     </div>
                     <div className="space-y-1">
-                      <h2 className={`text-2xl font-black uppercase italic leading-none ${darkMode ? 'text-white' : 'text-zinc-900'}`}>
+                      <h2 className="text-2xl font-black uppercase italic leading-none text-esports-text">
                         {roster.teamName}
                       </h2>
                       <button 
                         onClick={() => handleViewUser(roster.authorUid)}
-                        className={`text-[10px] font-black uppercase tracking-widest ${darkMode ? 'text-zinc-500' : 'text-zinc-400'} hover:text-pink-400 transition-colors flex items-center gap-2`}
+                        className="text-[10px] font-black uppercase tracking-widest text-esports-text-muted hover:text-esports-primary transition-colors flex items-center gap-2"
                       >
                         by {roster.authorName}
-                        {roster.isEdited && <span className="text-pink-400/50">(Edited)</span>}
+                        {roster.isEdited && <span className="text-esports-primary/50">(Edited)</span>}
                       </button>
                     </div>
                   </div>
                   {roster.status === 'pending' && (
-                    <span className="px-3 py-1 bg-amber-400 text-white text-[9px] font-black uppercase italic rounded-full animate-pulse">Pending</span>
+                    <span className="px-3 py-1 bg-amber-500 text-white text-[9px] font-black uppercase italic rounded-full animate-pulse">Pending</span>
                   )}
                 </div>
 
@@ -466,10 +466,10 @@ export default function Rosters() {
                   {roster.players.map((player, idx) => (
                     <div 
                       key={idx}
-                      className={`flex justify-between items-center p-3 rounded-xl border ${darkMode ? 'bg-zinc-800/50 border-zinc-700' : 'bg-zinc-50 border-zinc-100'}`}
+                      className="flex justify-between items-center p-3 rounded-xl border bg-black/20 border-white/5"
                     >
                       <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-lg overflow-hidden border border-zinc-200 dark:border-zinc-700">
+                        <div className="w-8 h-8 rounded-lg overflow-hidden border border-white/10">
                           <img 
                             src={player.photoURL || roster.teamLogo || `https://picsum.photos/seed/${player.ign}/100/100`} 
                             alt={player.ign} 
@@ -478,21 +478,21 @@ export default function Rosters() {
                           />
                         </div>
                         <div className="flex flex-col">
-                          <span className={`text-sm font-bold ${darkMode ? 'text-zinc-300' : 'text-zinc-800'}`}>{player.ign}</span>
-                          <span className="text-[9px] text-zinc-500 font-medium">UID: {player.uid}</span>
+                          <span className="text-sm font-bold text-esports-text">{player.ign}</span>
+                          <span className="text-[9px] text-esports-text-muted font-medium">UID: {player.uid}</span>
                         </div>
                       </div>
                       <div className="flex items-center gap-2">
                         {allUsers.find(u => u.gameUID === player.uid) && (
                           <button 
                             onClick={() => handleViewUser(allUsers.find(u => u.gameUID === player.uid).uid)}
-                            className="p-1.5 rounded-lg bg-pink-400/10 text-pink-400 hover:bg-pink-400 hover:text-white transition-all"
+                            className="p-1.5 rounded-lg bg-esports-primary/10 text-esports-primary hover:bg-esports-primary hover:text-white transition-all"
                             title="View Profile"
                           >
                             <UserIcon className="w-3 h-3" />
                           </button>
                         )}
-                        <span className="text-[10px] font-black uppercase tracking-widest text-pink-400">{player.role}</span>
+                        <span className="text-[10px] font-black uppercase tracking-widest text-esports-primary">{player.role}</span>
                       </div>
                     </div>
                   ))}
@@ -502,51 +502,51 @@ export default function Rosters() {
                   <div className="grid grid-cols-3 gap-2 pt-2">
                     {roster.coach?.name && (
                       <div className="text-center space-y-1">
-                        <div className="w-8 h-8 rounded-full bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center mx-auto border border-zinc-700 overflow-hidden">
+                        <div className="w-8 h-8 rounded-full bg-black/20 flex items-center justify-center mx-auto border border-white/10 overflow-hidden">
                           {roster.coach.photoURL || roster.teamLogo ? (
                             <img src={roster.coach.photoURL || roster.teamLogo} className="w-full h-full object-cover" alt="Coach" referrerPolicy="no-referrer" />
                           ) : (
-                            <UserIcon className="w-4 h-4 text-zinc-500" />
+                            <UserIcon className="w-4 h-4 text-esports-text-muted" />
                           )}
                         </div>
-                        <p className="text-[8px] font-black uppercase text-zinc-500">Coach</p>
+                        <p className="text-[8px] font-black uppercase text-esports-text-muted">Coach</p>
                       </div>
                     )}
                     {roster.manager?.name && (
                       <div className="text-center space-y-1">
-                        <div className="w-8 h-8 rounded-full bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center mx-auto border border-zinc-700 overflow-hidden">
+                        <div className="w-8 h-8 rounded-full bg-black/20 flex items-center justify-center mx-auto border border-white/10 overflow-hidden">
                           {roster.manager.photoURL || roster.teamLogo ? (
                             <img src={roster.manager.photoURL || roster.teamLogo} className="w-full h-full object-cover" alt="Manager" referrerPolicy="no-referrer" />
                           ) : (
-                            <UserIcon className="w-4 h-4 text-zinc-500" />
+                            <UserIcon className="w-4 h-4 text-esports-text-muted" />
                           )}
                         </div>
-                        <p className="text-[8px] font-black uppercase text-zinc-500">Manager</p>
+                        <p className="text-[8px] font-black uppercase text-esports-text-muted">Manager</p>
                       </div>
                     )}
                     {roster.sponsor?.name && (
                       <div className="text-center space-y-1">
-                        <div className="w-8 h-8 rounded-lg bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center mx-auto border border-zinc-700 overflow-hidden">
+                        <div className="w-8 h-8 rounded-lg bg-black/20 flex items-center justify-center mx-auto border border-white/10 overflow-hidden">
                           {roster.sponsor.logo || roster.teamLogo ? (
                             <img src={roster.sponsor.logo || roster.teamLogo} className="w-full h-full object-cover" alt="Sponsor" referrerPolicy="no-referrer" />
                           ) : (
-                            <Briefcase className="w-4 h-4 text-zinc-500" />
+                            <Briefcase className="w-4 h-4 text-esports-text-muted" />
                           )}
                         </div>
-                        <p className="text-[8px] font-black uppercase text-zinc-500">Sponsor</p>
+                        <p className="text-[8px] font-black uppercase text-esports-text-muted">Sponsor</p>
                       </div>
                     )}
                   </div>
                 )}
 
-                  <div className="flex items-center justify-between pt-4 border-t border-dashed border-zinc-200 dark:border-zinc-800">
+                  <div className="flex items-center justify-between pt-4 border-t border-dashed border-white/10">
                     <div className="flex items-center gap-4">
                       <button 
                         onClick={() => handleReact(roster.id, 'like')}
                         className="flex items-center gap-1.5 group/btn"
                       >
                         <ThumbsUp className={`w-4 h-4 ${Array.isArray(roster.reactions?.like) && roster.reactions.like.includes(user?.uid) ? 'text-blue-500 fill-blue-500' : 'text-blue-400'} group-hover/btn:scale-125 transition-all`} />
-                        <span className={`text-xs font-black ${darkMode ? 'text-zinc-400' : 'text-zinc-500'}`}>
+                        <span className="text-xs font-black text-esports-text-muted">
                           {Array.isArray(roster.reactions?.like) ? roster.reactions.like.length : (roster.reactions?.like || 0)}
                         </span>
                       </button>
@@ -554,8 +554,8 @@ export default function Rosters() {
                         onClick={() => handleReact(roster.id, 'heart')}
                         className="flex items-center gap-1.5 group/btn"
                       >
-                        <Heart className={`w-4 h-4 ${Array.isArray(roster.reactions?.heart) && roster.reactions.heart.includes(user?.uid) ? 'text-red-500 fill-red-500' : 'text-red-400'} group-hover/btn:scale-125 transition-all`} />
-                        <span className={`text-xs font-black ${darkMode ? 'text-zinc-400' : 'text-zinc-500'}`}>
+                        <Heart className={`w-4 h-4 ${Array.isArray(roster.reactions?.heart) && roster.reactions.heart.includes(user?.uid) ? 'text-esports-primary fill-esports-primary' : 'text-esports-primary/60'} group-hover/btn:scale-125 transition-all`} />
+                        <span className="text-xs font-black text-esports-text-muted">
                           {Array.isArray(roster.reactions?.heart) ? roster.reactions.heart.length : (roster.reactions?.heart || 0)}
                         </span>
                       </button>
@@ -563,38 +563,38 @@ export default function Rosters() {
 
                   <div className="flex items-center gap-2">
                     {roster.socialLinks?.facebook && (
-                      <a href={roster.socialLinks.facebook} target="_blank" rel="noreferrer" className="text-zinc-400 hover:text-blue-500 transition-colors" title="Facebook">
+                      <a href={roster.socialLinks.facebook} target="_blank" rel="noreferrer" className="text-esports-text-muted hover:text-blue-500 transition-colors" title="Facebook">
                         <Facebook className="w-4 h-4" />
                       </a>
                     )}
                     {roster.socialLinks?.instagram && (
-                      <a href={roster.socialLinks.instagram} target="_blank" rel="noreferrer" className="text-zinc-400 hover:text-pink-500 transition-colors" title="Instagram">
+                      <a href={roster.socialLinks.instagram} target="_blank" rel="noreferrer" className="text-esports-text-muted hover:text-esports-primary transition-colors" title="Instagram">
                         <Instagram className="w-4 h-4" />
                       </a>
                     )}
                     {roster.socialLinks?.youtube && (
-                      <a href={roster.socialLinks.youtube} target="_blank" rel="noreferrer" className="text-zinc-400 hover:text-red-500 transition-colors" title="YouTube">
+                      <a href={roster.socialLinks.youtube} target="_blank" rel="noreferrer" className="text-esports-text-muted hover:text-esports-primary transition-colors" title="YouTube">
                         <Youtube className="w-4 h-4" />
                       </a>
                     )}
                     <button 
                       onClick={() => handleChallenge(roster)}
                       disabled={isChallenging === roster.id}
-                      className={`p-2 rounded-xl transition-colors ${darkMode ? 'text-zinc-500 hover:bg-zinc-800' : 'text-zinc-400 hover:bg-zinc-100'} ${isChallenging === roster.id ? 'animate-pulse' : ''}`}
+                      className={`p-2 rounded-xl transition-colors text-esports-text-muted hover:bg-white/5 ${isChallenging === roster.id ? 'animate-pulse' : ''}`}
                       title="Challenge Team"
                     >
                       <Swords className="w-5 h-5" />
                     </button>
                     <button 
                       onClick={() => setSelectedRoster(roster)}
-                      className={`p-2 rounded-xl transition-colors ${darkMode ? 'text-zinc-500 hover:bg-zinc-800' : 'text-zinc-400 hover:bg-zinc-100'}`}
+                      className="p-2 rounded-xl transition-colors text-esports-text-muted hover:bg-white/5"
                     >
                       <MessageCircle className="w-5 h-5" />
                     </button>
                     {(user?.uid === roster.authorUid || isAdmin) && (
                       <button 
                         onClick={() => setEditingRoster(roster)}
-                        className={`p-2 rounded-xl transition-colors ${darkMode ? 'text-zinc-500 hover:bg-zinc-800' : 'text-zinc-400 hover:bg-zinc-100'}`}
+                        className="p-2 rounded-xl transition-colors text-esports-text-muted hover:bg-white/5"
                       >
                         <Shield className="w-5 h-5" />
                       </button>
@@ -602,7 +602,7 @@ export default function Rosters() {
                     {(user?.uid === roster.authorUid || isAdmin) && (
                       <button
                         onClick={() => setDeleteConfirm(roster.id)}
-                        className={`p-2 transition-colors ${darkMode ? 'text-zinc-600 hover:text-red-400' : 'text-zinc-300 hover:text-red-400'}`}
+                        className="p-2 transition-colors text-esports-text-muted hover:text-esports-primary"
                       >
                         <Trash2 className="w-5 h-5" />
                       </button>
@@ -617,20 +617,20 @@ export default function Rosters() {
         <div className="space-y-8">
           <div className="flex flex-col sm:flex-row gap-4 items-center">
             <div className="relative flex-1 w-full">
-              <Search className="absolute left-6 top-1/2 -translate-y-1/2 w-5 h-5 text-zinc-400" />
+              <Search className="absolute left-6 top-1/2 -translate-y-1/2 w-5 h-5 text-esports-text-muted" />
               <input 
                 type="text"
                 value={playerSearchTerm}
                 onChange={(e) => setPlayerSearchTerm(e.target.value)}
                 placeholder="Search players by name, IGN or UID..."
-                className={`w-full rounded-2xl pl-14 pr-6 py-4 focus:outline-none focus:border-pink-400 transition-colors ${darkMode ? 'bg-zinc-900 border-zinc-800 text-white' : 'bg-white border-zinc-100 text-zinc-800'} border-2`}
+                className="w-full rounded-xl pl-14 pr-6 py-4 focus:outline-none focus:border-esports-primary/50 transition-colors bg-esports-card border-white/5 text-esports-text border-2"
               />
             </div>
             
             <select 
               value={roleFilter}
               onChange={(e) => setRoleFilter(e.target.value)}
-              className={`px-6 py-4 rounded-2xl border-2 focus:outline-none focus:border-pink-400 transition-colors ${darkMode ? 'bg-zinc-900 border-zinc-800 text-white' : 'bg-white border-zinc-100 text-zinc-800'} font-bold min-w-[150px]`}
+              className="px-6 py-4 rounded-xl border-2 focus:outline-none focus:border-esports-primary/50 transition-colors bg-esports-card border-white/5 text-esports-text font-bold min-w-[150px]"
             >
               <option value="">All Roles</option>
               {ROLES.map(role => <option key={role} value={role}>{role}</option>)}
@@ -641,7 +641,7 @@ export default function Rosters() {
               value={countryFilter}
               onChange={(e) => setCountryFilter(e.target.value)}
               placeholder="Filter by Country..."
-              className={`px-6 py-4 rounded-2xl border-2 focus:outline-none focus:border-pink-400 transition-colors ${darkMode ? 'bg-zinc-900 border-zinc-800 text-white' : 'bg-white border-zinc-100 text-zinc-800'} font-bold min-w-[150px]`}
+              className="px-6 py-4 rounded-xl border-2 focus:outline-none focus:border-esports-primary/50 transition-colors bg-esports-card border-white/5 text-esports-text font-bold min-w-[150px]"
             />
           </div>
 
@@ -650,30 +650,30 @@ export default function Rosters() {
               <motion.div 
                 key={p.uid}
                 onClick={() => handleViewUser(p.uid)}
-                className={`p-6 rounded-[2rem] border-2 cursor-pointer transition-all hover:scale-105 ${darkMode ? 'bg-zinc-900 border-zinc-800 hover:border-pink-400' : 'bg-white border-zinc-100 hover:border-pink-400'} text-center space-y-4`}
+                className="p-6 rounded-2xl border-2 cursor-pointer transition-all hover:scale-105 bg-esports-card border-white/5 hover:border-esports-primary/50 text-center space-y-4"
               >
                 <div className="relative inline-block">
                   <img 
                     src={p.photoURL || `https://picsum.photos/seed/${p.uid}/200/200`} 
                     alt={p.displayName} 
-                    className="w-20 h-20 rounded-2xl object-cover mx-auto shadow-md"
+                    className="w-20 h-20 rounded-xl object-cover mx-auto shadow-md"
                     referrerPolicy="no-referrer"
                   />
                   {p.isOnline && (
-                    <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-emerald-400 rounded-full border-2 border-white dark:border-zinc-900" />
+                    <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-emerald-500 rounded-full border-2 border-esports-bg" />
                   )}
                 </div>
                 <div className="space-y-1">
-                  <h3 className={`font-black uppercase italic ${darkMode ? 'text-white' : 'text-zinc-900'}`}>{p.displayName}</h3>
-                  <p className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">UID: {p.gameUID || 'N/A'}</p>
+                  <h3 className="font-black uppercase italic text-esports-text">{p.displayName}</h3>
+                  <p className="text-[10px] font-bold text-esports-text-muted uppercase tracking-widest">UID: {p.gameUID || 'N/A'}</p>
                   <div className="flex items-center justify-center gap-2 mt-2">
                     {p.role && (
-                      <span className="px-2 py-0.5 rounded-lg bg-pink-400/10 text-pink-400 text-[9px] font-black uppercase tracking-widest">
+                      <span className="px-2 py-0.5 rounded-lg bg-esports-primary/10 text-esports-primary text-[9px] font-black uppercase tracking-widest">
                         {p.role}
                       </span>
                     )}
                     {p.country && (
-                      <span className="px-2 py-0.5 rounded-lg bg-blue-400/10 text-blue-400 text-[9px] font-black uppercase tracking-widest flex items-center gap-1">
+                      <span className="px-2 py-0.5 rounded-lg bg-esports-secondary/10 text-esports-secondary text-[9px] font-black uppercase tracking-widest flex items-center gap-1">
                         <Globe className="w-2 h-2" />
                         {p.country}
                       </span>
@@ -689,56 +689,56 @@ export default function Rosters() {
       {/* Edit Modal */}
       <AnimatePresence>
         {editingRoster && (
-          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/40 backdrop-blur-md">
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-md">
             <motion.div 
               initial={{ scale: 0.9, opacity: 0, y: 20 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
               exit={{ scale: 0.9, opacity: 0, y: 20 }}
-              className={`${darkMode ? 'bg-zinc-900 border-zinc-800' : 'bg-white border-zinc-100'} w-full max-w-2xl rounded-[3rem] p-10 border shadow-2xl relative max-h-[90vh] overflow-y-auto no-scrollbar`}
+              className="bg-esports-card border-white/5 w-full max-w-2xl rounded-3xl p-10 border shadow-2xl relative max-h-[90vh] overflow-y-auto no-scrollbar"
             >
               <button 
                 onClick={() => setEditingRoster(null)}
-                className={`absolute top-8 right-8 p-2 rounded-full transition-colors ${darkMode ? 'hover:bg-zinc-800 text-zinc-500' : 'hover:bg-zinc-100 text-zinc-400'}`}
+                className="absolute top-8 right-8 p-2 rounded-full transition-colors hover:bg-white/5 text-esports-text-muted"
               >
                 <X className="w-6 h-6" />
               </button>
 
               <div className="text-center space-y-4 mb-10">
-                <div className="w-16 h-16 bg-pink-400 rounded-2xl flex items-center justify-center mx-auto shadow-lg shadow-pink-400/20">
-                  <Shield className="w-8 h-8 text-white" />
+                <div className="w-16 h-16 bg-esports-primary rounded-2xl flex items-center justify-center mx-auto shadow-lg shadow-esports-primary/20">
+                  <Shield className="w-8 h-8 text-esports-text" />
                 </div>
-                <h2 className={`text-3xl font-black uppercase italic tracking-tighter ${darkMode ? 'text-white' : 'text-zinc-900'}`}>Edit Roster</h2>
-                <p className="text-zinc-500 font-medium">Update your squad information.</p>
+                <h2 className="text-3xl font-black uppercase italic tracking-tighter text-esports-text">Edit Roster</h2>
+                <p className="text-esports-text-muted font-medium">Update your squad information.</p>
               </div>
 
               <form onSubmit={handleEdit} className="space-y-10">
                 <div className="space-y-8">
                   {/* Team Info */}
                   <div className="space-y-4">
-                    <h3 className="text-xs font-black uppercase tracking-widest text-pink-400 flex items-center gap-2">
+                    <h3 className="text-xs font-black uppercase tracking-widest text-esports-primary flex items-center gap-2">
                       <Shield className="w-4 h-4" />
                       Team Identity
                     </h3>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                       <div className="space-y-2">
-                        <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 ml-2">Team Name</label>
+                        <label className="text-[10px] font-black uppercase tracking-widest text-esports-text-muted ml-2">Team Name</label>
                         <input 
                           required
                           value={editingRoster.teamName}
                           onChange={(e) => setEditingRoster({ ...editingRoster, teamName: e.target.value })}
                           placeholder="Enter team name..."
-                          className={`w-full ${darkMode ? 'bg-zinc-800 border-zinc-700 text-white' : 'bg-zinc-50 border-zinc-100 text-zinc-900'} rounded-2xl px-6 py-4 focus:outline-none focus:border-pink-400 transition-all font-bold`}
+                          className="w-full bg-black/20 border-white/5 text-esports-text rounded-xl px-6 py-4 focus:outline-none focus:border-esports-primary/50 transition-all font-bold"
                         />
                       </div>
                       <div className="space-y-2">
-                        <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 ml-2">Team Logo</label>
+                        <label className="text-[10px] font-black uppercase tracking-widest text-esports-text-muted ml-2">Team Logo</label>
                         <div className="flex items-center gap-4">
                           {editingRoster.teamLogo && (
                             <img src={editingRoster.teamLogo} className="w-12 h-12 rounded-xl object-cover" alt="Logo Preview" />
                           )}
-                          <label className={`flex-1 flex items-center justify-center gap-2 py-4 border-2 border-dashed rounded-2xl cursor-pointer transition-colors ${darkMode ? 'bg-zinc-800 border-zinc-700 hover:border-pink-400' : 'bg-zinc-50 border-zinc-200 hover:border-pink-400'}`}>
-                            <Camera className="w-5 h-5 text-zinc-400" />
-                            <span className="text-xs font-bold text-zinc-500">Upload Logo</span>
+                          <label className="flex-1 flex items-center justify-center gap-2 py-4 border-2 border-dashed rounded-xl cursor-pointer transition-colors bg-black/20 border-white/5 hover:border-esports-primary/50">
+                            <Camera className="w-5 h-5 text-esports-text-muted" />
+                            <span className="text-xs font-bold text-esports-text-muted">Upload Logo</span>
                             <input type="file" accept="image/*" className="hidden" onChange={(e) => handleImageUpload(e, (b) => setEditingRoster({...editingRoster, teamLogo: b}))} />
                           </label>
                         </div>
@@ -748,36 +748,36 @@ export default function Rosters() {
 
                   {/* Players */}
                   <div className="space-y-4">
-                    <h3 className="text-xs font-black uppercase tracking-widest text-pink-400 flex items-center gap-2">
+                    <h3 className="text-xs font-black uppercase tracking-widest text-esports-primary flex items-center gap-2">
                       <Users className="w-4 h-4" />
                       Active Roster
                     </h3>
                     <div className="space-y-6">
                       {editingRoster.players.map((player, idx) => (
-                        <div key={idx} className={`p-6 rounded-3xl border-2 ${darkMode ? 'bg-zinc-800/50 border-zinc-700' : 'bg-zinc-50 border-zinc-100'} space-y-4`}>
+                        <div key={idx} className="p-6 rounded-2xl border-2 bg-black/20 border-white/5 space-y-4">
                           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <input required value={player.ign} onChange={(e) => {
                               const newPlayers = [...editingRoster.players];
                               newPlayers[idx] = { ...newPlayers[idx], ign: e.target.value };
                               setEditingRoster({ ...editingRoster, players: newPlayers });
-                            }} placeholder="In-Game Name (IGN)" className={`w-full ${darkMode ? 'bg-zinc-800 border-zinc-700 text-white' : 'bg-zinc-50 border-zinc-100 text-zinc-900'} rounded-xl px-4 py-3 focus:outline-none focus:border-pink-400 transition-all font-bold text-sm`} />
+                            }} placeholder="In-Game Name (IGN)" className="w-full bg-black/20 border-white/5 text-esports-text rounded-lg px-4 py-3 focus:outline-none focus:border-esports-primary/50 transition-all font-bold text-sm" />
                             <input required value={player.uid} onChange={(e) => {
                               const newPlayers = [...editingRoster.players];
                               newPlayers[idx] = { ...newPlayers[idx], uid: e.target.value };
                               setEditingRoster({ ...editingRoster, players: newPlayers });
-                            }} placeholder="Game UID" className={`w-full ${darkMode ? 'bg-zinc-800 border-zinc-700 text-white' : 'bg-zinc-50 border-zinc-100 text-zinc-900'} rounded-xl px-4 py-3 focus:outline-none focus:border-pink-400 transition-all font-bold text-sm`} />
+                            }} placeholder="Game UID" className="w-full bg-black/20 border-white/5 text-esports-text rounded-lg px-4 py-3 focus:outline-none focus:border-esports-primary/50 transition-all font-bold text-sm" />
                             <select value={player.role} onChange={(e) => {
                               const newPlayers = [...editingRoster.players];
                               newPlayers[idx] = { ...newPlayers[idx], role: e.target.value };
                               setEditingRoster({ ...editingRoster, players: newPlayers });
-                            }} className={`w-full ${darkMode ? 'bg-zinc-800 border-zinc-700 text-white' : 'bg-zinc-50 border-zinc-100 text-zinc-900'} rounded-xl px-4 py-3 focus:outline-none focus:border-pink-400 transition-all font-bold text-sm`}>
+                            }} className="w-full bg-black/20 border-white/5 text-esports-text rounded-lg px-4 py-3 focus:outline-none focus:border-esports-primary/50 transition-all font-bold text-sm">
                               {ROLES.map(role => <option key={role} value={role}>{role}</option>)}
                             </select>
                             <div className="flex items-center gap-3">
                               {player.photoURL && <img src={player.photoURL} className="w-10 h-10 rounded-lg object-cover" alt="Player" />}
-                              <label className={`flex-1 flex items-center justify-center gap-2 py-3 border-2 border-dashed rounded-xl cursor-pointer transition-colors ${darkMode ? 'bg-zinc-800 border-zinc-700 hover:border-pink-400' : 'bg-zinc-50 border-zinc-200 hover:border-pink-400'}`}>
-                                <Camera className="w-4 h-4 text-zinc-400" />
-                                <span className="text-[10px] font-bold text-zinc-500">Player Photo</span>
+                              <label className="flex-1 flex items-center justify-center gap-2 py-3 border-2 border-dashed rounded-lg cursor-pointer transition-colors bg-black/20 border-white/5 hover:border-esports-primary/50">
+                                <Camera className="w-4 h-4 text-esports-text-muted" />
+                                <span className="text-[10px] font-bold text-esports-text-muted">Player Photo</span>
                                 <input type="file" accept="image/*" className="hidden" onChange={(e) => handleImageUpload(e, (b) => {
                                   const newPlayers = [...editingRoster.players];
                                   newPlayers[idx] = { ...newPlayers[idx], photoURL: b };
@@ -795,7 +795,7 @@ export default function Rosters() {
                 <button 
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full py-5 bg-pink-400 text-white rounded-[2rem] font-black uppercase italic tracking-wider hover:bg-pink-500 transition-all active:scale-95 disabled:opacity-50 shadow-xl shadow-pink-400/20"
+                  className="w-full py-5 bg-esports-primary text-white rounded-xl font-black uppercase italic tracking-wider hover:bg-esports-primary/90 transition-all active:scale-95 disabled:opacity-50 shadow-xl shadow-esports-primary/20"
                 >
                   {isSubmitting ? 'Updating...' : 'Save Changes'}
                 </button>
@@ -808,56 +808,56 @@ export default function Rosters() {
       {/* Registration Modal */}
       <AnimatePresence>
         {showRegister && (
-          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/40 backdrop-blur-md">
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-md">
             <motion.div 
               initial={{ scale: 0.9, opacity: 0, y: 20 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
               exit={{ scale: 0.9, opacity: 0, y: 20 }}
-              className={`${darkMode ? 'bg-zinc-900 border-zinc-800' : 'bg-white border-zinc-100'} w-full max-w-2xl rounded-[3rem] p-10 border shadow-2xl relative max-h-[90vh] overflow-y-auto no-scrollbar`}
+              className="bg-esports-card border-white/5 w-full max-w-2xl rounded-3xl p-10 border shadow-2xl relative max-h-[90vh] overflow-y-auto no-scrollbar"
             >
               <button 
                 onClick={() => setShowRegister(false)}
-                className={`absolute top-8 right-8 p-2 rounded-full transition-colors ${darkMode ? 'hover:bg-zinc-800 text-zinc-500' : 'hover:bg-zinc-100 text-zinc-400'}`}
+                className="absolute top-8 right-8 p-2 rounded-full transition-colors hover:bg-white/5 text-esports-text-muted"
               >
                 <X className="w-6 h-6" />
               </button>
 
               <div className="text-center space-y-4 mb-10">
-                <div className="w-16 h-16 bg-pink-400 rounded-2xl flex items-center justify-center mx-auto shadow-lg shadow-pink-400/20">
+                <div className="w-16 h-16 bg-esports-primary rounded-2xl flex items-center justify-center mx-auto shadow-lg shadow-esports-primary/20">
                   <Users className="w-8 h-8 text-white" />
                 </div>
-                <h2 className={`text-3xl font-black uppercase italic tracking-tighter ${darkMode ? 'text-white' : 'text-zinc-900'}`}>Register Team</h2>
-                <p className="text-zinc-500 font-medium">Submit your squad for the hub.</p>
+                <h2 className="text-3xl font-black uppercase italic tracking-tighter text-esports-text">Register Team</h2>
+                <p className="text-esports-text-muted font-medium">Submit your squad for the hub.</p>
               </div>
 
               <form onSubmit={handleSubmit} className="space-y-10">
                 <div className="space-y-8">
                   {/* Team Info */}
                   <div className="space-y-4">
-                    <h3 className="text-xs font-black uppercase tracking-widest text-pink-400 flex items-center gap-2">
+                    <h3 className="text-xs font-black uppercase tracking-widest text-esports-primary flex items-center gap-2">
                       <Shield className="w-4 h-4" />
                       Team Identity
                     </h3>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                       <div className="space-y-2">
-                        <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 ml-2">Team Name</label>
+                        <label className="text-[10px] font-black uppercase tracking-widest text-esports-text-muted ml-2">Team Name</label>
                         <input 
                           required
                           value={formData.teamName}
                           onChange={(e) => setFormData({ ...formData, teamName: e.target.value })}
                           placeholder="Enter team name..."
-                          className={`w-full ${darkMode ? 'bg-zinc-800 border-zinc-700 text-white' : 'bg-zinc-50 border-zinc-100 text-zinc-900'} rounded-2xl px-6 py-4 focus:outline-none focus:border-pink-400 transition-all font-bold`}
+                          className="w-full bg-black/20 border-white/5 text-esports-text rounded-xl px-6 py-4 focus:outline-none focus:border-esports-primary/50 transition-all font-bold"
                         />
                       </div>
                       <div className="space-y-2">
-                        <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 ml-2">Team Logo</label>
+                        <label className="text-[10px] font-black uppercase tracking-widest text-esports-text-muted ml-2">Team Logo</label>
                         <div className="flex items-center gap-4">
                           {formData.teamLogo && (
                             <img src={formData.teamLogo} className="w-12 h-12 rounded-xl object-cover" alt="Logo Preview" />
                           )}
-                          <label className={`flex-1 flex items-center justify-center gap-2 py-4 border-2 border-dashed rounded-2xl cursor-pointer transition-colors ${darkMode ? 'bg-zinc-800 border-zinc-700 hover:border-pink-400' : 'bg-zinc-50 border-zinc-200 hover:border-pink-400'}`}>
-                            <Camera className="w-5 h-5 text-zinc-400" />
-                            <span className="text-xs font-bold text-zinc-500">Upload Logo</span>
+                          <label className="flex-1 flex items-center justify-center gap-2 py-4 border-2 border-dashed rounded-xl cursor-pointer transition-colors bg-black/20 border-white/5 hover:border-esports-primary/50">
+                            <Camera className="w-5 h-5 text-esports-text-muted" />
+                            <span className="text-xs font-bold text-esports-text-muted">Upload Logo</span>
                             <input type="file" accept="image/*" className="hidden" onChange={(e) => handleImageUpload(e, (b) => setFormData({...formData, teamLogo: b}))} />
                           </label>
                         </div>
@@ -867,7 +867,7 @@ export default function Rosters() {
 
                   {/* Social Links */}
                   <div className="space-y-4">
-                    <h3 className="text-xs font-black uppercase tracking-widest text-pink-400 flex items-center gap-2">
+                    <h3 className="text-xs font-black uppercase tracking-widest text-esports-primary flex items-center gap-2">
                       <Globe className="w-4 h-4" />
                       Social Media
                     </h3>
@@ -876,19 +876,19 @@ export default function Rosters() {
                         value={formData.socialLinks.facebook}
                         onChange={(e) => setFormData({ ...formData, socialLinks: { ...formData.socialLinks, facebook: e.target.value } })}
                         placeholder="Facebook Link"
-                        className={`w-full ${darkMode ? 'bg-zinc-800 border-zinc-700 text-white' : 'bg-zinc-50 border-zinc-100 text-zinc-900'} rounded-xl px-4 py-3 focus:outline-none focus:border-pink-400 transition-all font-bold text-xs`}
+                        className="w-full bg-black/20 border-white/5 text-esports-text rounded-lg px-4 py-3 focus:outline-none focus:border-esports-primary/50 transition-all font-bold text-xs"
                       />
                       <input 
                         value={formData.socialLinks.instagram}
                         onChange={(e) => setFormData({ ...formData, socialLinks: { ...formData.socialLinks, instagram: e.target.value } })}
                         placeholder="Instagram Link"
-                        className={`w-full ${darkMode ? 'bg-zinc-800 border-zinc-700 text-white' : 'bg-zinc-50 border-zinc-100 text-zinc-900'} rounded-xl px-4 py-3 focus:outline-none focus:border-pink-400 transition-all font-bold text-xs`}
+                        className="w-full bg-black/20 border-white/5 text-esports-text rounded-lg px-4 py-3 focus:outline-none focus:border-esports-primary/50 transition-all font-bold text-xs"
                       />
                       <input 
                         value={formData.socialLinks.youtube}
                         onChange={(e) => setFormData({ ...formData, socialLinks: { ...formData.socialLinks, youtube: e.target.value } })}
                         placeholder="YouTube Link"
-                        className={`w-full ${darkMode ? 'bg-zinc-800 border-zinc-700 text-white' : 'bg-zinc-50 border-zinc-100 text-zinc-900'} rounded-xl px-4 py-3 focus:outline-none focus:border-pink-400 transition-all font-bold text-xs`}
+                        className="w-full bg-black/20 border-white/5 text-esports-text rounded-lg px-4 py-3 focus:outline-none focus:border-esports-primary/50 transition-all font-bold text-xs"
                       />
                     </div>
                   </div>
@@ -896,7 +896,7 @@ export default function Rosters() {
                   {/* Players */}
                   <div className="space-y-4">
                     <div className="flex justify-between items-center">
-                      <h3 className="text-xs font-black uppercase tracking-widest text-pink-400 flex items-center gap-2">
+                      <h3 className="text-xs font-black uppercase tracking-widest text-esports-primary flex items-center gap-2">
                         <Users className="w-4 h-4" />
                         Active Roster (4-6)
                       </h3>
@@ -904,7 +904,7 @@ export default function Rosters() {
                         <button 
                           type="button"
                           onClick={handleAddPlayer}
-                          className="text-[10px] font-black uppercase tracking-widest text-pink-400 hover:text-pink-500"
+                          className="text-[10px] font-black uppercase tracking-widest text-esports-primary hover:text-esports-primary/80"
                         >
                           + Add Player
                         </button>
@@ -913,26 +913,26 @@ export default function Rosters() {
                     
                     <div className="space-y-6">
                       {formData.players.map((player, idx) => (
-                        <div key={idx} className={`p-6 rounded-3xl border-2 ${darkMode ? 'bg-zinc-800/50 border-zinc-700' : 'bg-zinc-50 border-zinc-100'} space-y-4`}>
+                        <div key={idx} className="p-6 rounded-2xl border-2 bg-black/20 border-white/5 space-y-4">
                           <div className="flex justify-between items-center">
-                            <span className="text-[10px] font-black uppercase tracking-widest text-zinc-500">Player {idx + 1}</span>
+                            <span className="text-[10px] font-black uppercase tracking-widest text-esports-text-muted">Player {idx + 1}</span>
                             {formData.players.length > 4 && (
-                              <button type="button" onClick={() => handleRemovePlayer(idx)} className="text-red-400 hover:text-red-500"><X className="w-4 h-4" /></button>
+                              <button type="button" onClick={() => handleRemovePlayer(idx)} className="text-esports-primary hover:text-esports-primary/80"><X className="w-4 h-4" /></button>
                             )}
                           </div>
                           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <input required value={player.ign} onChange={(e) => handlePlayerChange(idx, 'ign', e.target.value)} placeholder="In-Game Name (IGN)" className={`w-full ${darkMode ? 'bg-zinc-800 border-zinc-700 text-white' : 'bg-zinc-50 border-zinc-100 text-zinc-900'} rounded-xl px-4 py-3 focus:outline-none focus:border-pink-400 transition-all font-bold text-sm`} />
-                            <input required value={player.uid} onChange={(e) => handlePlayerChange(idx, 'uid', e.target.value)} placeholder="Game UID" className={`w-full ${darkMode ? 'bg-zinc-800 border-zinc-700 text-white' : 'bg-zinc-50 border-zinc-100 text-zinc-900'} rounded-xl px-4 py-3 focus:outline-none focus:border-pink-400 transition-all font-bold text-sm`} />
-                            <input value={player.fullName} onChange={(e) => handlePlayerChange(idx, 'fullName', e.target.value)} placeholder="Full Name" className={`w-full ${darkMode ? 'bg-zinc-800 border-zinc-700 text-white' : 'bg-zinc-50 border-zinc-100 text-zinc-900'} rounded-xl px-4 py-3 focus:outline-none focus:border-pink-400 transition-all font-bold text-sm`} />
-                            <select value={player.role} onChange={(e) => handlePlayerChange(idx, 'role', e.target.value)} className={`w-full ${darkMode ? 'bg-zinc-800 border-zinc-700 text-white' : 'bg-zinc-50 border-zinc-100 text-zinc-900'} rounded-xl px-4 py-3 focus:outline-none focus:border-pink-400 transition-all font-bold text-sm`}>
+                            <input required value={player.ign} onChange={(e) => handlePlayerChange(idx, 'ign', e.target.value)} placeholder="In-Game Name (IGN)" className="w-full bg-black/20 border-white/5 text-esports-text rounded-lg px-4 py-3 focus:outline-none focus:border-esports-primary/50 transition-all font-bold text-sm" />
+                            <input required value={player.uid} onChange={(e) => handlePlayerChange(idx, 'uid', e.target.value)} placeholder="Game UID" className="w-full bg-black/20 border-white/5 text-esports-text rounded-lg px-4 py-3 focus:outline-none focus:border-esports-primary/50 transition-all font-bold text-sm" />
+                            <input value={player.fullName} onChange={(e) => handlePlayerChange(idx, 'fullName', e.target.value)} placeholder="Full Name" className="w-full bg-black/20 border-white/5 text-esports-text rounded-lg px-4 py-3 focus:outline-none focus:border-esports-primary/50 transition-all font-bold text-sm" />
+                            <select value={player.role} onChange={(e) => handlePlayerChange(idx, 'role', e.target.value)} className="w-full bg-black/20 border-white/5 text-esports-text rounded-lg px-4 py-3 focus:outline-none focus:border-esports-primary/50 transition-all font-bold text-sm">
                               {ROLES.map(role => <option key={role} value={role}>{role}</option>)}
                             </select>
-                            <input value={player.facebookId} onChange={(e) => handlePlayerChange(idx, 'facebookId', e.target.value)} placeholder="Facebook ID / Link" className={`w-full ${darkMode ? 'bg-zinc-800 border-zinc-700 text-white' : 'bg-zinc-50 border-zinc-100 text-zinc-900'} rounded-xl px-4 py-3 focus:outline-none focus:border-pink-400 transition-all font-bold text-sm`} />
+                            <input value={player.facebookId} onChange={(e) => handlePlayerChange(idx, 'facebookId', e.target.value)} placeholder="Facebook ID / Link" className="w-full bg-black/20 border-white/5 text-esports-text rounded-lg px-4 py-3 focus:outline-none focus:border-esports-primary/50 transition-all font-bold text-sm" />
                             <div className="flex items-center gap-3">
                               {player.photoURL && <img src={player.photoURL} className="w-10 h-10 rounded-lg object-cover" alt="Player" />}
-                              <label className={`flex-1 flex items-center justify-center gap-2 py-3 border-2 border-dashed rounded-xl cursor-pointer transition-colors ${darkMode ? 'bg-zinc-800 border-zinc-700 hover:border-pink-400' : 'bg-zinc-50 border-zinc-200 hover:border-pink-400'}`}>
-                                <Camera className="w-4 h-4 text-zinc-400" />
-                                <span className="text-[10px] font-bold text-zinc-500">Player Photo</span>
+                              <label className="flex-1 flex items-center justify-center gap-2 py-3 border-2 border-dashed rounded-lg cursor-pointer transition-colors bg-black/20 border-white/5 hover:border-esports-primary/50">
+                                <Camera className="w-4 h-4 text-esports-text-muted" />
+                                <span className="text-[10px] font-bold text-esports-text-muted">Player Photo</span>
                                 <input type="file" accept="image/*" className="hidden" onChange={(e) => handleImageUpload(e, (b) => handlePlayerChange(idx, 'photoURL', b))} />
                               </label>
                             </div>
@@ -945,7 +945,7 @@ export default function Rosters() {
                   {/* Staff & Sponsors */}
                   <div className="space-y-4">
                     <div className="flex justify-between items-center">
-                      <h3 className="text-xs font-black uppercase tracking-widest text-pink-400 flex items-center gap-2">
+                      <h3 className="text-xs font-black uppercase tracking-widest text-esports-primary flex items-center gap-2">
                         <Briefcase className="w-4 h-4" />
                         Staff & Sponsors
                       </h3>
@@ -953,21 +953,21 @@ export default function Rosters() {
                         <button 
                           type="button"
                           onClick={() => setFormData({...formData, enabledSections: {...formData.enabledSections, coach: !formData.enabledSections.coach}})}
-                          className={`px-3 py-1 rounded-lg text-[9px] font-black uppercase tracking-widest transition-all ${formData.enabledSections.coach ? 'bg-pink-400 text-white' : 'bg-zinc-100 dark:bg-zinc-800 text-zinc-500'}`}
+                          className={`px-3 py-1 rounded-lg text-[9px] font-black uppercase tracking-widest transition-all ${formData.enabledSections.coach ? 'bg-esports-primary text-white' : 'bg-white/5 text-esports-text-muted'}`}
                         >
                           {formData.enabledSections.coach ? '- Remove Coach' : '+ Add Coach'}
                         </button>
                         <button 
                           type="button"
                           onClick={() => setFormData({...formData, enabledSections: {...formData.enabledSections, manager: !formData.enabledSections.manager}})}
-                          className={`px-3 py-1 rounded-lg text-[9px] font-black uppercase tracking-widest transition-all ${formData.enabledSections.manager ? 'bg-pink-400 text-white' : 'bg-zinc-100 dark:bg-zinc-800 text-zinc-500'}`}
+                          className={`px-3 py-1 rounded-lg text-[9px] font-black uppercase tracking-widest transition-all ${formData.enabledSections.manager ? 'bg-esports-primary text-white' : 'bg-white/5 text-esports-text-muted'}`}
                         >
                           {formData.enabledSections.manager ? '- Remove Manager' : '+ Add Manager'}
                         </button>
                         <button 
                           type="button"
                           onClick={() => setFormData({...formData, enabledSections: {...formData.enabledSections, sponsor: !formData.enabledSections.sponsor}})}
-                          className={`px-3 py-1 rounded-lg text-[9px] font-black uppercase tracking-widest transition-all ${formData.enabledSections.sponsor ? 'bg-pink-400 text-white' : 'bg-zinc-100 dark:bg-zinc-800 text-zinc-500'}`}
+                          className={`px-3 py-1 rounded-lg text-[9px] font-black uppercase tracking-widest transition-all ${formData.enabledSections.sponsor ? 'bg-esports-primary text-white' : 'bg-white/5 text-esports-text-muted'}`}
                         >
                           {formData.enabledSections.sponsor ? '- Remove Sponsor' : '+ Add Sponsor'}
                         </button>
@@ -977,25 +977,25 @@ export default function Rosters() {
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                       {/* Coach */}
                       {formData.enabledSections.coach && (
-                        <div className={`p-6 rounded-3xl border-2 ${darkMode ? 'bg-zinc-800/50 border-zinc-700' : 'bg-zinc-50 border-zinc-100'} space-y-4`}>
-                          <p className="text-[10px] font-black uppercase text-zinc-500">Coach</p>
-                          <input value={formData.coach.name} onChange={(e) => setFormData({...formData, coach: {...formData.coach, name: e.target.value}})} placeholder="Coach Name" className={`w-full ${darkMode ? 'bg-zinc-800 border-zinc-700 text-white' : 'bg-zinc-50 border-zinc-100 text-zinc-900'} rounded-xl px-4 py-3 focus:outline-none focus:border-pink-400 transition-all font-bold text-sm`} />
-                          <input value={formData.coach.ign} onChange={(e) => setFormData({...formData, coach: {...formData.coach, ign: e.target.value}})} placeholder="Coach IGN" className={`w-full ${darkMode ? 'bg-zinc-800 border-zinc-700 text-white' : 'bg-zinc-50 border-zinc-100 text-zinc-900'} rounded-xl px-4 py-3 focus:outline-none focus:border-pink-400 transition-all font-bold text-sm`} />
+                        <div className="p-6 rounded-2xl border-2 bg-black/20 border-white/5 space-y-4">
+                          <p className="text-[10px] font-black uppercase text-esports-text-muted">Coach</p>
+                          <input value={formData.coach.name} onChange={(e) => setFormData({...formData, coach: {...formData.coach, name: e.target.value}})} placeholder="Coach Name" className="w-full bg-black/20 border-white/5 text-esports-text rounded-lg px-4 py-3 focus:outline-none focus:border-esports-primary/50 transition-all font-bold text-sm" />
+                          <input value={formData.coach.ign} onChange={(e) => setFormData({...formData, coach: {...formData.coach, ign: e.target.value}})} placeholder="Coach IGN" className="w-full bg-black/20 border-white/5 text-esports-text rounded-lg px-4 py-3 focus:outline-none focus:border-esports-primary/50 transition-all font-bold text-sm" />
                         </div>
                       )}
                       {/* Manager */}
                       {formData.enabledSections.manager && (
-                        <div className={`p-6 rounded-3xl border-2 ${darkMode ? 'bg-zinc-800/50 border-zinc-700' : 'bg-zinc-50 border-zinc-100'} space-y-4`}>
-                          <p className="text-[10px] font-black uppercase text-zinc-500">Manager</p>
-                          <input value={formData.manager.name} onChange={(e) => setFormData({...formData, manager: {...formData.manager, name: e.target.value}})} placeholder="Manager Name" className={`w-full ${darkMode ? 'bg-zinc-800 border-zinc-700 text-white' : 'bg-zinc-50 border-zinc-100 text-zinc-900'} rounded-xl px-4 py-3 focus:outline-none focus:border-pink-400 transition-all font-bold text-sm`} />
-                          <input value={formData.manager.ign} onChange={(e) => setFormData({...formData, manager: {...formData.manager, ign: e.target.value}})} placeholder="Manager IGN" className={`w-full ${darkMode ? 'bg-zinc-800 border-zinc-700 text-white' : 'bg-zinc-50 border-zinc-100 text-zinc-900'} rounded-xl px-4 py-3 focus:outline-none focus:border-pink-400 transition-all font-bold text-sm`} />
+                        <div className="p-6 rounded-2xl border-2 bg-black/20 border-white/5 space-y-4">
+                          <p className="text-[10px] font-black uppercase text-esports-text-muted">Manager</p>
+                          <input value={formData.manager.name} onChange={(e) => setFormData({...formData, manager: {...formData.manager, name: e.target.value}})} placeholder="Manager Name" className="w-full bg-black/20 border-white/5 text-esports-text rounded-lg px-4 py-3 focus:outline-none focus:border-esports-primary/50 transition-all font-bold text-sm" />
+                          <input value={formData.manager.ign} onChange={(e) => setFormData({...formData, manager: {...formData.manager, ign: e.target.value}})} placeholder="Manager IGN" className="w-full bg-black/20 border-white/5 text-esports-text rounded-lg px-4 py-3 focus:outline-none focus:border-esports-primary/50 transition-all font-bold text-sm" />
                         </div>
                       )}
                       {/* Sponsor */}
                       {formData.enabledSections.sponsor && (
-                        <div className={`p-6 rounded-3xl border-2 ${darkMode ? 'bg-zinc-800/50 border-zinc-700' : 'bg-zinc-50 border-zinc-100'} space-y-4 sm:col-span-2`}>
-                          <p className="text-[10px] font-black uppercase text-zinc-500">Sponsor</p>
-                          <input value={formData.sponsor.name} onChange={(e) => setFormData({...formData, sponsor: {...formData.sponsor, name: e.target.value}})} placeholder="Sponsor Name" className={`w-full ${darkMode ? 'bg-zinc-800 border-zinc-700 text-white' : 'bg-zinc-50 border-zinc-100 text-zinc-900'} rounded-xl px-4 py-3 focus:outline-none focus:border-pink-400 transition-all font-bold text-sm`} />
+                        <div className="p-6 rounded-2xl border-2 bg-black/20 border-white/5 space-y-4 sm:col-span-2">
+                          <p className="text-[10px] font-black uppercase text-esports-text-muted">Sponsor</p>
+                          <input value={formData.sponsor.name} onChange={(e) => setFormData({...formData, sponsor: {...formData.sponsor, name: e.target.value}})} placeholder="Sponsor Name" className="w-full bg-black/20 border-white/5 text-esports-text rounded-lg px-4 py-3 focus:outline-none focus:border-esports-primary/50 transition-all font-bold text-sm" />
                         </div>
                       )}
                     </div>
@@ -1005,7 +1005,7 @@ export default function Rosters() {
                 <button 
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full py-5 bg-pink-400 text-white rounded-[2rem] font-black uppercase italic tracking-wider hover:bg-pink-500 transition-all active:scale-95 disabled:opacity-50 shadow-xl shadow-pink-400/20"
+                  className="w-full py-5 bg-esports-primary text-white rounded-xl font-black uppercase italic tracking-wider hover:bg-esports-primary/90 transition-all active:scale-95 disabled:opacity-50 shadow-xl shadow-esports-primary/20"
                 >
                   {isSubmitting ? 'Registering...' : 'Submit Roster'}
                 </button>
@@ -1043,19 +1043,19 @@ export default function Rosters() {
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
-              className={`${darkMode ? 'bg-zinc-900 border-zinc-800' : 'bg-white border-zinc-100'} w-full max-w-sm rounded-[2.5rem] p-8 border shadow-2xl text-center space-y-6`}
+              className="bg-esports-card border-white/5 w-full max-w-sm rounded-3xl p-8 border shadow-2xl text-center space-y-6"
             >
-              <div className="w-16 h-16 bg-red-500/10 rounded-2xl flex items-center justify-center mx-auto">
-                <Trash2 className="w-8 h-8 text-red-500" />
+              <div className="w-16 h-16 bg-esports-primary/10 rounded-2xl flex items-center justify-center mx-auto">
+                <Trash2 className="w-8 h-8 text-esports-primary" />
               </div>
               <div className="space-y-2">
-                <h3 className={`text-xl font-black uppercase italic tracking-tighter ${darkMode ? 'text-white' : 'text-zinc-900'}`}>Delete Roster?</h3>
-                <p className="text-zinc-500 text-sm font-medium">This action cannot be undone. Are you sure?</p>
+                <h3 className="text-xl font-black uppercase italic tracking-tighter text-esports-text">Delete Roster?</h3>
+                <p className="text-esports-text-muted text-sm font-medium">This action cannot be undone. Are you sure?</p>
               </div>
               <div className="flex gap-3">
                 <button
                   onClick={() => setDeleteConfirm(null)}
-                  className={`flex-1 py-3 rounded-xl font-black uppercase tracking-widest text-[10px] transition-all ${darkMode ? 'bg-zinc-800 text-zinc-400 hover:bg-zinc-700' : 'bg-zinc-100 text-zinc-500 hover:bg-zinc-200'}`}
+                  className="flex-1 py-3 rounded-xl font-black uppercase tracking-widest text-[10px] transition-all bg-white/5 text-esports-text-muted hover:bg-white/10"
                 >
                   Cancel
                 </button>
@@ -1070,7 +1070,7 @@ export default function Rosters() {
                       showToast('Failed to delete roster.', 'error');
                     }
                   }}
-                  className="flex-1 py-3 bg-red-500 text-white rounded-xl font-black uppercase tracking-widest text-[10px] hover:bg-red-600 transition-all shadow-lg shadow-red-500/20"
+                  className="flex-1 py-3 bg-esports-primary text-white rounded-xl font-black uppercase tracking-widest text-[10px] hover:bg-esports-primary/90 transition-all shadow-lg shadow-esports-primary/20"
                 >
                   Delete
                 </button>
@@ -1089,10 +1089,10 @@ export default function Rosters() {
             exit={{ opacity: 0, y: 50 }}
             className="fixed bottom-8 left-1/2 -translate-x-1/2 z-[200]"
           >
-            <div className={`px-8 py-4 rounded-2xl shadow-2xl flex items-center gap-3 border ${
+            <div className={`px-8 py-4 rounded-xl shadow-2xl flex items-center gap-3 border ${
               toast.type === 'success'
-                ? (darkMode ? 'bg-emerald-900/90 border-emerald-500/30 text-emerald-400' : 'bg-white border-emerald-100 text-emerald-600')
-                : (darkMode ? 'bg-red-900/90 border-red-500/30 text-red-400' : 'bg-white border-red-100 text-red-600')
+                ? 'bg-emerald-900/90 border-emerald-500/30 text-emerald-400'
+                : 'bg-esports-primary/90 border-esports-primary/30 text-white'
             }`}>
               <span className="font-black uppercase italic tracking-widest text-xs">{toast.message}</span>
             </div>
@@ -1166,13 +1166,13 @@ function RosterDetailModal({ roster, onClose, darkMode }: { roster: Roster, onCl
       >
         <button 
           onClick={onClose}
-          className={`absolute top-8 right-8 p-2 rounded-full transition-colors ${darkMode ? 'hover:bg-zinc-800 text-zinc-500' : 'hover:bg-zinc-100 text-zinc-400'}`}
+          className="absolute top-8 right-8 p-2 rounded-full transition-colors hover:bg-white/10 text-esports-text-muted"
         >
           <X className="w-6 h-6" />
         </button>
 
         <div className="space-y-6 mb-8">
-          <h2 className={`text-3xl font-black uppercase italic tracking-tighter ${darkMode ? 'text-white' : 'text-zinc-900'}`}>
+          <h2 className="text-3xl font-black uppercase italic tracking-tighter text-esports-text">
             {roster.teamName} Discussion
           </h2>
           <div className="flex gap-4">
@@ -1195,27 +1195,27 @@ function RosterDetailModal({ roster, onClose, darkMode }: { roster: Roster, onCl
               />
               <div className="space-y-1">
                 <div className="flex items-center gap-2">
-                  <span className={`text-xs font-black uppercase italic ${darkMode ? 'text-white' : 'text-zinc-900'}`}>{comment.authorName}</span>
-                  <span className="text-[10px] font-bold text-zinc-400">{comment.createdAt?.toDate().toLocaleDateString()}</span>
+                  <span className="text-xs font-black uppercase italic text-esports-text">{comment.authorName}</span>
+                  <span className="text-[10px] font-bold text-esports-text-muted">{comment.createdAt?.toDate().toLocaleDateString()}</span>
                 </div>
-                <p className={`text-sm font-medium leading-relaxed ${darkMode ? 'text-zinc-400' : 'text-zinc-600'}`}>{comment.text}</p>
+                <p className="text-sm font-medium leading-relaxed text-esports-text-muted">{comment.text}</p>
               </div>
             </div>
           ))}
           {comments.length === 0 && (
             <div className="text-center py-10">
-              <p className="text-zinc-400 text-xs font-bold uppercase tracking-widest">No comments yet</p>
+              <p className="text-esports-text-muted text-xs font-bold uppercase tracking-widest">No comments yet</p>
             </div>
           )}
         </div>
 
-        <form onSubmit={handleSubmitComment} className="mt-8 pt-8 border-t border-dashed border-zinc-200 dark:border-zinc-800">
+        <form onSubmit={handleSubmitComment} className="mt-8 pt-8 border-t border-dashed border-white/10">
           <div className="relative">
             <input 
               value={newComment}
               onChange={(e) => setNewComment(e.target.value)}
               placeholder="Add a comment..."
-              className={`w-full p-4 pr-12 rounded-2xl border-2 font-bold focus:outline-none focus:border-pink-400 transition-all ${darkMode ? 'bg-zinc-800 border-zinc-700 text-white' : 'bg-zinc-50 border-zinc-100 text-zinc-900'}`}
+              className="w-full p-4 pr-12 rounded-2xl border-2 font-bold focus:outline-none focus:border-esports-primary transition-all bg-black/20 border-white/5 text-esports-text"
             />
             <button 
               type="submit"

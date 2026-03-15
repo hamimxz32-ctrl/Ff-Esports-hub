@@ -111,6 +111,18 @@ service cloud.firestore {
       allow update: if isAdmin() || (isAuthenticated() && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['reactions']));
     }
 
+    // Champions Rules
+    match /champions/{championId} {
+      allow read: if true;
+      allow create, update, delete: if isAdmin();
+    }
+
+    // Hall of Fame Rules
+    match /hallOfFame/{entryId} {
+      allow read: if true;
+      allow create, update, delete: if isAdmin();
+    }
+
     // Page Upgrade Requests Rules
     match /upgradeRequests/{requestId} {
       allow read: if isAdmin() || (isAuthenticated() && resource.data.authorUid == request.auth.uid);

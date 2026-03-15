@@ -146,8 +146,8 @@ export default function Admin() {
         <div className={`p-6 rounded-full ${darkMode ? 'bg-red-900/20' : 'bg-red-50'}`}>
           <X className="w-12 h-12 text-red-400" />
         </div>
-        <h1 className={`text-2xl font-black uppercase italic ${darkMode ? 'text-white' : 'text-zinc-900'}`}>Access Denied</h1>
-        <p className="text-zinc-400 font-medium">Only admins can access this panel.</p>
+        <h1 className={`text-2xl font-black uppercase italic text-esports-text`}>Access Denied</h1>
+        <p className="text-esports-text-muted font-medium">Only admins can access this panel.</p>
       </div>
     );
   }
@@ -161,30 +161,30 @@ export default function Admin() {
     >
       <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
         <div className="space-y-1 text-center sm:text-left">
-          <h1 className={`text-4xl font-black uppercase italic tracking-tight ${darkMode ? 'text-white' : 'text-zinc-900'}`}>Admin Panel</h1>
-          <p className="text-zinc-400 font-medium">Review and approve community content</p>
+          <h1 className="text-4xl font-black uppercase italic tracking-tight text-esports-text">Admin Panel</h1>
+          <p className="text-esports-text-muted font-medium">Review and approve community content</p>
         </div>
         
-        <div className={`flex items-center gap-2 px-4 py-2 rounded-2xl font-bold border ${darkMode ? 'bg-emerald-900/20 text-emerald-400 border-emerald-900/30' : 'bg-emerald-50 text-emerald-600 border-emerald-100'}`}>
+        <div className="flex items-center gap-2 px-4 py-2 rounded-2xl font-bold border bg-emerald-900/20 text-emerald-400 border-emerald-900/30">
           <ShieldCheck className="w-5 h-5" />
           Admin Verified
         </div>
       </div>
 
-      <div className={`flex p-1.5 rounded-2xl w-fit mx-auto sm:mx-0 overflow-x-auto max-w-full no-scrollbar ${darkMode ? 'bg-zinc-900' : 'bg-zinc-100'}`}>
+      <div className="flex p-1.5 rounded-2xl w-fit mx-auto sm:mx-0 overflow-x-auto max-w-full no-scrollbar bg-esports-card border border-white/5">
         {(['gallery', 'rosters', 'comments', 'recruitment', 'esportsPages', 'upgradeRequests', 'messageBoard', 'groupChat', 'topTeams', 'settings'] as Tab[]).map((tab) => (
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}
             className={`px-6 py-2.5 rounded-xl font-bold uppercase italic text-sm transition-all whitespace-nowrap ${
               activeTab === tab 
-                ? (darkMode ? 'bg-zinc-800 text-white shadow-sm' : 'bg-white text-zinc-900 shadow-sm')
-                : 'text-zinc-400 hover:text-zinc-600'
+                ? 'bg-esports-primary text-white shadow-lg shadow-esports-primary/20'
+                : 'text-esports-text-muted hover:text-esports-text'
             }`}
           >
             {tab === 'gallery' ? 'Photos' : tab === 'rosters' ? 'Rosters' : tab === 'comments' ? 'Comments' : tab === 'recruitment' ? 'Recruitment' : tab === 'esportsPages' ? 'Pages' : tab === 'upgradeRequests' ? 'Requests' : tab === 'messageBoard' ? 'Board' : tab === 'groupChat' ? 'Group' : tab === 'topTeams' ? 'Top Teams' : 'Settings'}
             {tab !== 'settings' && (
-              <span className={`ml-2 px-2 py-0.5 rounded-md text-[10px] font-black ${darkMode ? 'bg-zinc-700' : 'bg-zinc-200'}`}>
+              <span className={`ml-2 px-2 py-0.5 rounded-md text-[10px] font-black ${activeTab === tab ? 'bg-white/20' : 'bg-black/20'}`}>
                 {activeTab === tab ? items.length : '?'}
               </span>
             )}
@@ -196,251 +196,260 @@ export default function Admin() {
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className={`${darkMode ? 'bg-zinc-900 border-zinc-800' : 'bg-white border-zinc-100'} rounded-[2rem] border p-10 shadow-sm max-w-4xl mx-auto`}
+          className="bg-esports-card border border-white/5 rounded-[2rem] p-10 shadow-sm max-w-4xl mx-auto"
         >
           <div className="flex items-center gap-3 mb-8">
-            <SettingsIcon className="w-8 h-8 text-pink-500" />
-            <h2 className={`text-3xl font-black uppercase italic ${darkMode ? 'text-white' : 'text-zinc-900'}`}>Site Customization</h2>
+            <SettingsIcon className="w-8 h-8 text-esports-primary" />
+            <h2 className="text-3xl font-black uppercase italic text-esports-text">Site Customization</h2>
           </div>
 
           <form onSubmit={handleSaveSettings} className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="space-y-6">
-              <h3 className="text-xs font-black uppercase tracking-widest text-zinc-400 border-b border-zinc-50 dark:border-zinc-800 pb-2">General Info</h3>
+              <h3 className="text-xs font-black uppercase tracking-widest text-esports-text-muted border-b border-white/5 pb-2">General Info</h3>
               <div className="space-y-1">
-                <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 ml-1">Navbar Title</label>
+                <label className="text-[10px] font-black uppercase tracking-widest text-esports-text-muted ml-1">Navbar Title</label>
                 <input 
                   type="text"
                   value={editSettings.siteTitle}
                   onChange={(e) => setEditSettings({ ...editSettings, siteTitle: e.target.value })}
-                  className={`w-full rounded-xl px-4 py-2.5 focus:outline-none focus:border-pink-400 transition-colors ${darkMode ? 'bg-zinc-800 border-zinc-700 text-white' : 'bg-zinc-50 border-zinc-100 text-zinc-800'}`}
+                  className="w-full rounded-xl px-4 py-2.5 focus:outline-none focus:border-esports-primary transition-colors bg-black/20 border border-white/5 text-esports-text"
                 />
               </div>
               <div className="space-y-1">
-                <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 ml-1">Hero Title</label>
+                <label className="text-[10px] font-black uppercase tracking-widest text-esports-text-muted ml-1">Hero Title</label>
                 <input 
                   type="text"
                   value={editSettings.heroTitle}
                   onChange={(e) => setEditSettings({ ...editSettings, heroTitle: e.target.value })}
-                  className={`w-full rounded-xl px-4 py-2.5 focus:outline-none focus:border-pink-400 transition-colors ${darkMode ? 'bg-zinc-800 border-zinc-700 text-white' : 'bg-zinc-50 border-zinc-100 text-zinc-800'}`}
+                  className="w-full rounded-xl px-4 py-2.5 focus:outline-none focus:border-esports-primary transition-colors bg-black/20 border border-white/5 text-esports-text"
                 />
               </div>
               <div className="space-y-1">
-                <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 ml-1">Hero Subtitle</label>
+                <label className="text-[10px] font-black uppercase tracking-widest text-esports-text-muted ml-1">Hero Subtitle</label>
                 <textarea 
                   rows={3}
                   value={editSettings.heroSubtitle}
                   onChange={(e) => setEditSettings({ ...editSettings, heroSubtitle: e.target.value })}
-                  className={`w-full rounded-xl px-4 py-2.5 focus:outline-none focus:border-pink-400 transition-colors resize-none ${darkMode ? 'bg-zinc-800 border-zinc-700 text-white' : 'bg-zinc-50 border-zinc-100 text-zinc-800'}`}
+                  className="w-full rounded-xl px-4 py-2.5 focus:outline-none focus:border-esports-primary transition-colors resize-none bg-black/20 border border-white/5 text-esports-text"
                 />
               </div>
               <div className="space-y-1">
-                <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 ml-1">Font Power</label>
+                <label className="text-[10px] font-black uppercase tracking-widest text-esports-text-muted ml-1">Hero Image URL</label>
+                <input 
+                  type="text"
+                  value={editSettings.heroImageUrl}
+                  onChange={(e) => setEditSettings({ ...editSettings, heroImageUrl: e.target.value })}
+                  className="w-full rounded-xl px-4 py-2.5 focus:outline-none focus:border-esports-primary transition-colors bg-black/20 border border-white/5 text-esports-text"
+                />
+              </div>
+              <div className="space-y-1">
+                <label className="text-[10px] font-black uppercase tracking-widest text-esports-text-muted ml-1">Font Power</label>
                 <select 
                   value={editSettings.fontFamily}
                   onChange={(e) => setEditSettings({ ...editSettings, fontFamily: e.target.value })}
-                  className={`w-full rounded-xl px-4 py-2.5 focus:outline-none focus:border-pink-400 transition-colors ${darkMode ? 'bg-zinc-800 border-zinc-700 text-white' : 'bg-zinc-50 border-zinc-100 text-zinc-800'}`}
+                  className="w-full rounded-xl px-4 py-2.5 focus:outline-none focus:border-esports-primary transition-colors bg-black/20 border border-white/5 text-esports-text"
                 >
                   <option value="Sans">Normal (Sans)</option>
                   <option value="Mono">Gaming (Mono)</option>
                 </select>
               </div>
               <div className="space-y-1">
-                <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 ml-1">Support Telegram Link</label>
+                <label className="text-[10px] font-black uppercase tracking-widest text-esports-text-muted ml-1">Support Telegram Link</label>
                 <input 
                   type="text"
                   value={editSettings.supportTelegram}
                   onChange={(e) => setEditSettings({ ...editSettings, supportTelegram: e.target.value })}
                   placeholder="https://t.me/yourusername"
-                  className={`w-full rounded-xl px-4 py-2.5 focus:outline-none focus:border-pink-400 transition-colors ${darkMode ? 'bg-zinc-800 border-zinc-700 text-white' : 'bg-zinc-50 border-zinc-100 text-zinc-800'}`}
+                  className="w-full rounded-xl px-4 py-2.5 focus:outline-none focus:border-esports-primary transition-colors bg-black/20 border border-white/5 text-esports-text"
                 />
               </div>
               <div className="space-y-1">
-                <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 ml-1">Creator Name</label>
+                <label className="text-[10px] font-black uppercase tracking-widest text-esports-text-muted ml-1">Creator Name</label>
                 <input 
                   type="text"
                   value={editSettings.creatorName}
                   onChange={(e) => setEditSettings({ ...editSettings, creatorName: e.target.value })}
-                  className={`w-full rounded-xl px-4 py-2.5 focus:outline-none focus:border-pink-400 transition-colors ${darkMode ? 'bg-zinc-800 border-zinc-700 text-white' : 'bg-zinc-50 border-zinc-100 text-zinc-800'}`}
+                  className="w-full rounded-xl px-4 py-2.5 focus:outline-none focus:border-esports-primary transition-colors bg-black/20 border border-white/5 text-esports-text"
                 />
               </div>
               <div className="space-y-1">
-                <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 ml-1">Creator Telegram/Link</label>
+                <label className="text-[10px] font-black uppercase tracking-widest text-esports-text-muted ml-1">Creator Telegram/Link</label>
                 <input 
                   type="text"
                   value={editSettings.creatorLink}
                   onChange={(e) => setEditSettings({ ...editSettings, creatorLink: e.target.value })}
-                  className={`w-full rounded-xl px-4 py-2.5 focus:outline-none focus:border-pink-400 transition-colors ${darkMode ? 'bg-zinc-800 border-zinc-700 text-white' : 'bg-zinc-50 border-zinc-100 text-zinc-800'}`}
+                  className="w-full rounded-xl px-4 py-2.5 focus:outline-none focus:border-esports-primary transition-colors bg-black/20 border border-white/5 text-esports-text"
                 />
               </div>
             </div>
 
             <div className="space-y-6">
-              <h3 className="text-xs font-black uppercase tracking-widest text-zinc-400 border-b border-zinc-50 dark:border-zinc-800 pb-2">Section Names & Descriptions</h3>
+              <h3 className="text-xs font-black uppercase tracking-widest text-esports-text-muted border-b border-white/5 pb-2">Section Names & Descriptions</h3>
               <div className="grid grid-cols-1 gap-6">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="space-y-1">
-                    <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 ml-1">Roster Title</label>
+                    <label className="text-[10px] font-black uppercase tracking-widest text-esports-text-muted ml-1">Roster Title</label>
                     <input 
                       type="text"
                       value={editSettings.rosterTitle}
                       onChange={(e) => setEditSettings({ ...editSettings, rosterTitle: e.target.value })}
-                      className={`w-full rounded-xl px-4 py-2.5 focus:outline-none focus:border-pink-400 transition-colors ${darkMode ? 'bg-zinc-800 border-zinc-700 text-white' : 'bg-zinc-50 border-zinc-100 text-zinc-800'}`}
+                      className="w-full rounded-xl px-4 py-2.5 focus:outline-none focus:border-esports-primary transition-colors bg-black/20 border border-white/5 text-esports-text"
                     />
                   </div>
                   <div className="space-y-1">
-                    <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 ml-1">Roster Desc</label>
+                    <label className="text-[10px] font-black uppercase tracking-widest text-esports-text-muted ml-1">Roster Desc</label>
                     <input 
                       type="text"
                       value={editSettings.rosterDesc}
                       onChange={(e) => setEditSettings({ ...editSettings, rosterDesc: e.target.value })}
-                      className={`w-full rounded-xl px-4 py-2.5 focus:outline-none focus:border-pink-400 transition-colors ${darkMode ? 'bg-zinc-800 border-zinc-700 text-white' : 'bg-zinc-50 border-zinc-100 text-zinc-800'}`}
+                      className="w-full rounded-xl px-4 py-2.5 focus:outline-none focus:border-esports-primary transition-colors bg-black/20 border border-white/5 text-esports-text"
                     />
                   </div>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="space-y-1">
-                    <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 ml-1">Album Title</label>
+                    <label className="text-[10px] font-black uppercase tracking-widest text-esports-text-muted ml-1">Album Title</label>
                     <input 
                       type="text"
                       value={editSettings.albumTitle}
                       onChange={(e) => setEditSettings({ ...editSettings, albumTitle: e.target.value })}
-                      className={`w-full rounded-xl px-4 py-2.5 focus:outline-none focus:border-pink-400 transition-colors ${darkMode ? 'bg-zinc-800 border-zinc-700 text-white' : 'bg-zinc-50 border-zinc-100 text-zinc-800'}`}
+                      className="w-full rounded-xl px-4 py-2.5 focus:outline-none focus:border-esports-primary transition-colors bg-black/20 border border-white/5 text-esports-text"
                     />
                   </div>
                   <div className="space-y-1">
-                    <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 ml-1">Album Desc</label>
+                    <label className="text-[10px] font-black uppercase tracking-widest text-esports-text-muted ml-1">Album Desc</label>
                     <input 
                       type="text"
                       value={editSettings.albumDesc}
                       onChange={(e) => setEditSettings({ ...editSettings, albumDesc: e.target.value })}
-                      className={`w-full rounded-xl px-4 py-2.5 focus:outline-none focus:border-pink-400 transition-colors ${darkMode ? 'bg-zinc-800 border-zinc-700 text-white' : 'bg-zinc-50 border-zinc-100 text-zinc-800'}`}
+                      className="w-full rounded-xl px-4 py-2.5 focus:outline-none focus:border-esports-primary transition-colors bg-black/20 border border-white/5 text-esports-text"
                     />
                   </div>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="space-y-1">
-                    <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 ml-1">Recruitment Title</label>
+                    <label className="text-[10px] font-black uppercase tracking-widest text-esports-text-muted ml-1">Recruitment Title</label>
                     <input 
                       type="text"
                       value={editSettings.recruitmentTitle}
                       onChange={(e) => setEditSettings({ ...editSettings, recruitmentTitle: e.target.value })}
-                      className={`w-full rounded-xl px-4 py-2.5 focus:outline-none focus:border-pink-400 transition-colors ${darkMode ? 'bg-zinc-800 border-zinc-700 text-white' : 'bg-zinc-50 border-zinc-100 text-zinc-800'}`}
+                      className="w-full rounded-xl px-4 py-2.5 focus:outline-none focus:border-esports-primary transition-colors bg-black/20 border border-white/5 text-esports-text"
                     />
                   </div>
                   <div className="space-y-1">
-                    <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 ml-1">Recruitment Desc</label>
+                    <label className="text-[10px] font-black uppercase tracking-widest text-esports-text-muted ml-1">Recruitment Desc</label>
                     <input 
                       type="text"
                       value={editSettings.recruitmentDesc}
                       onChange={(e) => setEditSettings({ ...editSettings, recruitmentDesc: e.target.value })}
-                      className={`w-full rounded-xl px-4 py-2.5 focus:outline-none focus:border-pink-400 transition-colors ${darkMode ? 'bg-zinc-800 border-zinc-700 text-white' : 'bg-zinc-50 border-zinc-100 text-zinc-800'}`}
+                      className="w-full rounded-xl px-4 py-2.5 focus:outline-none focus:border-esports-primary transition-colors bg-black/20 border border-white/5 text-esports-text"
                     />
                   </div>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="space-y-1">
-                    <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 ml-1">Message Board Title</label>
+                    <label className="text-[10px] font-black uppercase tracking-widest text-esports-text-muted ml-1">Message Board Title</label>
                     <input 
                       type="text"
                       value={editSettings.messageBoardTitle}
                       onChange={(e) => setEditSettings({ ...editSettings, messageBoardTitle: e.target.value })}
-                      className={`w-full rounded-xl px-4 py-2.5 focus:outline-none focus:border-pink-400 transition-colors ${darkMode ? 'bg-zinc-800 border-zinc-700 text-white' : 'bg-zinc-50 border-zinc-100 text-zinc-800'}`}
+                      className="w-full rounded-xl px-4 py-2.5 focus:outline-none focus:border-esports-primary transition-colors bg-black/20 border border-white/5 text-esports-text"
                     />
                   </div>
                   <div className="space-y-1">
-                    <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 ml-1">Message Board Desc</label>
+                    <label className="text-[10px] font-black uppercase tracking-widest text-esports-text-muted ml-1">Message Board Desc</label>
                     <input 
                       type="text"
                       value={editSettings.messageBoardDesc}
                       onChange={(e) => setEditSettings({ ...editSettings, messageBoardDesc: e.target.value })}
-                      className={`w-full rounded-xl px-4 py-2.5 focus:outline-none focus:border-pink-400 transition-colors ${darkMode ? 'bg-zinc-800 border-zinc-700 text-white' : 'bg-zinc-50 border-zinc-100 text-zinc-800'}`}
+                      className="w-full rounded-xl px-4 py-2.5 focus:outline-none focus:border-esports-primary transition-colors bg-black/20 border border-white/5 text-esports-text"
                     />
                   </div>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="space-y-1">
-                    <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 ml-1">Top Teams Title</label>
+                    <label className="text-[10px] font-black uppercase tracking-widest text-esports-text-muted ml-1">Top Teams Title</label>
                     <input 
                       type="text"
                       value={editSettings.topTeamsTitle}
                       onChange={(e) => setEditSettings({ ...editSettings, topTeamsTitle: e.target.value })}
-                      className={`w-full rounded-xl px-4 py-2.5 focus:outline-none focus:border-pink-400 transition-colors ${darkMode ? 'bg-zinc-800 border-zinc-700 text-white' : 'bg-zinc-50 border-zinc-100 text-zinc-800'}`}
+                      className="w-full rounded-xl px-4 py-2.5 focus:outline-none focus:border-esports-primary transition-colors bg-black/20 border border-white/5 text-esports-text"
                     />
                   </div>
                   <div className="space-y-1">
-                    <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 ml-1">Top Teams Desc</label>
+                    <label className="text-[10px] font-black uppercase tracking-widest text-esports-text-muted ml-1">Top Teams Desc</label>
                     <input 
                       type="text"
                       value={editSettings.topTeamsDesc}
                       onChange={(e) => setEditSettings({ ...editSettings, topTeamsDesc: e.target.value })}
-                      className={`w-full rounded-xl px-4 py-2.5 focus:outline-none focus:border-pink-400 transition-colors ${darkMode ? 'bg-zinc-800 border-zinc-700 text-white' : 'bg-zinc-50 border-zinc-100 text-zinc-800'}`}
+                      className="w-full rounded-xl px-4 py-2.5 focus:outline-none focus:border-esports-primary transition-colors bg-black/20 border border-white/5 text-esports-text"
                     />
                   </div>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="space-y-1">
-                    <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 ml-1">Esports Pages Title</label>
+                    <label className="text-[10px] font-black uppercase tracking-widest text-esports-text-muted ml-1">Esports Pages Title</label>
                     <input 
                       type="text"
                       value={editSettings.esportsPagesTitle}
                       onChange={(e) => setEditSettings({ ...editSettings, esportsPagesTitle: e.target.value })}
-                      className={`w-full rounded-xl px-4 py-2.5 focus:outline-none focus:border-pink-400 transition-colors ${darkMode ? 'bg-zinc-800 border-zinc-700 text-white' : 'bg-zinc-50 border-zinc-100 text-zinc-800'}`}
+                      className="w-full rounded-xl px-4 py-2.5 focus:outline-none focus:border-esports-primary transition-colors bg-black/20 border border-white/5 text-esports-text"
                     />
                   </div>
                   <div className="space-y-1">
-                    <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 ml-1">Esports Pages Desc</label>
+                    <label className="text-[10px] font-black uppercase tracking-widest text-esports-text-muted ml-1">Esports Pages Desc</label>
                     <input 
                       type="text"
                       value={editSettings.esportsPagesDesc}
                       onChange={(e) => setEditSettings({ ...editSettings, esportsPagesDesc: e.target.value })}
-                      className={`w-full rounded-xl px-4 py-2.5 focus:outline-none focus:border-pink-400 transition-colors ${darkMode ? 'bg-zinc-800 border-zinc-700 text-white' : 'bg-zinc-50 border-zinc-100 text-zinc-800'}`}
+                      className="w-full rounded-xl px-4 py-2.5 focus:outline-none focus:border-esports-primary transition-colors bg-black/20 border border-white/5 text-esports-text"
                     />
                   </div>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="space-y-1">
-                    <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 ml-1">Friends Title</label>
+                    <label className="text-[10px] font-black uppercase tracking-widest text-esports-text-muted ml-1">Friends Title</label>
                     <input 
                       type="text"
                       value={editSettings.friendsTitle}
                       onChange={(e) => setEditSettings({ ...editSettings, friendsTitle: e.target.value })}
-                      className={`w-full rounded-xl px-4 py-2.5 focus:outline-none focus:border-pink-400 transition-colors ${darkMode ? 'bg-zinc-800 border-zinc-700 text-white' : 'bg-zinc-50 border-zinc-100 text-zinc-800'}`}
+                      className="w-full rounded-xl px-4 py-2.5 focus:outline-none focus:border-esports-primary transition-colors bg-black/20 border border-white/5 text-esports-text"
                     />
                   </div>
                   <div className="space-y-1">
-                    <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 ml-1">Friends Desc</label>
+                    <label className="text-[10px] font-black uppercase tracking-widest text-esports-text-muted ml-1">Friends Desc</label>
                     <input 
                       type="text"
                       value={editSettings.friendsDesc}
                       onChange={(e) => setEditSettings({ ...editSettings, friendsDesc: e.target.value })}
-                      className={`w-full rounded-xl px-4 py-2.5 focus:outline-none focus:border-pink-400 transition-colors ${darkMode ? 'bg-zinc-800 border-zinc-700 text-white' : 'bg-zinc-50 border-zinc-100 text-zinc-800'}`}
+                      className="w-full rounded-xl px-4 py-2.5 focus:outline-none focus:border-esports-primary transition-colors bg-black/20 border border-white/5 text-esports-text"
                     />
                   </div>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="space-y-1">
-                    <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 ml-1">Group Chat Title</label>
+                    <label className="text-[10px] font-black uppercase tracking-widest text-esports-text-muted ml-1">Group Chat Title</label>
                     <input 
                       type="text"
                       value={editSettings.groupChatTitle}
                       onChange={(e) => setEditSettings({ ...editSettings, groupChatTitle: e.target.value })}
-                      className={`w-full rounded-xl px-4 py-2.5 focus:outline-none focus:border-pink-400 transition-colors ${darkMode ? 'bg-zinc-800 border-zinc-700 text-white' : 'bg-zinc-50 border-zinc-100 text-zinc-800'}`}
+                      className="w-full rounded-xl px-4 py-2.5 focus:outline-none focus:border-esports-primary transition-colors bg-black/20 border border-white/5 text-esports-text"
                     />
                   </div>
                   <div className="space-y-1">
-                    <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 ml-1">Group Chat Desc</label>
+                    <label className="text-[10px] font-black uppercase tracking-widest text-esports-text-muted ml-1">Group Chat Desc</label>
                     <input 
                       type="text"
                       value={editSettings.groupChatDesc}
                       onChange={(e) => setEditSettings({ ...editSettings, groupChatDesc: e.target.value })}
-                      className={`w-full rounded-xl px-4 py-2.5 focus:outline-none focus:border-pink-400 transition-colors ${darkMode ? 'bg-zinc-800 border-zinc-700 text-white' : 'bg-zinc-50 border-zinc-100 text-zinc-800'}`}
+                      className="w-full rounded-xl px-4 py-2.5 focus:outline-none focus:border-esports-primary transition-colors bg-black/20 border border-white/5 text-esports-text"
                     />
                   </div>
                 </div>
@@ -463,15 +472,15 @@ export default function Admin() {
         <>
           {activeTab !== 'settings' && ['gallery', 'rosters', 'recruitment', 'esportsPages', 'upgradeRequests', 'comments'].includes(activeTab) && (
             <div className="flex justify-between items-center mb-8">
-              <h2 className={`text-xl font-black uppercase italic ${darkMode ? 'text-white' : 'text-zinc-900'}`}>
+              <h2 className="text-xl font-black uppercase italic text-esports-text">
                 {showApproved ? 'Approved Items' : 'Pending Approval'}
               </h2>
               <button
                 onClick={() => setShowApproved(!showApproved)}
                 className={`px-4 py-2 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${
                   showApproved 
-                    ? 'bg-purple-500 text-white shadow-lg shadow-purple-500/20' 
-                    : darkMode ? 'bg-zinc-800 text-zinc-400 hover:bg-zinc-700' : 'bg-zinc-100 text-zinc-500 hover:bg-zinc-200'
+                    ? 'bg-esports-primary text-white shadow-lg shadow-esports-primary/20' 
+                    : 'bg-esports-card text-esports-text-muted hover:bg-white/10'
                 }`}
               >
                 {showApproved ? 'View Pending' : 'View Approved'}
@@ -481,7 +490,7 @@ export default function Admin() {
 
           {activeTab !== 'settings' && !['gallery', 'rosters', 'recruitment', 'esportsPages', 'upgradeRequests'].includes(activeTab) && (
             <div className="mb-8">
-              <h2 className={`text-xl font-black uppercase italic ${darkMode ? 'text-white' : 'text-zinc-900'}`}>
+              <h2 className="text-xl font-black uppercase italic text-esports-text">
                 All {activeTab === 'topTeams' ? 'Ranked Teams' : activeTab === 'messageBoard' ? 'Board Messages' : activeTab === 'groupChat' ? 'Group Messages' : 'Items'}
               </h2>
             </div>
@@ -496,7 +505,7 @@ export default function Admin() {
                 initial={{ scale: 0.9, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 exit={{ scale: 0.9, opacity: 0 }}
-                className={`${darkMode ? 'bg-zinc-900 border-zinc-800' : 'bg-white border-zinc-100'} rounded-[2rem] border p-6 shadow-sm hover:shadow-md transition-all flex flex-col`}
+                className="bg-esports-card border border-white/5 rounded-[2rem] p-6 shadow-sm hover:shadow-md transition-all flex flex-col"
               >
                 <div className="flex-1 space-y-4">
                   {activeTab === 'gallery' && (
@@ -504,18 +513,18 @@ export default function Admin() {
                       <img 
                         src={item.imageUrl} 
                         alt="Pending" 
-                        className="w-full aspect-video object-cover rounded-2xl"
+                        className="w-full aspect-video object-cover rounded-2xl border border-white/5"
                         referrerPolicy="no-referrer"
                       />
                       {item.caption && (
-                        <p className={`${darkMode ? 'text-zinc-400' : 'text-zinc-600'} text-sm font-medium italic px-2 leading-relaxed`}>
+                        <p className="text-esports-text-muted text-sm font-medium italic px-2 leading-relaxed">
                           "{item.caption}"
                         </p>
                       )}
                       <div className="px-2 flex justify-between items-end">
                         <button 
                           onClick={() => handleViewUser(item.authorUid)}
-                          className="text-[10px] font-black uppercase tracking-widest text-zinc-400 hover:text-purple-400 transition-colors"
+                          className="text-[10px] font-black uppercase tracking-widest text-esports-text-muted hover:text-esports-primary transition-colors"
                         >
                           By {item.authorName}
                         </button>
@@ -525,27 +534,27 @@ export default function Admin() {
 
                   {activeTab === 'rosters' && (
                     <div className="space-y-4">
-                      <div className={`p-6 rounded-2xl border-2 ${darkMode ? 'bg-zinc-800 border-zinc-700' : 'bg-zinc-50 border-zinc-100'}`}>
+                      <div className="p-6 rounded-2xl border bg-black/20 border-white/5">
                         <div className="flex items-center gap-4 mb-4">
-                          <img src={item.teamLogo || `https://picsum.photos/seed/${item.id}/100/100`} className="w-12 h-12 rounded-xl object-cover" alt="Logo" />
-                          <h3 className={`text-xl font-black uppercase italic leading-none ${darkMode ? 'text-white' : 'text-zinc-900'}`}>{item.teamName}</h3>
+                          <img src={item.teamLogo || `https://picsum.photos/seed/${item.id}/100/100`} className="w-12 h-12 rounded-xl object-cover border border-white/10" alt="Logo" />
+                          <h3 className="text-xl font-black uppercase italic leading-none text-esports-text">{item.teamName}</h3>
                         </div>
                         <div className="space-y-2">
                           {item.players?.map((p: any, idx: number) => (
                             <div key={idx} className="flex justify-between items-center text-xs font-bold">
-                              <span className={darkMode ? 'text-zinc-300' : 'text-zinc-800'}>{p.ign}</span>
-                              <span className="text-pink-400 uppercase tracking-widest">{p.role}</span>
+                              <span className="text-esports-text-muted">{p.ign}</span>
+                              <span className="text-esports-primary uppercase tracking-widest">{p.role}</span>
                             </div>
                           ))}
                         </div>
-                        <div className="flex gap-2 mt-4 pt-4 border-t border-zinc-200 dark:border-zinc-700">
+                        <div className="flex gap-2 mt-4 pt-4 border-t border-white/5">
                           {item.socialLinks?.facebook && <span className="text-[8px] font-black uppercase px-2 py-1 bg-blue-500/10 text-blue-500 rounded">FB</span>}
                           {item.socialLinks?.instagram && <span className="text-[8px] font-black uppercase px-2 py-1 bg-pink-500/10 text-pink-500 rounded">IG</span>}
                           {item.socialLinks?.youtube && <span className="text-[8px] font-black uppercase px-2 py-1 bg-red-500/10 text-red-500 rounded">YT</span>}
                         </div>
                         <button 
                           onClick={() => handleViewUser(item.authorUid)}
-                          className="mt-4 w-full text-[10px] font-black uppercase tracking-widest text-zinc-400 hover:text-pink-400 transition-colors text-center"
+                          className="mt-4 w-full text-[10px] font-black uppercase tracking-widest text-esports-text-muted hover:text-esports-primary transition-colors text-center"
                         >
                           Submitted by {item.authorName}
                         </button>
@@ -554,42 +563,42 @@ export default function Admin() {
                   )}
 
                   {activeTab === 'comments' && (
-                    <div className={`p-4 rounded-2xl border space-y-3 ${darkMode ? 'bg-zinc-800 border-zinc-700' : 'bg-zinc-50 border-zinc-100'}`}>
+                    <div className="p-4 rounded-2xl border bg-black/20 border-white/5 space-y-3">
                       <div className="flex items-center gap-2">
                         <img 
                           src={item.authorPhoto || `https://picsum.photos/seed/${item.authorUid}/100/100`} 
                           alt={item.authorName} 
-                          className="w-6 h-6 rounded-full object-cover"
+                          className="w-6 h-6 rounded-full object-cover border border-white/10"
                           referrerPolicy="no-referrer"
                         />
                         <button 
                           onClick={() => handleViewUser(item.authorUid)}
-                          className="text-[10px] font-black uppercase tracking-widest text-zinc-400 hover:text-purple-400 transition-colors"
+                          className="text-[10px] font-black uppercase tracking-widest text-esports-text-muted hover:text-esports-primary transition-colors"
                         >
                           {item.authorName}
                         </button>
                       </div>
-                      <p className={`font-bold italic leading-relaxed ${darkMode ? 'text-zinc-300' : 'text-zinc-800'}`}>"{item.text}"</p>
-                      <p className="text-[9px] font-bold text-zinc-500 uppercase tracking-tighter">On {item.targetType} ID: {item.targetId}</p>
+                      <p className="font-bold italic leading-relaxed text-esports-text">"{item.text}"</p>
+                      <p className="text-[9px] font-bold text-esports-text-muted uppercase tracking-tighter">On {item.targetType} ID: {item.targetId}</p>
                     </div>
                   )}
 
                   {activeTab === 'recruitment' && (
-                    <div className={`p-6 rounded-2xl border-2 ${darkMode ? 'bg-zinc-800 border-zinc-700' : 'bg-zinc-50 border-zinc-100'}`}>
+                    <div className="p-6 rounded-2xl border bg-black/20 border-white/5">
                       <div className="flex items-center justify-between mb-4">
                         <div className="flex items-center gap-3">
-                          <img src={item.authorPhoto} className="w-10 h-10 rounded-xl object-cover" alt="" />
+                          <img src={item.authorPhoto} className="w-10 h-10 rounded-xl object-cover border border-white/10" alt="" />
                           <div>
-                            <h3 className={`font-black uppercase italic text-sm ${darkMode ? 'text-white' : 'text-zinc-900'}`}>{item.ign || item.authorName}</h3>
-                            <p className="text-[8px] font-bold text-zinc-500 uppercase tracking-widest">{item.type === 'player' ? 'LFG' : 'LFR'}</p>
+                            <h3 className="font-black uppercase italic text-sm text-esports-text">{item.ign || item.authorName}</h3>
+                            <p className="text-[8px] font-bold text-esports-text-muted uppercase tracking-widest">{item.type === 'player' ? 'LFG' : 'LFR'}</p>
                           </div>
                         </div>
                       </div>
                       <div className="space-y-2">
                         {item.type === 'player' ? (
-                          <p className="text-xs font-bold text-zinc-400">UID: {item.gameUid}</p>
+                          <p className="text-xs font-bold text-esports-text-muted">UID: {item.gameUid}</p>
                         ) : (
-                          <p className="text-xs font-bold text-zinc-400">Role: {item.requirements?.role}</p>
+                          <p className="text-xs font-bold text-esports-text-muted">Role: {item.requirements?.role}</p>
                         )}
                       </div>
                     </div>
@@ -599,18 +608,18 @@ export default function Admin() {
                     <div className="space-y-4">
                       <div className="flex items-center gap-4">
                         {item.logoUrl ? (
-                          <img src={item.logoUrl} className="w-12 h-12 rounded-xl object-cover shadow-lg" alt="" />
+                          <img src={item.logoUrl} className="w-12 h-12 rounded-xl object-cover border border-white/10" alt="" />
                         ) : (
-                          <div className="w-12 h-12 rounded-xl bg-blue-500 flex items-center justify-center text-white font-black italic">
+                          <div className="w-12 h-12 rounded-xl bg-esports-primary flex items-center justify-center text-white font-black italic">
                             {item.title?.charAt(0) || item.name?.charAt(0)}
                           </div>
                         )}
                         <div>
-                          <h3 className={`font-black uppercase italic ${darkMode ? 'text-white' : 'text-zinc-900'}`}>{item.title || item.name}</h3>
-                          <p className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">{item.category}</p>
+                          <h3 className="font-black uppercase italic text-esports-text">{item.title || item.name}</h3>
+                          <p className="text-[10px] font-bold text-esports-text-muted uppercase tracking-widest">{item.category}</p>
                         </div>
                       </div>
-                      <p className={`text-xs leading-relaxed line-clamp-2 ${darkMode ? 'text-zinc-400' : 'text-zinc-600'}`}>{item.description}</p>
+                      <p className="text-xs leading-relaxed line-clamp-2 text-esports-text-muted">{item.description}</p>
                       <div className="flex gap-2">
                         {item.socialLinks?.facebook && <span className="text-[8px] font-black uppercase px-2 py-1 bg-blue-500/10 text-blue-500 rounded">FB</span>}
                         {item.socialLinks?.whatsapp && <span className="text-[8px] font-black uppercase px-2 py-1 bg-emerald-500/10 text-emerald-500 rounded">WA</span>}
@@ -622,16 +631,16 @@ export default function Admin() {
                   {activeTab === 'upgradeRequests' && (
                     <div className="space-y-4">
                       <div className="flex items-center justify-between">
-                        <div className="px-3 py-1 bg-blue-500/10 text-blue-500 rounded-full text-[8px] font-black uppercase tracking-widest italic">
+                        <div className="px-3 py-1 bg-esports-primary/10 text-esports-primary rounded-full text-[8px] font-black uppercase tracking-widest italic">
                           {item.type}
                         </div>
-                        <span className="text-[10px] font-bold text-zinc-500">{new Date(item.createdAt?.seconds * 1000).toLocaleDateString()}</span>
+                        <span className="text-[10px] font-bold text-esports-text-muted">{new Date(item.createdAt?.seconds * 1000).toLocaleDateString()}</span>
                       </div>
-                      <h3 className={`font-black uppercase italic ${darkMode ? 'text-white' : 'text-zinc-900'}`}>{item.pageTitle}</h3>
-                      <p className={`text-xs leading-relaxed ${darkMode ? 'text-zinc-400' : 'text-zinc-600'}`}>{item.details}</p>
-                      <div className="pt-4 border-t border-zinc-100 dark:border-zinc-800">
-                        <p className="text-[10px] font-bold text-zinc-500">FROM: {item.authorName}</p>
-                        <p className="text-[10px] font-bold text-zinc-500">EMAIL: {item.authorEmail}</p>
+                      <h3 className="font-black uppercase italic text-esports-text">{item.pageTitle}</h3>
+                      <p className="text-xs leading-relaxed text-esports-text-muted">{item.details}</p>
+                      <div className="pt-4 border-t border-white/5">
+                        <p className="text-[10px] font-bold text-esports-text-muted">FROM: {item.authorName}</p>
+                        <p className="text-[10px] font-bold text-esports-text-muted">EMAIL: {item.authorEmail}</p>
                       </div>
                     </div>
                   )}
@@ -639,45 +648,45 @@ export default function Admin() {
                   {activeTab === 'topTeams' && (
                     <div className="space-y-4">
                       <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 bg-yellow-500 text-white rounded-xl flex items-center justify-center font-black italic text-xl shadow-lg">
+                        <div className="w-12 h-12 bg-esports-primary text-white rounded-xl flex items-center justify-center font-black italic text-xl shadow-lg shadow-esports-primary/20">
                           #{item.rank}
                         </div>
-                        <img src={item.logoUrl} className="w-12 h-12 rounded-xl object-cover shadow-lg" alt="" />
+                        <img src={item.logoUrl} className="w-12 h-12 rounded-xl object-cover border border-white/10" alt="" />
                         <div>
-                          <h3 className={`font-black uppercase italic ${darkMode ? 'text-white' : 'text-zinc-900'}`}>{item.name}</h3>
-                          <p className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Ranked Team</p>
+                          <h3 className="font-black uppercase italic text-esports-text">{item.name}</h3>
+                          <p className="text-[10px] font-bold text-esports-text-muted uppercase tracking-widest">Ranked Team</p>
                         </div>
                       </div>
-                      <p className={`text-xs leading-relaxed line-clamp-2 ${darkMode ? 'text-zinc-400' : 'text-zinc-600'}`}>{item.description}</p>
+                      <p className="text-xs leading-relaxed line-clamp-2 text-esports-text-muted">{item.description}</p>
                     </div>
                   )}
 
                   {(activeTab === 'messageBoard' || activeTab === 'groupChat') && (
-                    <div className={`p-4 rounded-2xl border space-y-3 ${darkMode ? 'bg-zinc-800 border-zinc-700' : 'bg-zinc-50 border-zinc-100'}`}>
+                    <div className="p-4 rounded-2xl border bg-black/20 border-white/5 space-y-3">
                       <div className="flex items-center gap-2">
                         <img 
                           src={item.authorPhoto || `https://picsum.photos/seed/${item.authorUid}/100/100`} 
                           alt={item.authorName} 
-                          className="w-6 h-6 rounded-full object-cover"
+                          className="w-6 h-6 rounded-full object-cover border border-white/10"
                           referrerPolicy="no-referrer"
                         />
                         <button 
                           onClick={() => handleViewUser(item.authorUid)}
-                          className="text-[10px] font-black uppercase tracking-widest text-zinc-400 hover:text-purple-400 transition-colors"
+                          className="text-[10px] font-black uppercase tracking-widest text-esports-text-muted hover:text-esports-primary transition-colors"
                         >
                           {item.authorName}
                         </button>
                       </div>
-                      <p className={`font-bold italic leading-relaxed ${darkMode ? 'text-zinc-300' : 'text-zinc-800'}`}>"{item.text}"</p>
+                      <p className="font-bold italic leading-relaxed text-esports-text">"{item.text}"</p>
                     </div>
                   )}
                 </div>
 
-                <div className={`grid grid-cols-2 gap-3 mt-6 pt-6 border-t ${darkMode ? 'border-zinc-800' : 'border-zinc-50'}`}>
+                <div className="grid grid-cols-2 gap-3 mt-6 pt-6 border-t border-white/5">
                 {!showApproved && ['gallery', 'rosters', 'recruitment', 'esportsPages', 'upgradeRequests', 'comments'].includes(activeTab) && (
                     <button
                       onClick={() => handleApprove(item.id)}
-                      className="col-span-2 flex items-center justify-center gap-2 py-3 bg-emerald-500 text-white rounded-xl font-bold hover:bg-emerald-600 transition-all active:scale-95 shadow-sm mb-2"
+                      className="col-span-2 flex items-center justify-center gap-2 py-3 bg-emerald-500 text-white rounded-xl font-bold hover:bg-emerald-600 transition-all active:scale-95 shadow-lg shadow-emerald-500/20 mb-2"
                     >
                       <Check className="w-4 h-4" />
                       Approve
@@ -686,7 +695,7 @@ export default function Admin() {
                   
                   <button
                     onClick={() => setEditingItem(item)}
-                    className={`flex items-center justify-center gap-2 py-3 rounded-xl font-bold transition-all active:scale-95 ${darkMode ? 'bg-zinc-800 text-zinc-300 hover:bg-zinc-700' : 'bg-zinc-100 text-zinc-600 hover:bg-zinc-200'}`}
+                    className="flex items-center justify-center gap-2 py-3 rounded-xl font-bold transition-all active:scale-95 bg-esports-card text-esports-text-muted hover:bg-white/10"
                   >
                     <SettingsIcon className="w-4 h-4" />
                     Edit
@@ -694,7 +703,7 @@ export default function Admin() {
 
                   <button
                     onClick={() => handleDelete(item.id)}
-                    className={`flex items-center justify-center gap-2 py-3 rounded-xl font-bold transition-all active:scale-95 bg-red-500 text-white hover:bg-red-600`}
+                    className="flex items-center justify-center gap-2 py-3 rounded-xl font-bold transition-all active:scale-95 bg-esports-primary text-white hover:bg-red-600 shadow-lg shadow-esports-primary/20"
                   >
                     <Trash2 className="w-4 h-4" />
                     Delete
@@ -708,42 +717,42 @@ export default function Admin() {
       )}
 
       {activeTab !== 'settings' && items.length === 0 && (
-        <div className={`text-center py-20 rounded-[2rem] border-2 border-dashed ${darkMode ? 'bg-zinc-900 border-zinc-800' : 'bg-white border-zinc-100'}`}>
-          <p className="text-zinc-300 font-black uppercase italic text-2xl">
+        <div className="text-center py-20 rounded-[2rem] border-2 border-dashed bg-esports-card border-white/5">
+          <p className="text-esports-text-muted font-black uppercase italic text-2xl">
             {['gallery', 'rosters', 'recruitment', 'esportsPages', 'upgradeRequests', 'comments'].includes(activeTab) && !showApproved ? 'No Pending Items' : 'No Items Found'}
           </p>
-          <p className="text-zinc-400 font-medium mt-2">Everything is up to date!</p>
+          <p className="text-esports-text-muted/60 font-medium mt-2">Everything is up to date!</p>
         </div>
       )}
 
       {/* Edit Item Modal */}
       <AnimatePresence>
         {editingItem && (
-          <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/20 backdrop-blur-sm">
+          <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm">
             <motion.div 
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
-              className={`${darkMode ? 'bg-zinc-900 border-zinc-800' : 'bg-white border-zinc-100'} w-full max-w-lg rounded-[2.5rem] p-8 border shadow-2xl relative`}
+              className="bg-esports-card border border-white/10 w-full max-w-lg rounded-[2.5rem] p-8 shadow-2xl relative"
             >
               <button 
                 onClick={() => setEditingItem(null)}
-                className={`absolute top-6 right-6 p-2 rounded-full transition-colors ${darkMode ? 'hover:bg-zinc-800 text-zinc-500' : 'hover:bg-zinc-100 text-zinc-400'}`}
+                className="absolute top-6 right-6 p-2 rounded-full transition-colors hover:bg-white/10 text-esports-text-muted"
               >
                 <X className="w-5 h-5" />
               </button>
 
-              <h2 className={`text-2xl font-black uppercase italic mb-6 ${darkMode ? 'text-white' : 'text-zinc-900'}`}>Edit {activeTab.slice(0, -1)}</h2>
+              <h2 className="text-2xl font-black uppercase italic mb-6 text-esports-text">Edit {activeTab.slice(0, -1)}</h2>
 
               <form onSubmit={handleUpdateItem} className="space-y-4">
                 {activeTab === 'gallery' && (
                   <div className="space-y-4">
                     <div className="space-y-1">
-                      <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 ml-1">Caption</label>
+                      <label className="text-[10px] font-black uppercase tracking-widest text-esports-text-muted ml-1">Caption</label>
                       <textarea 
                         value={editingItem.caption || ''}
                         onChange={(e) => setEditingItem({ ...editingItem, caption: e.target.value })}
-                        className={`w-full rounded-xl px-4 py-2.5 focus:outline-none focus:border-pink-400 transition-colors ${darkMode ? 'bg-zinc-800 border-zinc-700 text-white' : 'bg-zinc-50 border-zinc-100 text-zinc-800'}`}
+                        className="w-full rounded-xl px-4 py-2.5 focus:outline-none focus:border-esports-primary transition-colors bg-black/20 border border-white/5 text-esports-text"
                       />
                     </div>
                   </div>
@@ -752,12 +761,12 @@ export default function Admin() {
                 {activeTab === 'rosters' && (
                   <div className="space-y-4">
                     <div className="space-y-1">
-                      <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 ml-1">Team Name</label>
+                      <label className="text-[10px] font-black uppercase tracking-widest text-esports-text-muted ml-1">Team Name</label>
                       <input 
                         type="text"
                         value={editingItem.teamName || ''}
                         onChange={(e) => setEditingItem({ ...editingItem, teamName: e.target.value })}
-                        className={`w-full rounded-xl px-4 py-2.5 focus:outline-none focus:border-pink-400 transition-colors ${darkMode ? 'bg-zinc-800 border-zinc-700 text-white' : 'bg-zinc-50 border-zinc-100 text-zinc-800'}`}
+                        className="w-full rounded-xl px-4 py-2.5 focus:outline-none focus:border-esports-primary transition-colors bg-black/20 border border-white/5 text-esports-text"
                       />
                     </div>
                   </div>
@@ -766,11 +775,11 @@ export default function Admin() {
                 {(activeTab === 'comments' || activeTab === 'messageBoard' || activeTab === 'groupChat') && (
                   <div className="space-y-4">
                     <div className="space-y-1">
-                      <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 ml-1">Text Content</label>
+                      <label className="text-[10px] font-black uppercase tracking-widest text-esports-text-muted ml-1">Text Content</label>
                       <textarea 
                         value={editingItem.text || ''}
                         onChange={(e) => setEditingItem({ ...editingItem, text: e.target.value })}
-                        className={`w-full rounded-xl px-4 py-2.5 focus:outline-none focus:border-pink-400 transition-colors ${darkMode ? 'bg-zinc-800 border-zinc-700 text-white' : 'bg-zinc-50 border-zinc-100 text-zinc-800'}`}
+                        className="w-full rounded-xl px-4 py-2.5 focus:outline-none focus:border-esports-primary transition-colors bg-black/20 border border-white/5 text-esports-text"
                       />
                     </div>
                   </div>
@@ -779,29 +788,29 @@ export default function Admin() {
                 {activeTab === 'esportsPages' && (
                   <div className="space-y-4">
                     <div className="space-y-1">
-                      <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 ml-1">Logo URL</label>
+                      <label className="text-[10px] font-black uppercase tracking-widest text-esports-text-muted ml-1">Logo URL</label>
                       <input 
                         type="text"
                         value={editingItem.logoUrl || ''}
                         onChange={(e) => setEditingItem({ ...editingItem, logoUrl: e.target.value })}
-                        className={`w-full rounded-xl px-4 py-2.5 focus:outline-none focus:border-pink-400 transition-colors ${darkMode ? 'bg-zinc-800 border-zinc-700 text-white' : 'bg-zinc-50 border-zinc-100 text-zinc-800'}`}
+                        className="w-full rounded-xl px-4 py-2.5 focus:outline-none focus:border-esports-primary transition-colors bg-black/20 border border-white/5 text-esports-text"
                       />
                     </div>
                     <div className="space-y-1">
-                      <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 ml-1">Title</label>
+                      <label className="text-[10px] font-black uppercase tracking-widest text-esports-text-muted ml-1">Title</label>
                       <input 
                         type="text"
                         value={editingItem.title || ''}
                         onChange={(e) => setEditingItem({ ...editingItem, title: e.target.value })}
-                        className={`w-full rounded-xl px-4 py-2.5 focus:outline-none focus:border-pink-400 transition-colors ${darkMode ? 'bg-zinc-800 border-zinc-700 text-white' : 'bg-zinc-50 border-zinc-100 text-zinc-800'}`}
+                        className="w-full rounded-xl px-4 py-2.5 focus:outline-none focus:border-esports-primary transition-colors bg-black/20 border border-white/5 text-esports-text"
                       />
                     </div>
                     <div className="space-y-1">
-                      <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 ml-1">Category</label>
+                      <label className="text-[10px] font-black uppercase tracking-widest text-esports-text-muted ml-1">Category</label>
                       <select 
                         value={editingItem.category || 'News'}
                         onChange={(e) => setEditingItem({ ...editingItem, category: e.target.value })}
-                        className={`w-full rounded-xl px-4 py-2.5 focus:outline-none focus:border-pink-400 transition-colors ${darkMode ? 'bg-zinc-800 border-zinc-700 text-white' : 'bg-zinc-50 border-zinc-100 text-zinc-800'}`}
+                        className="w-full rounded-xl px-4 py-2.5 focus:outline-none focus:border-esports-primary transition-colors bg-black/20 border border-white/5 text-esports-text"
                       >
                         <option value="News">News</option>
                         <option value="Production">Production</option>
@@ -812,40 +821,40 @@ export default function Admin() {
                       </select>
                     </div>
                     <div className="space-y-1">
-                      <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 ml-1">Description</label>
+                      <label className="text-[10px] font-black uppercase tracking-widest text-esports-text-muted ml-1">Description</label>
                       <textarea 
                         value={editingItem.description || ''}
                         onChange={(e) => setEditingItem({ ...editingItem, description: e.target.value })}
-                        className={`w-full rounded-xl px-4 py-2.5 focus:outline-none focus:border-pink-400 transition-colors ${darkMode ? 'bg-zinc-800 border-zinc-700 text-white' : 'bg-zinc-50 border-zinc-100 text-zinc-800'}`}
+                        className="w-full rounded-xl px-4 py-2.5 focus:outline-none focus:border-esports-primary transition-colors bg-black/20 border border-white/5 text-esports-text"
                       />
                     </div>
                     <div className="grid grid-cols-2 gap-4">
                       <div className="space-y-1">
-                        <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 ml-1">Facebook</label>
+                        <label className="text-[10px] font-black uppercase tracking-widest text-esports-text-muted ml-1">Facebook</label>
                         <input 
                           type="text"
                           value={editingItem.socialLinks?.facebook || ''}
                           onChange={(e) => setEditingItem({ ...editingItem, socialLinks: { ...editingItem.socialLinks, facebook: e.target.value } })}
-                          className={`w-full rounded-xl px-4 py-2.5 focus:outline-none focus:border-pink-400 transition-colors ${darkMode ? 'bg-zinc-800 border-zinc-700 text-white' : 'bg-zinc-50 border-zinc-100 text-zinc-800'}`}
+                          className="w-full rounded-xl px-4 py-2.5 focus:outline-none focus:border-esports-primary transition-colors bg-black/20 border border-white/5 text-esports-text"
                         />
                       </div>
                       <div className="space-y-1">
-                        <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 ml-1">WhatsApp</label>
+                        <label className="text-[10px] font-black uppercase tracking-widest text-esports-text-muted ml-1">WhatsApp</label>
                         <input 
                           type="text"
                           value={editingItem.socialLinks?.whatsapp || ''}
                           onChange={(e) => setEditingItem({ ...editingItem, socialLinks: { ...editingItem.socialLinks, whatsapp: e.target.value } })}
-                          className={`w-full rounded-xl px-4 py-2.5 focus:outline-none focus:border-pink-400 transition-colors ${darkMode ? 'bg-zinc-800 border-zinc-700 text-white' : 'bg-zinc-50 border-zinc-100 text-zinc-800'}`}
+                          className="w-full rounded-xl px-4 py-2.5 focus:outline-none focus:border-esports-primary transition-colors bg-black/20 border border-white/5 text-esports-text"
                         />
                       </div>
                     </div>
                     <div className="space-y-1">
-                      <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 ml-1">YouTube</label>
+                      <label className="text-[10px] font-black uppercase tracking-widest text-esports-text-muted ml-1">YouTube</label>
                       <input 
                         type="text"
                         value={editingItem.socialLinks?.youtube || ''}
                         onChange={(e) => setEditingItem({ ...editingItem, socialLinks: { ...editingItem.socialLinks, youtube: e.target.value } })}
-                        className={`w-full rounded-xl px-4 py-2.5 focus:outline-none focus:border-pink-400 transition-colors ${darkMode ? 'bg-zinc-800 border-zinc-700 text-white' : 'bg-zinc-50 border-zinc-100 text-zinc-800'}`}
+                        className="w-full rounded-xl px-4 py-2.5 focus:outline-none focus:border-esports-primary transition-colors bg-black/20 border border-white/5 text-esports-text"
                       />
                     </div>
                   </div>
@@ -855,39 +864,39 @@ export default function Admin() {
                   <div className="space-y-4">
                     <div className="grid grid-cols-2 gap-4">
                       <div className="space-y-1">
-                        <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 ml-1">Rank</label>
+                        <label className="text-[10px] font-black uppercase tracking-widest text-esports-text-muted ml-1">Rank</label>
                         <input 
                           type="number"
                           value={editingItem.rank || ''}
                           onChange={(e) => setEditingItem({ ...editingItem, rank: parseInt(e.target.value) })}
-                          className={`w-full rounded-xl px-4 py-2.5 focus:outline-none focus:border-pink-400 transition-colors ${darkMode ? 'bg-zinc-800 border-zinc-700 text-white' : 'bg-zinc-50 border-zinc-100 text-zinc-800'}`}
+                          className="w-full rounded-xl px-4 py-2.5 focus:outline-none focus:border-esports-primary transition-colors bg-black/20 border border-white/5 text-esports-text"
                         />
                       </div>
                       <div className="space-y-1">
-                        <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 ml-1">Team Name</label>
+                        <label className="text-[10px] font-black uppercase tracking-widest text-esports-text-muted ml-1">Team Name</label>
                         <input 
                           type="text"
                           value={editingItem.name || ''}
                           onChange={(e) => setEditingItem({ ...editingItem, name: e.target.value })}
-                          className={`w-full rounded-xl px-4 py-2.5 focus:outline-none focus:border-pink-400 transition-colors ${darkMode ? 'bg-zinc-800 border-zinc-700 text-white' : 'bg-zinc-50 border-zinc-100 text-zinc-800'}`}
+                          className="w-full rounded-xl px-4 py-2.5 focus:outline-none focus:border-esports-primary transition-colors bg-black/20 border border-white/5 text-esports-text"
                         />
                       </div>
                     </div>
                     <div className="space-y-1">
-                      <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 ml-1">Logo URL</label>
+                      <label className="text-[10px] font-black uppercase tracking-widest text-esports-text-muted ml-1">Logo URL</label>
                       <input 
                         type="text"
                         value={editingItem.logoUrl || ''}
                         onChange={(e) => setEditingItem({ ...editingItem, logoUrl: e.target.value })}
-                        className={`w-full rounded-xl px-4 py-2.5 focus:outline-none focus:border-pink-400 transition-colors ${darkMode ? 'bg-zinc-800 border-zinc-700 text-white' : 'bg-zinc-50 border-zinc-100 text-zinc-800'}`}
+                        className="w-full rounded-xl px-4 py-2.5 focus:outline-none focus:border-esports-primary transition-colors bg-black/20 border border-white/5 text-esports-text"
                       />
                     </div>
                     <div className="space-y-1">
-                      <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 ml-1">Description</label>
+                      <label className="text-[10px] font-black uppercase tracking-widest text-esports-text-muted ml-1">Description</label>
                       <textarea 
                         value={editingItem.description || ''}
                         onChange={(e) => setEditingItem({ ...editingItem, description: e.target.value })}
-                        className={`w-full rounded-xl px-4 py-2.5 focus:outline-none focus:border-pink-400 transition-colors ${darkMode ? 'bg-zinc-800 border-zinc-700 text-white' : 'bg-zinc-50 border-zinc-100 text-zinc-800'}`}
+                        className="w-full rounded-xl px-4 py-2.5 focus:outline-none focus:border-esports-primary transition-colors bg-black/20 border border-white/5 text-esports-text"
                       />
                     </div>
                   </div>
@@ -918,7 +927,7 @@ export default function Admin() {
             >
               <button 
                 onClick={() => setSelectedUser(null)}
-                className={`absolute top-6 right-6 p-2 rounded-full transition-colors ${darkMode ? 'hover:bg-zinc-800 text-zinc-500' : 'hover:bg-zinc-100 text-zinc-400'}`}
+                className="absolute top-6 right-6 p-2 rounded-full transition-colors hover:bg-white/10 text-esports-text-muted"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -935,13 +944,13 @@ export default function Admin() {
                 </div>
 
                 <div className="space-y-1">
-                  <h2 className={`text-2xl font-black uppercase italic leading-none ${darkMode ? 'text-white' : 'text-zinc-900'}`}>{selectedUser.displayName}</h2>
-                  <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Squad Member</p>
+                  <h2 className="text-2xl font-black uppercase italic leading-none text-esports-text">{selectedUser.displayName}</h2>
+                  <p className="text-[10px] font-bold text-esports-text-muted uppercase tracking-widest">Squad Member</p>
                 </div>
 
                 {selectedUser.bio ? (
                   <div className={`p-4 rounded-2xl border ${darkMode ? 'bg-zinc-800 border-zinc-700' : 'bg-zinc-50 border-zinc-100'}`}>
-                    <p className={`${darkMode ? 'text-zinc-400' : 'text-zinc-600'} text-sm font-medium italic leading-relaxed`}>
+                    <p className="text-esports-text-muted text-sm font-medium italic leading-relaxed">
                       "{selectedUser.bio}"
                     </p>
                   </div>
@@ -967,12 +976,12 @@ export default function Admin() {
               <div className={`w-16 h-16 rounded-full mx-auto mb-6 flex items-center justify-center ${darkMode ? 'bg-red-900/20' : 'bg-red-50'}`}>
                 <Trash2 className="w-8 h-8 text-red-500" />
               </div>
-              <h3 className={`text-2xl font-black uppercase italic mb-2 ${darkMode ? 'text-white' : 'text-zinc-900'}`}>Confirm Delete</h3>
-              <p className="text-zinc-400 text-sm mb-8">Are you sure you want to delete this item? This action cannot be undone.</p>
+              <h3 className="text-2xl font-black uppercase italic mb-2 text-esports-text">Confirm Delete</h3>
+              <p className="text-esports-text-muted text-sm mb-8">Are you sure you want to delete this item? This action cannot be undone.</p>
               <div className="grid grid-cols-2 gap-4">
                 <button
                   onClick={() => setDeleteConfirm(null)}
-                  className={`py-4 rounded-2xl font-black uppercase italic tracking-widest text-xs transition-all ${darkMode ? 'bg-zinc-800 text-zinc-400 hover:bg-zinc-700' : 'bg-zinc-100 text-zinc-500 hover:bg-zinc-200'}`}
+                  className="py-4 rounded-2xl font-black uppercase italic tracking-widest text-xs transition-all bg-esports-card text-esports-text-muted hover:bg-white/10"
                 >
                   Cancel
                 </button>

@@ -4,8 +4,19 @@ import { doc, updateDoc, getDoc, query, collection, where, getDocs } from 'fireb
 import { updateProfile } from 'firebase/auth';
 import { useAuth, useTheme } from '../App';
 import { motion } from 'motion/react';
-import { User, Camera, Save, Globe, Facebook, Gamepad2, AtSign, Info } from 'lucide-react';
+import { User, Camera, Save, Globe, Facebook, Gamepad2, AtSign, Info, MapPin, Image as ImageIcon, Sparkles } from 'lucide-react';
 import imageCompression from 'browser-image-compression';
+
+const BANGLADESH_DISTRICTS = [
+  'Dhaka', 'Faridpur', 'Gazipur', 'Gopalganj', 'Kishoreganj', 'Madaripur', 'Manikganj', 'Munshiganj', 'Narayanganj', 'Narsingdi', 'Rajbari', 'Shariatpur', 'Tangail',
+  'Bagerhat', 'Chuadanga', 'Jessore', 'Jhenaidah', 'Khulna', 'Kushtia', 'Magura', 'Meherpur', 'Narail', 'Satkhira',
+  'Bogra', 'Joypurhat', 'Naogaon', 'Natore', 'Chapainawabganj', 'Pabna', 'Rajshahi', 'Sirajganj',
+  'Dinajpur', 'Gaibandha', 'Kurigram', 'Lalmonirhat', 'Nilphamari', 'Panchagarh', 'Rangpur', 'Thakurgaon',
+  'Habiganj', 'Moulvibazar', 'Sunamganj', 'Sylhet',
+  'Barguna', 'Barisal', 'Bhola', 'Jhalokati', 'Patuakhali', 'Pirojpur',
+  'Bandarban', 'Brahmanbaria', 'Chandpur', 'Chittagong', 'Comilla', 'Cox\'s Bazar', 'Feni', 'Khagrachhari', 'Lakshmipur', 'Noakhali', 'Rangamati',
+  'Jamalpur', 'Mymensingh', 'Netrokona', 'Sherpur'
+].sort();
 
 export default function Profile() {
   const { user, userData } = useAuth();
@@ -20,11 +31,14 @@ export default function Profile() {
     facebookId: '',
     bio: '',
     photoURL: '',
+    bannerUrl: '',
+    district: '',
     country: '',
     role: ''
   });
 
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const bannerInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (userData) {
@@ -35,18 +49,20 @@ export default function Profile() {
         facebookId: userData.facebookId || '',
         bio: userData.bio || '',
         photoURL: userData.photoURL || '',
+        bannerUrl: userData.bannerUrl || '',
+        district: userData.district || '',
         country: userData.country || '',
         role: userData.role || ''
       });
     }
   }, [userData]);
 
-  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>, field: 'photoURL' | 'bannerUrl') => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
       const options = {
-        maxSizeMB: 0.1,
-        maxWidthOrHeight: 400,
+        maxSizeMB: field === 'bannerUrl' ? 0.2 : 0.1,
+        maxWidthOrHeight: field === 'bannerUrl' ? 1200 : 400,
         useWebWorker: true,
       };
       try {
@@ -54,7 +70,7 @@ export default function Profile() {
         const reader = new FileReader();
         reader.readAsDataURL(compressedFile);
         reader.onloadend = () => {
-          setFormData(prev => ({ ...prev, photoURL: reader.result as string }));
+          setFormData(prev => ({ ...prev, [field]: reader.result as string }));
         };
       } catch (error) {
         console.error('Image upload failed:', error);
@@ -88,6 +104,8 @@ export default function Profile() {
         facebookId: formData.facebookId,
         bio: formData.bio,
         photoURL: formData.photoURL,
+        bannerUrl: formData.bannerUrl,
+        district: formData.district,
         country: formData.country,
         role: formData.role
       });
@@ -127,10 +145,73 @@ export default function Profile() {
       className="max-w-4xl mx-auto space-y-12"
     >
       <div className="text-center space-y-4">
-        <h1 className={`text-5xl font-black uppercase italic tracking-tighter leading-none ${darkMode ? 'text-white' : 'text-zinc-900'}`}>
+        <h1 className="text-5xl font-black uppercase italic tracking-tighter leading-none text-esports-text">
           Edit Profile
         </h1>
-        <p className="text-zinc-500 font-medium">Customize your public esports presence.</p>
+        <p className="text-esports-text-muted font-medium">Customize your public esports presence.</p>
+      </div>
+
+      {/* Profile Preview (Esports Card Style) */}
+      <div className="relative group">
+        <div className="relative h-64 rounded-[2rem] overflow-hidden border-4 border-esports-card shadow-2xl bg-esports-card">
+          {/* Animated Gradient Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-br from-esports-primary/20 via-purple-500/10 to-blue-500/10 z-10" />
+          
+          {formData.bannerUrl ? (
+            <img src={formData.bannerUrl} className="w-full h-full object-cover" alt="Banner" />
+          ) : (
+            <div className="w-full h-full bg-white/5 flex items-center justify-center">
+              <ImageIcon className="w-12 h-12 text-white/10" />
+            </div>
+          )}
+
+          <div className="absolute inset-0 bg-gradient-to-t from-esports-bg via-transparent to-transparent z-20" />
+          
+          <div className="absolute bottom-8 left-8 right-8 flex items-end justify-between z-30">
+            <div className="flex items-center gap-6">
+              <div className="relative">
+                <img 
+                  src={formData.photoURL || `https://picsum.photos/seed/${user.uid}/200/200`} 
+                  className="w-24 h-24 rounded-2xl border-4 border-esports-card object-cover shadow-2xl"
+                  alt="Avatar"
+                />
+                <div className="absolute -top-2 -right-2 bg-esports-primary p-1.5 rounded-lg shadow-lg">
+                  <Sparkles className="w-3 h-3 text-white" />
+                </div>
+              </div>
+              <div className="text-esports-text">
+                <h2 className="text-3xl font-black uppercase italic tracking-tighter">{formData.displayName || 'Your Name'}</h2>
+                <div className="flex items-center gap-3">
+                  <span className="text-xs font-bold text-esports-text-muted uppercase tracking-widest">@{formData.username || 'username'}</span>
+                  <span className="px-2 py-0.5 bg-esports-primary/20 text-esports-primary rounded-md text-[10px] font-black uppercase italic">{formData.role || 'Player'}</span>
+                </div>
+              </div>
+            </div>
+            
+            <div className="text-right">
+              <div className="flex items-center gap-2 text-esports-text-muted mb-1">
+                <MapPin className="w-3 h-3" />
+                <span className="text-[10px] font-black uppercase tracking-widest">{formData.district || 'Location'}</span>
+              </div>
+              <div className="text-esports-secondary text-xl font-black italic uppercase tracking-tighter">Pro Elite</div>
+            </div>
+          </div>
+
+          <button 
+            type="button"
+            onClick={() => bannerInputRef.current?.click()}
+            className="absolute top-6 right-6 p-3 bg-white/10 backdrop-blur-md text-white rounded-xl hover:bg-white/20 transition-all z-40 border border-white/20"
+          >
+            <Camera className="w-5 h-5" />
+          </button>
+          <input 
+            type="file" 
+            ref={bannerInputRef} 
+            onChange={(e) => handleImageUpload(e, 'bannerUrl')} 
+            accept="image/*" 
+            className="hidden" 
+          />
+        </div>
       </div>
 
       <form onSubmit={handleSave} className="grid grid-cols-1 md:grid-cols-3 gap-12">
@@ -139,21 +220,21 @@ export default function Profile() {
           <div className="relative group mx-auto w-48 h-48">
             <img 
               src={formData.photoURL || `https://picsum.photos/seed/${user.uid}/400/400`} 
-              className={`w-full h-full rounded-[3rem] object-cover border-8 ${darkMode ? 'border-zinc-900 shadow-zinc-900' : 'border-white shadow-pink-100'} shadow-2xl transition-all group-hover:scale-105`}
+              className="w-full h-full rounded-[2.5rem] object-cover border-8 border-esports-card shadow-2xl transition-all group-hover:scale-105"
               alt="Profile"
               referrerPolicy="no-referrer"
             />
             <button 
               type="button"
               onClick={() => fileInputRef.current?.click()}
-              className="absolute bottom-4 right-4 p-4 bg-pink-400 text-white rounded-2xl shadow-xl hover:bg-pink-500 transition-all active:scale-90"
+              className="absolute bottom-4 right-4 p-4 bg-esports-primary text-white rounded-2xl shadow-xl hover:bg-red-600 transition-all active:scale-90"
             >
               <Camera className="w-6 h-6" />
             </button>
             <input 
               type="file" 
               ref={fileInputRef} 
-              onChange={handleImageUpload} 
+              onChange={(e) => handleImageUpload(e, 'photoURL')} 
               accept="image/*" 
               className="hidden" 
             />
@@ -161,27 +242,27 @@ export default function Profile() {
 
           <div className="space-y-4">
             <div className="space-y-2">
-              <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 ml-2">Display Name</label>
+              <label className="text-[10px] font-black uppercase tracking-widest text-esports-text-muted ml-2">Display Name</label>
               <div className="relative">
-                <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-zinc-400" />
+                <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-esports-text-muted" />
                 <input 
                   required
                   value={formData.displayName}
                   onChange={(e) => setFormData({ ...formData, displayName: e.target.value })}
-                  className={`w-full pl-12 pr-4 py-4 rounded-2xl border ${darkMode ? 'bg-zinc-900 border-zinc-800 text-white' : 'bg-white border-zinc-100 text-zinc-900'} focus:ring-2 focus:ring-pink-400 outline-none transition-all font-bold`}
+                  className="w-full pl-12 pr-4 py-4 rounded-2xl border bg-esports-card border-white/5 text-esports-text focus:ring-2 focus:ring-esports-primary outline-none transition-all font-bold"
                 />
               </div>
             </div>
 
             <div className="space-y-2">
-              <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 ml-2">Username</label>
+              <label className="text-[10px] font-black uppercase tracking-widest text-esports-text-muted ml-2">Username</label>
               <div className="relative">
-                <AtSign className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-zinc-400" />
+                <AtSign className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-esports-text-muted" />
                 <input 
                   required
                   value={formData.username}
                   onChange={(e) => setFormData({ ...formData, username: e.target.value.replace(/\s/g, '') })}
-                  className={`w-full pl-12 pr-4 py-4 rounded-2xl border ${darkMode ? 'bg-zinc-900 border-zinc-800 text-white' : 'bg-white border-zinc-100 text-zinc-900'} focus:ring-2 focus:ring-pink-400 outline-none transition-all font-bold`}
+                  className="w-full pl-12 pr-4 py-4 rounded-2xl border bg-esports-card border-white/5 text-esports-text focus:ring-2 focus:ring-esports-primary outline-none transition-all font-bold"
                 />
               </div>
             </div>
@@ -192,52 +273,69 @@ export default function Profile() {
         <div className="md:col-span-2 space-y-8">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div className="space-y-2">
-              <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 ml-2">Game UID</label>
+              <label className="text-[10px] font-black uppercase tracking-widest text-esports-text-muted ml-2">Game UID</label>
               <div className="relative">
-                <Gamepad2 className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-zinc-400" />
+                <Gamepad2 className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-esports-text-muted" />
                 <input 
                   value={formData.gameUID}
                   onChange={(e) => setFormData({ ...formData, gameUID: e.target.value })}
                   placeholder="Your FF UID..."
-                  className={`w-full pl-12 pr-4 py-4 rounded-2xl border ${darkMode ? 'bg-zinc-900 border-zinc-800 text-white' : 'bg-white border-zinc-100 text-zinc-900'} focus:ring-2 focus:ring-pink-400 outline-none transition-all font-bold`}
+                  className="w-full pl-12 pr-4 py-4 rounded-2xl border bg-esports-card border-white/5 text-esports-text focus:ring-2 focus:ring-esports-primary outline-none transition-all font-bold"
                 />
               </div>
             </div>
 
             <div className="space-y-2">
-              <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 ml-2">Facebook ID / Link</label>
+              <label className="text-[10px] font-black uppercase tracking-widest text-esports-text-muted ml-2">Facebook ID / Link</label>
               <div className="relative">
-                <Facebook className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-zinc-400" />
+                <Facebook className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-esports-text-muted" />
                 <input 
                   value={formData.facebookId}
                   onChange={(e) => setFormData({ ...formData, facebookId: e.target.value })}
                   placeholder="Facebook profile link..."
-                  className={`w-full pl-12 pr-4 py-4 rounded-2xl border ${darkMode ? 'bg-zinc-900 border-zinc-800 text-white' : 'bg-white border-zinc-100 text-zinc-900'} focus:ring-2 focus:ring-pink-400 outline-none transition-all font-bold`}
+                  className="w-full pl-12 pr-4 py-4 rounded-2xl border bg-esports-card border-white/5 text-esports-text focus:ring-2 focus:ring-esports-primary outline-none transition-all font-bold"
                 />
               </div>
             </div>
 
             <div className="space-y-2">
-              <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 ml-2">Country</label>
+              <label className="text-[10px] font-black uppercase tracking-widest text-esports-text-muted ml-2">District (Bangladesh)</label>
               <div className="relative">
-                <Globe className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-zinc-400" />
+                <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-esports-text-muted" />
+                <select 
+                  value={formData.district}
+                  onChange={(e) => setFormData({ ...formData, district: e.target.value })}
+                  className="w-full pl-12 pr-4 py-4 rounded-2xl border bg-esports-card border-white/5 text-esports-text focus:ring-2 focus:ring-esports-primary outline-none transition-all font-bold appearance-none"
+                >
+                  <option value="">Select District</option>
+                  {BANGLADESH_DISTRICTS.map(d => (
+                    <option key={d} value={d}>{d}</option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <label className="text-[10px] font-black uppercase tracking-widest text-esports-text-muted ml-2">Country</label>
+              <div className="relative">
+                <Globe className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-esports-text-muted" />
                 <input 
                   value={formData.country}
                   onChange={(e) => setFormData({ ...formData, country: e.target.value })}
                   placeholder="e.g. Bangladesh, India..."
-                  className={`w-full pl-12 pr-4 py-4 rounded-2xl border ${darkMode ? 'bg-zinc-900 border-zinc-800 text-white' : 'bg-white border-zinc-100 text-zinc-900'} focus:ring-2 focus:ring-pink-400 outline-none transition-all font-bold`}
+                  className="w-full pl-12 pr-4 py-4 rounded-2xl border bg-esports-card border-white/5 text-esports-text focus:ring-2 focus:ring-esports-primary outline-none transition-all font-bold"
                 />
               </div>
             </div>
 
             <div className="space-y-2">
-              <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 ml-2">Esports Role</label>
+              <label className="text-[10px] font-black uppercase tracking-widest text-esports-text-muted ml-2">Esports Role</label>
               <div className="relative">
-                <Gamepad2 className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-zinc-400" />
+                <Gamepad2 className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-esports-text-muted" />
                 <select 
                   value={formData.role}
                   onChange={(e) => setFormData({ ...formData, role: e.target.value })}
-                  className={`w-full pl-12 pr-4 py-4 rounded-2xl border ${darkMode ? 'bg-zinc-900 border-zinc-800 text-white' : 'bg-white border-zinc-100 text-zinc-900'} focus:ring-2 focus:ring-pink-400 outline-none transition-all font-bold appearance-none`}
+                  className="w-full pl-12 pr-4 py-4 rounded-2xl border bg-esports-card border-white/5 text-esports-text focus:ring-2 focus:ring-esports-primary outline-none transition-all font-bold appearance-none"
                 >
                   <option value="">Select Role</option>
                   <option value="Captain">Captain</option>
@@ -252,15 +350,15 @@ export default function Profile() {
           </div>
 
           <div className="space-y-2">
-            <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 ml-2">Bio / Description</label>
+            <label className="text-[10px] font-black uppercase tracking-widest text-esports-text-muted ml-2">Bio / Description</label>
             <div className="relative">
-              <Info className="absolute left-4 top-6 w-5 h-5 text-zinc-400" />
+              <Info className="absolute left-4 top-6 w-5 h-5 text-esports-text-muted" />
               <textarea 
                 value={formData.bio}
                 onChange={(e) => setFormData({ ...formData, bio: e.target.value })}
                 placeholder="Tell the world about yourself..."
                 rows={4}
-                className={`w-full pl-12 pr-4 py-4 rounded-2xl border ${darkMode ? 'bg-zinc-900 border-zinc-800 text-white' : 'bg-white border-zinc-100 text-zinc-900'} focus:ring-2 focus:ring-pink-400 outline-none transition-all font-bold resize-none`}
+                className="w-full pl-12 pr-4 py-4 rounded-2xl border bg-esports-card border-white/5 text-esports-text focus:ring-2 focus:ring-esports-primary outline-none transition-all font-bold resize-none"
               />
             </div>
           </div>
@@ -274,7 +372,7 @@ export default function Profile() {
           <button 
             type="submit"
             disabled={loading}
-            className="w-full py-5 bg-pink-400 text-white rounded-[2rem] font-black uppercase italic tracking-wider hover:bg-pink-500 transition-all active:scale-95 disabled:opacity-50 shadow-xl shadow-pink-400/20 flex items-center justify-center gap-3"
+            className="w-full py-5 bg-esports-primary text-white rounded-[2rem] font-black uppercase italic tracking-wider hover:bg-red-600 transition-all active:scale-95 disabled:opacity-50 shadow-xl shadow-esports-primary/20 flex items-center justify-center gap-3"
           >
             <Save className="w-6 h-6" />
             {loading ? 'Saving Changes...' : 'Save Profile'}

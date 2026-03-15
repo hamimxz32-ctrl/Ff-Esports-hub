@@ -208,7 +208,7 @@ export default function Friends() {
       <section>
         <div className="flex items-center justify-between mb-8">
           <div>
-            <h1 className="text-4xl font-black uppercase italic tracking-tighter">{settings.friendsTitle}</h1>
+            <h1 className="text-4xl font-black uppercase italic tracking-tighter text-esports-text">{settings.friendsTitle}</h1>
             <p className="text-zinc-500 font-medium">{settings.friendsDesc}</p>
           </div>
         </div>
@@ -300,7 +300,7 @@ export default function Friends() {
           <div className="lg:col-span-2 space-y-6">
             <div className="flex items-center gap-3 mb-2">
               <Users className="w-6 h-6 text-pink-400" />
-              <h2 className="text-2xl font-black uppercase italic tracking-tighter">My Friends</h2>
+              <h2 className="text-2xl font-black uppercase italic tracking-tighter text-esports-text">My Friends</h2>
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -358,7 +358,7 @@ export default function Friends() {
             <div>
               <div className="flex items-center gap-3 mb-6">
                 <Clock className="w-5 h-5 text-pink-400" />
-                <h2 className="text-xl font-black uppercase italic tracking-tighter">Requests</h2>
+                <h2 className="text-xl font-black uppercase italic tracking-tighter text-esports-text">Requests</h2>
               </div>
               
               <div className="space-y-3">
@@ -411,7 +411,7 @@ export default function Friends() {
         <div className="space-y-8">
           <div className="flex items-center gap-3">
             <Swords className="w-6 h-6 text-orange-400" />
-            <h2 className="text-2xl font-black uppercase italic tracking-tighter">Team Challenges</h2>
+            <h2 className="text-2xl font-black uppercase italic tracking-tighter text-esports-text">Team Challenges</h2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

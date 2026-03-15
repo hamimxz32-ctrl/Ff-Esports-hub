@@ -101,12 +101,74 @@
         "email": { "type": "string", "format": "email" },
         "displayName": { "type": "string" },
         "photoURL": { "type": "string", "format": "uri" },
+        "bannerUrl": { "type": "string", "format": "uri" },
         "bio": { "type": "string" },
         "gameUID": { "type": "string" },
         "facebookId": { "type": "string" },
+        "district": { "type": "string" },
+        "location": {
+          "type": "object",
+          "properties": {
+            "lat": { "type": "number" },
+            "lng": { "type": "number" }
+          }
+        },
         "lastActive": { "type": "string", "format": "date-time" },
         "isOnline": { "type": "boolean" }
       }
+    },
+    "TopTeam": {
+      "title": "Top Team",
+      "description": "A ranked esports team",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "rank": { "type": "number" },
+        "description": { "type": "string" },
+        "logoUrl": { "type": "string", "format": "uri" },
+        "isVerified": { "type": "boolean" },
+        "badgeType": { "type": "string" },
+        "socialLink": { "type": "string" },
+        "achievements": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "title": { "type": "string" },
+              "image": { "type": "string" }
+            }
+          }
+        },
+        "reactions": { "type": "object" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "Champion": {
+      "title": "Champion",
+      "description": "A recent tournament champion or highlight",
+      "type": "object",
+      "properties": {
+        "teamName": { "type": "string" },
+        "tournamentName": { "type": "string" },
+        "imageUrl": { "type": "string", "format": "uri" },
+        "caption": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["teamName", "imageUrl", "createdAt"]
+    },
+    "HallOfFameEntry": {
+      "title": "Hall of Fame Entry",
+      "description": "An entry in the esports Hall of Fame",
+      "type": "object",
+      "properties": {
+        "category": { "type": "string", "enum": ["team", "player", "tournament"] },
+        "name": { "type": "string" },
+        "description": { "type": "string" },
+        "imageUrl": { "type": "string", "format": "uri" },
+        "year": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["category", "name", "createdAt"]
     },
     "FriendRequest": {
       "title": "Friend Request",
@@ -211,6 +273,18 @@
     "/recruitment": {
       "schema": "RecruitmentPost",
       "description": "Player and team recruitment posts"
+    },
+    "/topTeams": {
+      "schema": "TopTeam",
+      "description": "Ranked esports teams"
+    },
+    "/champions": {
+      "schema": "Champion",
+      "description": "Recent tournament champions and highlights"
+    },
+    "/hallOfFame": {
+      "schema": "HallOfFameEntry",
+      "description": "Esports Hall of Fame entries"
     },
     "/settings": {
       "schema": "object",

@@ -23,67 +23,68 @@ export default function Navbar() {
   };
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-300 ${darkMode ? 'bg-zinc-900/80 border-zinc-800' : 'bg-white/80 border-zinc-100'} backdrop-blur-md border-b`}>
-      <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-esports-bg/80 backdrop-blur-md border-b border-white/5">
+      <div className="max-w-[1200px] mx-auto px-4 h-20 flex items-center justify-between">
         <Link to="/" className="flex items-center gap-2 group">
-          <span className={`font-black text-2xl tracking-tighter uppercase italic ${darkMode ? 'text-pink-400' : 'text-pink-500'}`}>{settings.siteTitle}</span>
+          <span className="font-black text-2xl tracking-tighter uppercase italic text-esports-primary">{settings.siteTitle}</span>
         </Link>
 
           <div className="flex items-center gap-1 sm:gap-2">
             <button 
+              onClick={toggleDarkMode}
+              className="p-3 rounded-xl text-esports-text-muted hover:bg-white/5 transition-colors"
+              title={darkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+            >
+              {darkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+            </button>
+
+            <button 
               onClick={() => setShowSearch(true)}
-              className={`p-2 rounded-full transition-colors ${darkMode ? 'text-zinc-400 hover:bg-zinc-800' : 'text-zinc-500 hover:bg-zinc-100'}`}
+              className="p-3 rounded-xl text-esports-text-muted hover:bg-white/5 transition-colors"
               title="Search Hub"
             >
               <Search className="w-5 h-5" />
             </button>
 
             <div className="hidden lg:flex items-center gap-1">
-            <Link to="/rosters" className={`flex items-center gap-2 px-3 py-2 rounded-xl transition-all ${location.pathname === '/rosters' ? 'text-pink-500 bg-pink-50 dark:bg-pink-900/20' : 'text-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-800'}`}>
+            <Link to="/rosters" className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all ${location.pathname === '/rosters' ? 'text-esports-primary bg-esports-primary/10' : 'text-esports-text-muted hover:bg-white/5'}`}>
               <Users className="w-4 h-4" />
               <span className="text-[10px] font-black uppercase italic tracking-widest">Rosters</span>
             </Link>
-            <Link to="/album" className={`flex items-center gap-2 px-3 py-2 rounded-xl transition-all ${location.pathname === '/album' ? 'text-pink-500 bg-pink-50 dark:bg-pink-900/20' : 'text-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-800'}`}>
+            <Link to="/album" className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all ${location.pathname === '/album' ? 'text-esports-primary bg-esports-primary/10' : 'text-esports-text-muted hover:bg-white/5'}`}>
               <Image className="w-4 h-4" />
               <span className="text-[10px] font-black uppercase italic tracking-widest">Album</span>
             </Link>
-            <Link to="/recruitment" className={`flex items-center gap-2 px-3 py-2 rounded-xl transition-all ${location.pathname === '/recruitment' ? 'text-pink-500 bg-pink-50 dark:bg-pink-900/20' : 'text-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-800'}`}>
+            <Link to="/recruitment" className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all ${location.pathname === '/recruitment' ? 'text-esports-primary bg-esports-primary/10' : 'text-esports-text-muted hover:bg-white/5'}`}>
               <UserPlus className="w-4 h-4" />
               <span className="text-[10px] font-black uppercase italic tracking-widest">Recruit</span>
             </Link>
-            <Link to="/message-board" className={`flex items-center gap-2 px-3 py-2 rounded-xl transition-all ${location.pathname === '/message-board' ? 'text-pink-500 bg-pink-50 dark:bg-pink-900/20' : 'text-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-800'}`}>
+            <Link to="/message-board" className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all ${location.pathname === '/message-board' ? 'text-esports-primary bg-esports-primary/10' : 'text-esports-text-muted hover:bg-white/5'}`}>
               <LayoutGrid className="w-4 h-4" />
               <span className="text-[10px] font-black uppercase italic tracking-widest">Board</span>
             </Link>
-            <Link to="/group-chat" className={`flex items-center gap-2 px-3 py-2 rounded-xl transition-all ${location.pathname === '/group-chat' ? 'text-pink-500 bg-pink-50 dark:bg-pink-900/20' : 'text-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-800'}`}>
+            <Link to="/group-chat" className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all ${location.pathname === '/group-chat' ? 'text-esports-primary bg-esports-primary/10' : 'text-esports-text-muted hover:bg-white/5'}`}>
               <MessagesSquare className="w-4 h-4" />
               <span className="text-[10px] font-black uppercase italic tracking-widest">Chat</span>
             </Link>
-            <Link to="/top-teams" className={`flex items-center gap-2 px-3 py-2 rounded-xl transition-all ${location.pathname === '/top-teams' ? 'text-pink-500 bg-pink-50 dark:bg-pink-900/20' : 'text-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-800'}`}>
+            <Link to="/top-teams" className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all ${location.pathname === '/top-teams' ? 'text-esports-primary bg-esports-primary/10' : 'text-esports-text-muted hover:bg-white/5'}`}>
               <Trophy className="w-4 h-4" />
               <span className="text-[10px] font-black uppercase italic tracking-widest">Top Teams</span>
             </Link>
           </div>
 
           <div className="flex lg:hidden items-center gap-1">
-            <Link to="/message-board" className="p-2 text-zinc-500"><LayoutGrid className="w-5 h-5" /></Link>
-            <Link to="/group-chat" className="p-2 text-zinc-500"><MessagesSquare className="w-5 h-5" /></Link>
+            <Link to="/message-board" className="p-2 text-esports-text-muted"><LayoutGrid className="w-5 h-5" /></Link>
+            <Link to="/group-chat" className="p-2 text-esports-text-muted"><MessagesSquare className="w-5 h-5" /></Link>
           </div>
             {user && (
-              <Link to="/friends" className={`p-2 rounded-full transition-colors ${location.pathname === '/friends' ? 'text-pink-400 bg-pink-50 dark:bg-pink-900/20' : 'text-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-800'}`} title="Friends & Messages">
+              <Link to="/friends" className={`p-3 rounded-xl transition-colors ${location.pathname === '/friends' ? 'text-esports-primary bg-esports-primary/10' : 'text-esports-text-muted hover:bg-white/5'}`} title="Friends & Messages">
                 <MessageSquare className="w-5 h-5" />
               </Link>
             )}
 
-          <button 
-            onClick={toggleDarkMode}
-            className={`p-2 rounded-full transition-colors ${darkMode ? 'text-amber-400 hover:bg-zinc-800' : 'text-zinc-500 hover:bg-zinc-100'}`}
-          >
-            {darkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
-          </button>
-
           {location.pathname !== '/' && (
-            <Link to="/" className={`p-2 rounded-full transition-colors ${darkMode ? 'text-zinc-400 hover:bg-zinc-800' : 'text-zinc-600 hover:bg-zinc-100'}`}>
+            <Link to="/" className="p-3 rounded-xl text-esports-text-muted hover:bg-white/5 transition-colors">
               <Home className="w-5 h-5" />
             </Link>
           )}
@@ -91,10 +92,10 @@ export default function Navbar() {
           {isAdmin && (
             <Link 
               to="/admin" 
-              className={`px-4 py-1.5 rounded-full text-sm font-bold transition-all ${
+              className={`px-5 py-2 rounded-xl text-xs font-black uppercase italic tracking-widest transition-all ${
                 location.pathname === '/admin' 
-                ? 'bg-pink-400 text-white' 
-                : darkMode ? 'bg-zinc-800 text-zinc-400 hover:bg-zinc-700' : 'bg-zinc-100 text-zinc-600 hover:bg-zinc-200'
+                ? 'bg-esports-primary text-white' 
+                : 'bg-white/5 text-esports-text-muted hover:bg-white/10'
               }`}
             >
               Admin
@@ -105,19 +106,19 @@ export default function Navbar() {
             <div className="flex items-center gap-3">
               <Link 
                 to="/profile"
-                className={`flex items-center gap-2 p-1 pr-3 rounded-full transition-all border ${darkMode ? 'bg-zinc-800 border-zinc-700 hover:bg-zinc-700' : 'bg-zinc-50 border-zinc-100 hover:bg-zinc-100'} ${location.pathname === '/profile' ? 'border-pink-400 ring-1 ring-pink-400' : ''}`}
+                className={`flex items-center gap-2 p-1 pr-4 rounded-xl transition-all border ${location.pathname === '/profile' ? 'bg-esports-primary/10 border-esports-primary/50' : 'bg-white/5 border-white/5 hover:bg-white/10'}`}
               >
                 <img 
                   src={userData?.photoURL || user.photoURL || ''} 
                   alt={userData?.displayName || user.displayName || ''} 
-                  className="w-8 h-8 rounded-full border border-zinc-200 dark:border-zinc-600"
+                  className="w-8 h-8 rounded-lg border border-white/10"
                   referrerPolicy="no-referrer"
                 />
-                <span className={`text-xs font-bold hidden sm:block ${darkMode ? 'text-zinc-300' : 'text-zinc-600'}`}>{userData?.displayName || user.displayName}</span>
+                <span className="text-[10px] font-black uppercase italic tracking-widest hidden sm:block text-esports-text">{userData?.displayName || user.displayName}</span>
               </Link>
               <button 
                 onClick={handleLogout}
-                className={`p-2 rounded-full transition-all ${darkMode ? 'text-zinc-500 hover:text-red-400 hover:bg-zinc-800' : 'text-zinc-400 hover:text-red-500 hover:bg-red-50'}`}
+                className="p-3 rounded-xl text-esports-text-muted hover:text-esports-primary hover:bg-esports-primary/10 transition-all"
                 title="Logout"
               >
                 <LogOut className="w-5 h-5" />
@@ -126,7 +127,7 @@ export default function Navbar() {
           ) : (
             <button 
               onClick={handleLogin}
-              className="flex items-center gap-2 px-4 py-1.5 bg-pink-400 text-white rounded-full text-sm font-bold hover:bg-pink-500 transition-all active:scale-95 shadow-sm"
+              className="flex items-center gap-2 px-6 py-2.5 bg-esports-primary text-white rounded-xl text-xs font-black uppercase italic tracking-widest hover:bg-red-600 transition-all active:scale-95 shadow-lg shadow-red-500/20"
             >
               <LogIn className="w-4 h-4" />
               Login
@@ -134,7 +135,7 @@ export default function Navbar() {
           )}
         </div>
       </div>
-      <SearchModal isOpen={showSearch} onClose={() => setShowSearch(false)} darkMode={darkMode} />
+      <SearchModal isOpen={showSearch} onClose={() => setShowSearch(false)} darkMode={true} />
     </nav>
   );
 }

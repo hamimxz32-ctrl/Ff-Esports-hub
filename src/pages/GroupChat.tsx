@@ -134,7 +134,7 @@ export default function GroupChat() {
               <div className={`relative group ${
                 msg.authorUid === user?.uid 
                   ? 'bg-emerald-500 text-white rounded-[1.5rem] rounded-tr-none' 
-                  : `${darkMode ? 'bg-zinc-800 text-zinc-100' : 'bg-zinc-100 text-zinc-800'} rounded-[1.5rem] rounded-tl-none`
+                  : `${darkMode ? 'bg-zinc-800 text-esports-text' : 'bg-zinc-100 text-esports-text'} rounded-[1.5rem] rounded-tl-none`
               } p-4 shadow-sm`}>
                 {msg.replyTo && (
                   <div className={`mb-2 p-2 rounded-lg text-[10px] border-l-4 border-emerald-400 ${
@@ -181,7 +181,7 @@ export default function GroupChat() {
                 <Reply className="w-4 h-4 text-emerald-400" />
                 <div className="text-xs">
                   <p className="font-black uppercase italic text-emerald-400">Replying to {replyingTo.authorName}</p>
-                  <p className="text-zinc-500 truncate max-w-md">{replyingTo.text}</p>
+                  <p className="text-esports-text truncate max-w-md">{replyingTo.text}</p>
                 </div>
               </div>
               <button onClick={() => setReplyingTo(null)} className="p-1 hover:bg-zinc-800 rounded-full transition-colors">
@@ -196,7 +196,7 @@ export default function GroupChat() {
             value={newMessage}
             onChange={(e) => setNewMessage(e.target.value)}
             placeholder="Say something to the community..."
-            className={`flex-1 bg-transparent border-none focus:ring-0 resize-none text-sm font-medium max-h-32 ${darkMode ? 'text-white' : 'text-zinc-900'}`}
+            className={`flex-1 bg-transparent border-none focus:ring-0 resize-none text-sm font-medium max-h-32 text-esports-text`}
             rows={1}
           />
           <div className="flex items-center gap-2 pb-1">

@@ -3,7 +3,7 @@ import { db } from '../firebase';
 import { collection, query, orderBy, onSnapshot, addDoc, deleteDoc, doc, serverTimestamp, where, updateDoc } from 'firebase/firestore';
 import { useAuth, useTheme, useSettings } from '../App';
 import { motion, AnimatePresence } from 'motion/react';
-import { Trophy, Plus, X, Trash2, ExternalLink, ShieldCheck, Camera, Heart, MessageSquare, Send } from 'lucide-react';
+import { Trophy, Plus, X, Trash2, ExternalLink, ShieldCheck, Camera, Heart, MessageSquare, Send, Star, Medal } from 'lucide-react';
 import imageCompression from 'browser-image-compression';
 
 interface Comment {
@@ -28,7 +28,19 @@ interface TopTeam {
   logoUrl: string;
   achievements: Achievement[];
   socialLink?: string;
+  isVerified?: boolean;
+  badgeType?: string;
   reactions?: Record<string, string[]>;
+  createdAt: any;
+}
+
+interface HallOfFameEntry {
+  id: string;
+  category: 'team' | 'player' | 'tournament';
+  name: string;
+  description: string;
+  imageUrl: string;
+  year: string;
   createdAt: any;
 }
 
@@ -50,7 +62,19 @@ export default function TopTeams() {
     description: '',
     logoUrl: '',
     achievements: [] as Achievement[],
-    socialLink: ''
+    socialLink: '',
+    isVerified: false,
+    badgeType: ''
+  });
+
+  const [hallOfFame, setHallOfFame] = useState<HallOfFameEntry[]>([]);
+  const [showAddHOF, setShowAddHOF] = useState(false);
+  const [newHOF, setNewHOF] = useState({
+    category: 'team' as const,
+    name: '',
+    description: '',
+    imageUrl: '',
+    year: new Date().getFullYear().toString()
   });
 
   const [newAchievement, setNewAchievement] = useState({ title: '', image: '' });
@@ -60,7 +84,16 @@ export default function TopTeams() {
     const unsubscribe = onSnapshot(q, (snapshot) => {
       setTeams(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as TopTeam)));
     });
-    return unsubscribe;
+
+    const hofQ = query(collection(db, 'hallOfFame'), orderBy('createdAt', 'desc'));
+    const unsubscribeHOF = onSnapshot(hofQ, (snapshot) => {
+      setHallOfFame(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as HallOfFameEntry)));
+    });
+
+    return () => {
+      unsubscribe();
+      unsubscribeHOF();
+    };
   }, []);
 
   useEffect(() => {
@@ -162,6 +195,24 @@ export default function TopTeams() {
     }));
   };
 
+  const handleAddHOF = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!isAdmin) return;
+    setIsSubmitting(true);
+    try {
+      await addDoc(collection(db, 'hallOfFame'), {
+        ...newHOF,
+        createdAt: serverTimestamp()
+      });
+      setShowAddHOF(false);
+      setNewHOF({ category: 'team', name: '', description: '', imageUrl: '', year: new Date().getFullYear().toString() });
+    } catch (error) {
+      console.error('Add HOF failed:', error);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!isAdmin) return;
@@ -200,18 +251,18 @@ export default function TopTeams() {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div className="space-y-2">
           <div className="flex items-center gap-3">
-            <Trophy className="w-10 h-10 text-yellow-500" />
-            <h1 className={`text-5xl font-black uppercase italic tracking-tighter ${darkMode ? 'text-white' : 'text-zinc-900'}`}>
-              {settings.topTeamsTitle.split(' ')[0]} <span className="text-yellow-500">{settings.topTeamsTitle.split(' ').slice(1).join(' ')}</span>
+            <Trophy className="w-10 h-10 text-esports-primary" />
+            <h1 className="text-5xl font-black uppercase italic tracking-tighter text-esports-text">
+              {settings.topTeamsTitle.split(' ')[0]} <span className="text-esports-primary">{settings.topTeamsTitle.split(' ').slice(1).join(' ')}</span>
             </h1>
           </div>
-          <p className="text-xs font-bold text-zinc-500 uppercase tracking-widest">{settings.topTeamsDesc}</p>
+          <p className="text-xs font-bold text-esports-text-muted uppercase tracking-widest">{settings.topTeamsDesc}</p>
         </div>
 
         {isAdmin && (
           <button 
             onClick={() => setShowAdd(true)}
-            className="px-6 py-3 bg-yellow-500 text-white rounded-2xl text-xs font-black uppercase italic tracking-widest hover:bg-yellow-600 transition-all shadow-xl shadow-yellow-500/20 flex items-center gap-2"
+            className="px-6 py-3 bg-esports-primary text-white rounded-2xl text-xs font-black uppercase italic tracking-widest hover:bg-red-600 transition-all shadow-xl shadow-esports-primary/20 flex items-center gap-2"
           >
             <Plus className="w-5 h-5" /> Add Team
           </button>
@@ -228,49 +279,62 @@ export default function TopTeams() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9 }}
               onClick={() => setSelectedTeam(team)}
-              className={`group relative rounded-[3rem] border p-8 transition-all hover:shadow-2xl cursor-pointer ${
-                darkMode ? 'bg-zinc-900 border-zinc-800 hover:shadow-yellow-900/20' : 'bg-white border-zinc-100 hover:shadow-yellow-100/50'
-              }`}
+              className="group relative rounded-[2.5rem] border border-white/5 p-8 transition-all hover:shadow-2xl cursor-pointer bg-esports-card hover:bg-white/10"
             >
-              <div className="absolute -top-4 -left-4 w-12 h-12 bg-yellow-500 text-white rounded-2xl flex items-center justify-center font-black italic text-xl shadow-lg rotate-[-10deg] z-10">
+              <div className="absolute -top-4 -left-4 w-12 h-12 bg-esports-primary text-white rounded-2xl flex items-center justify-center font-black italic text-xl shadow-lg rotate-[-10deg] z-10">
                 #{team.rank}
               </div>
+              {team.isVerified && (
+                <div className="absolute top-4 right-4 z-10">
+                  <div className="bg-blue-500 text-white p-2 rounded-xl shadow-lg animate-pulse">
+                    <Star className="w-4 h-4 fill-current" />
+                  </div>
+                </div>
+              )}
 
               <div className="space-y-6">
                 <div className="flex items-center gap-6">
                   <img 
                     src={team.logoUrl || `https://picsum.photos/seed/${team.id}/200/200`} 
-                    className="w-20 h-20 rounded-[2rem] object-cover border-4 border-yellow-500/20 shadow-xl"
+                    className="w-20 h-20 rounded-[2rem] object-cover border-4 border-white/5 shadow-xl"
                     alt={team.name}
                   />
                   <div>
-                    <h2 className={`text-2xl font-black uppercase italic leading-none ${darkMode ? 'text-white' : 'text-zinc-900'}`}>{team.name}</h2>
+                    <div className="flex items-center gap-2">
+                      <h2 className="text-2xl font-black uppercase italic leading-none text-esports-text">{team.name}</h2>
+                      {team.isVerified && (
+                        <div className="flex items-center gap-1 bg-blue-500/10 text-blue-500 px-2 py-0.5 rounded-full border border-blue-500/20">
+                          <ShieldCheck className="w-3 h-3 fill-current" />
+                          <span className="text-[8px] font-black uppercase tracking-tighter">Verified</span>
+                        </div>
+                      )}
+                    </div>
                     <div className="flex items-center gap-2 mt-2">
-                      <ShieldCheck className="w-4 h-4 text-yellow-500" />
-                      <span className="text-[10px] font-black uppercase tracking-widest text-zinc-500">Verified Elite</span>
+                      <ShieldCheck className="w-4 h-4 text-esports-primary" />
+                      <span className="text-[10px] font-black uppercase tracking-widest text-esports-text-muted">{team.badgeType || 'Verified Elite'}</span>
                     </div>
                   </div>
                 </div>
 
-                <p className={`text-sm leading-relaxed line-clamp-3 ${darkMode ? 'text-zinc-400' : 'text-zinc-600'}`}>{team.description}</p>
+                <p className="text-sm leading-relaxed line-clamp-3 text-esports-text-muted">{team.description}</p>
 
                 <div className="space-y-3">
-                  <h3 className="text-[10px] font-black uppercase tracking-widest text-yellow-500">Recent Achievements</h3>
+                  <h3 className="text-[10px] font-black uppercase tracking-widest text-esports-primary">Recent Achievements</h3>
                   <div className="flex flex-wrap gap-2">
                     {team.achievements.slice(0, 3).map((ach, i) => (
-                      <span key={i} className={`px-3 py-1 rounded-lg text-[9px] font-bold uppercase ${darkMode ? 'bg-zinc-800 text-zinc-300' : 'bg-zinc-50 text-zinc-600'}`}>
+                      <span key={i} className="px-3 py-1 rounded-lg text-[9px] font-bold uppercase bg-white/5 text-esports-text">
                         {ach.title}
                       </span>
                     ))}
                     {team.achievements.length > 3 && (
-                      <span className={`px-3 py-1 rounded-lg text-[9px] font-bold uppercase ${darkMode ? 'bg-zinc-800 text-zinc-500' : 'bg-zinc-50 text-zinc-400'}`}>
+                      <span className="px-3 py-1 rounded-lg text-[9px] font-bold uppercase bg-white/5 text-esports-text-muted">
                         +{team.achievements.length - 3} More
                       </span>
                     )}
                   </div>
                 </div>
 
-                <div className="flex items-center justify-between pt-6 border-t border-zinc-100 dark:border-zinc-800">
+                <div className="flex items-center justify-between pt-6 border-t border-white/5">
                   <div className="flex items-center gap-4">
                     <button
                       onClick={(e) => {
@@ -279,14 +343,14 @@ export default function TopTeams() {
                       }}
                       className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full transition-all ${
                         team.reactions?.['❤️']?.includes(user?.uid || '')
-                          ? 'bg-red-500 text-white shadow-lg shadow-red-500/20'
-                          : (darkMode ? 'bg-zinc-800 text-zinc-400 hover:bg-zinc-700' : 'bg-zinc-100 text-zinc-500 hover:bg-zinc-200')
+                          ? 'bg-esports-primary text-white shadow-lg shadow-esports-primary/20'
+                          : 'bg-white/5 text-esports-text-muted hover:bg-white/10'
                       }`}
                     >
                       <Heart className={`w-3.5 h-3.5 ${team.reactions?.['❤️']?.includes(user?.uid || '') ? 'fill-current' : ''}`} />
                       <span className="text-[10px] font-black">{team.reactions?.['❤️']?.length || 0}</span>
                     </button>
-                    <div className="flex items-center gap-1.5 text-zinc-400">
+                    <div className="flex items-center gap-1.5 text-esports-text-muted">
                       <MessageSquare className="w-3.5 h-3.5" />
                       <span className="text-[10px] font-black">?</span>
                     </div>
@@ -298,7 +362,7 @@ export default function TopTeams() {
                         target="_blank" 
                         rel="noreferrer"
                         onClick={(e) => e.stopPropagation()}
-                        className="flex items-center gap-2 text-[10px] font-black uppercase italic text-yellow-500 hover:translate-x-1 transition-transform"
+                        className="flex items-center gap-2 text-[10px] font-black uppercase italic text-esports-primary hover:translate-x-1 transition-transform"
                       >
                         Visit Team Page <ExternalLink className="w-3 h-3" />
                       </a>
@@ -309,7 +373,7 @@ export default function TopTeams() {
                           e.stopPropagation();
                           handleDelete(team.id);
                         }}
-                        className="p-2 text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-xl transition-colors"
+                        className="p-2 text-red-400 hover:bg-red-900/20 rounded-xl transition-colors"
                       >
                         <Trash2 className="w-4 h-4" />
                       </button>
@@ -323,13 +387,183 @@ export default function TopTeams() {
       </div>
 
       {teams.length === 0 && (
-        <div className={`text-center py-20 rounded-[3rem] border-2 border-dashed ${darkMode ? 'bg-zinc-900 border-zinc-800' : 'bg-white border-zinc-100'}`}>
-          <Trophy className="w-16 h-16 text-zinc-300 mx-auto mb-4 opacity-20" />
-          <p className="text-zinc-400 font-black uppercase italic text-xl">Rankings are being updated...</p>
+        <div className="text-center py-20 rounded-[3rem] border-2 border-dashed bg-esports-card border-white/5">
+          <Trophy className="w-16 h-16 text-white/10 mx-auto mb-4 opacity-20" />
+          <p className="text-esports-text-muted font-black uppercase italic text-xl">Rankings are being updated...</p>
         </div>
       )}
 
-      {/* Team Detail Modal */}
+      {/* Hall of Fame Section */}
+      <div className="space-y-12 pt-12 border-t border-white/5">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+          <div className="space-y-2">
+            <div className="flex items-center gap-3">
+              <Star className="w-10 h-10 text-esports-secondary" />
+              <h2 className="text-5xl font-black uppercase italic tracking-tighter text-esports-text">
+                Hall of <span className="text-esports-secondary">Fame</span>
+              </h2>
+            </div>
+            <p className="text-xs font-bold text-esports-text-muted uppercase tracking-widest">Immortalizing the legends of Free Fire Esports</p>
+          </div>
+
+          {isAdmin && (
+            <button 
+              onClick={() => setShowAddHOF(true)}
+              className="px-6 py-3 bg-white text-esports-bg rounded-2xl text-xs font-black uppercase italic tracking-widest hover:scale-105 transition-all shadow-xl flex items-center gap-2"
+            >
+              <Plus className="w-5 h-5" /> Add Legend
+            </button>
+          )}
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {hallOfFame.map((entry) => (
+            <motion.div
+              key={entry.id}
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              className="group relative rounded-[2.5rem] overflow-hidden border bg-esports-card border-white/5 shadow-xl"
+            >
+              <div className="aspect-[3/4] relative overflow-hidden">
+                <img 
+                  src={entry.imageUrl || `https://picsum.photos/seed/${entry.id}/400/600`} 
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                  alt={entry.name}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-80" />
+                
+                <div className="absolute top-4 left-4 bg-esports-secondary text-white px-3 py-1 rounded-lg text-[10px] font-black uppercase italic shadow-lg">
+                  {entry.year}
+                </div>
+
+                <div className="absolute bottom-6 left-6 right-6 space-y-2">
+                  <div className="flex items-center gap-2">
+                    <Medal className="w-4 h-4 text-esports-secondary" />
+                    <span className="text-[10px] font-black uppercase tracking-widest text-esports-secondary">{entry.category}</span>
+                  </div>
+                  <h3 className="text-2xl font-black uppercase italic text-esports-text leading-tight">{entry.name}</h3>
+                  <p className="text-xs text-esports-text-muted font-medium line-clamp-2">{entry.description}</p>
+                </div>
+              </div>
+            </motion.div>
+          ))}
+          {hallOfFame.length === 0 && (
+            <div className="col-span-full py-20 text-center border-2 border-dashed border-white/5 rounded-[3rem] bg-esports-card">
+              <Star className="w-16 h-16 text-white/5 mx-auto mb-4 opacity-20" />
+              <p className="text-esports-text-muted font-black uppercase italic tracking-widest">The Hall of Fame is awaiting its first legends</p>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Add HOF Modal */}
+      <AnimatePresence>
+        {showAddHOF && (
+          <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/60 backdrop-blur-md">
+            <motion.div 
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              className={`${darkMode ? 'bg-zinc-900 border-zinc-800' : 'bg-white border-zinc-100'} w-full max-w-xl rounded-[3rem] p-10 border shadow-2xl relative`}
+            >
+              <button 
+                onClick={() => setShowAddHOF(false)}
+                className={`absolute top-8 right-8 p-3 rounded-full transition-colors ${darkMode ? 'hover:bg-zinc-800 text-zinc-500' : 'hover:bg-zinc-100 text-zinc-400'}`}
+              >
+                <X className="w-6 h-6" />
+              </button>
+
+              <div className="space-y-8">
+                <div className="text-center">
+                  <h2 className={`text-3xl font-black uppercase italic tracking-tighter ${darkMode ? 'text-white' : 'text-zinc-900'}`}>Add to Hall of Fame</h2>
+                </div>
+
+                <form onSubmit={handleAddHOF} className="space-y-6">
+                  <div className="flex justify-center">
+                    <div className="relative group">
+                      <input 
+                        type="file" 
+                        accept="image/*" 
+                        onChange={(e) => e.target.files && handleImageUpload(e.target.files[0], (b) => setNewHOF(prev => ({ ...prev, imageUrl: b })))}
+                        className="hidden"
+                        id="hof-img"
+                      />
+                      <label 
+                        htmlFor="hof-img"
+                        className={`w-32 h-40 rounded-[2rem] border-2 border-dashed flex flex-col items-center justify-center cursor-pointer transition-all overflow-hidden ${
+                          newHOF.imageUrl ? 'border-yellow-500' : 'border-zinc-200 dark:border-zinc-800 hover:border-yellow-500'
+                        }`}
+                      >
+                        {newHOF.imageUrl ? (
+                          <img src={newHOF.imageUrl} className="w-full h-full object-cover" alt="" />
+                        ) : (
+                          <div className="text-center space-y-2">
+                            <Camera className="w-8 h-8 text-zinc-300 mx-auto" />
+                            <span className="text-[10px] font-black uppercase text-zinc-400">Upload Photo</span>
+                          </div>
+                        )}
+                      </label>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-6">
+                    <div className="space-y-2">
+                      <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 ml-2">Category</label>
+                      <select 
+                        value={newHOF.category}
+                        onChange={(e) => setNewHOF({ ...newHOF, category: e.target.value as any })}
+                        className={`w-full px-6 py-4 rounded-2xl border ${darkMode ? 'bg-zinc-800 border-zinc-700 text-white' : 'bg-zinc-50 border-zinc-100 text-zinc-900'} outline-none font-bold`}
+                      >
+                        <option value="team">Best Team</option>
+                        <option value="player">Best Player</option>
+                        <option value="tournament">Tournament Winner</option>
+                      </select>
+                    </div>
+                    <div className="space-y-2">
+                      <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 ml-2">Year</label>
+                      <input 
+                        value={newHOF.year}
+                        onChange={(e) => setNewHOF({ ...newHOF, year: e.target.value })}
+                        className={`w-full px-6 py-4 rounded-2xl border ${darkMode ? 'bg-zinc-800 border-zinc-700 text-white' : 'bg-zinc-50 border-zinc-100 text-zinc-900'} outline-none font-bold`}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 ml-2">Name</label>
+                    <input 
+                      required
+                      value={newHOF.name}
+                      onChange={(e) => setNewHOF({ ...newHOF, name: e.target.value })}
+                      className={`w-full px-6 py-4 rounded-2xl border ${darkMode ? 'bg-zinc-800 border-zinc-700 text-white' : 'bg-zinc-50 border-zinc-100 text-zinc-900'} outline-none font-bold`}
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 ml-2">Description</label>
+                    <textarea 
+                      required
+                      value={newHOF.description}
+                      onChange={(e) => setNewHOF({ ...newHOF, description: e.target.value })}
+                      className={`w-full px-6 py-4 rounded-2xl border ${darkMode ? 'bg-zinc-800 border-zinc-700 text-white' : 'bg-zinc-50 border-zinc-100 text-zinc-900'} outline-none font-bold resize-none`}
+                      rows={3}
+                    />
+                  </div>
+
+                  <button 
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="w-full py-5 bg-yellow-500 text-white rounded-[2rem] font-black uppercase italic tracking-wider hover:bg-yellow-600 transition-all disabled:opacity-50 shadow-xl"
+                  >
+                    {isSubmitting ? 'Adding Legend...' : 'Add to Hall of Fame'}
+                  </button>
+                </form>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
       <AnimatePresence>
         {selectedTeam && (
           <div className="fixed inset-0 z-[150] flex items-center justify-center p-4 bg-black/60 backdrop-blur-md">
@@ -508,6 +742,27 @@ export default function TopTeams() {
                         min="1"
                         value={newTeam.rank}
                         onChange={(e) => setNewTeam({ ...newTeam, rank: Number(e.target.value) })}
+                        className={`w-full px-6 py-4 rounded-2xl border ${darkMode ? 'bg-zinc-800 border-zinc-700 text-white' : 'bg-zinc-50 border-zinc-100 text-zinc-900'} focus:ring-2 focus:ring-yellow-500 outline-none transition-all font-bold`}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-6">
+                    <div className="flex items-center gap-3 px-6 py-4 rounded-2xl border border-zinc-100 dark:border-zinc-800">
+                      <input 
+                        type="checkbox"
+                        checked={newTeam.isVerified}
+                        onChange={(e) => setNewTeam({ ...newTeam, isVerified: e.target.checked })}
+                        className="w-5 h-5 accent-blue-500"
+                      />
+                      <label className="text-xs font-black uppercase italic tracking-widest text-zinc-500">Verified Team</label>
+                    </div>
+                    <div className="space-y-2">
+                      <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400 ml-2">Badge Type</label>
+                      <input 
+                        value={newTeam.badgeType}
+                        onChange={(e) => setNewTeam({ ...newTeam, badgeType: e.target.value })}
+                        placeholder="e.g. Top Community Team"
                         className={`w-full px-6 py-4 rounded-2xl border ${darkMode ? 'bg-zinc-800 border-zinc-700 text-white' : 'bg-zinc-50 border-zinc-100 text-zinc-900'} focus:ring-2 focus:ring-yellow-500 outline-none transition-all font-bold`}
                       />
                     </div>

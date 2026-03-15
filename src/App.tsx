@@ -51,6 +51,7 @@ export interface Settings {
   groupChatDesc: string;
   fontFamily: string;
   supportTelegram: string;
+  heroImageUrl: string;
   creatorName: string;
   creatorLink: string;
 }
@@ -59,6 +60,7 @@ const DEFAULT_SETTINGS: Settings = {
   siteTitle: 'FF Esports Hub',
   heroTitle: 'Free Fire Esports Hub',
   heroSubtitle: 'Register your squad, share your epic booyahs, and dominate the leaderboard.',
+  heroImageUrl: 'https://picsum.photos/seed/esports/1920/1080',
   rosterTitle: 'Team Rosters',
   rosterDesc: 'Browse and register official team rosters for the upcoming tournaments.',
   albumTitle: 'Esports Album',
@@ -119,11 +121,11 @@ function AppContent() {
 
   return (
     <div 
-      className={`min-h-screen transition-colors duration-300 ${darkMode ? 'bg-zinc-950 text-zinc-100' : 'bg-[#fafafa] text-zinc-800'} selection:bg-pink-200`}
-      style={{ fontFamily: settings.fontFamily === 'Mono' ? 'JetBrains Mono, monospace' : 'Inter, sans-serif' }}
+      className="min-h-screen bg-esports-bg text-esports-text selection:bg-esports-primary/30"
+      style={{ fontFamily: 'Inter, sans-serif' }}
     >
       <Navbar />
-      <main className="pt-20 pb-12 px-4 max-w-7xl mx-auto">
+      <main className="pt-24 pb-20 px-4 max-w-[1200px] mx-auto">
         <AnimatePresence mode="wait">
           <motion.div
             key={location.pathname}

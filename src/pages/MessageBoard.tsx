@@ -172,7 +172,7 @@ export default function MessageBoard() {
               <div className={`p-4 rounded-[1.5rem] ${
                 msg.authorUid === user?.uid 
                   ? 'bg-pink-500 text-white rounded-tr-none' 
-                  : `${darkMode ? 'bg-zinc-800 text-zinc-100' : 'bg-zinc-100 text-zinc-800'} rounded-tl-none`
+                  : `${darkMode ? 'bg-zinc-800 text-esports-text' : 'bg-zinc-100 text-esports-text'} rounded-tl-none`
               } shadow-sm relative group`}>
                 {msg.imageUrl && (
                   <img src={msg.imageUrl} className="rounded-xl mb-2 w-full max-h-64 object-cover" alt="" />
@@ -222,7 +222,7 @@ export default function MessageBoard() {
               value={newMessage}
               onChange={(e) => setNewMessage(e.target.value)}
               placeholder="Type your message..."
-              className={`w-full bg-transparent border-none focus:ring-0 resize-none text-sm font-medium max-h-32 ${darkMode ? 'text-white' : 'text-zinc-900'}`}
+              className={`w-full bg-transparent border-none focus:ring-0 resize-none text-sm font-medium max-h-32 text-esports-text`}
               rows={1}
             />
           </div>
@@ -270,12 +270,12 @@ export default function MessageBoard() {
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
-              className={`${darkMode ? 'bg-zinc-900 border-zinc-800' : 'bg-white border-zinc-100'} w-full max-w-sm rounded-[2.5rem] p-8 border shadow-2xl text-center`}
+              className={`w-full max-w-sm rounded-[2.5rem] p-8 border shadow-2xl text-center bg-esports-card border-white/5`}
             >
               <div className={`w-16 h-16 rounded-full mx-auto mb-6 flex items-center justify-center ${darkMode ? 'bg-red-900/20' : 'bg-red-50'}`}>
                 <Trash2 className="w-8 h-8 text-red-500" />
               </div>
-              <h3 className={`text-2xl font-black uppercase italic mb-2 ${darkMode ? 'text-white' : 'text-zinc-900'}`}>Confirm Delete</h3>
+              <h3 className={`text-2xl font-black uppercase italic mb-2 text-esports-text`}>Confirm Delete</h3>
               <p className="text-zinc-400 text-sm mb-8">Are you sure you want to delete this message? This action cannot be undone.</p>
               <div className="grid grid-cols-2 gap-4">
                 <button
